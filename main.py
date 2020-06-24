@@ -1,10 +1,8 @@
 import clean_file
-import sys
-import math
 import os
 from bs4 import BeautifulSoup as bs
 from urllib import request, parse, error
-import xlrd 
+import xlrd
 
 
 def get_files(links):
@@ -19,30 +17,35 @@ def get_files(links):
     wb = xlrd.open_workbook(file_path)
     sheet = wb.sheet_by_index(0)
 
-    for i in range(1, sheet.nrows):
-        if 
+    for i in range(1, 500):
         links.append(sheet.cell_value(i, 1))
-
     return links
 
 
-def get_words(text, all_words):
+def get_words(text, words_in_docs, fhand):
+    all_words = dict()
     text = text.split()
     for word in text:
+        fhand.write(word + " ")
         all_words[word] = all_words.get(word, 0) + 1
-    return all_words
+    
+    for word in all_words.keys():
+        words_in_docs[word] = words_in_docs.get(word, 0) + 1
+    return words_in_docs
 
 
 
-def clean_all_files(links, all_words):
+def clean_all_files(links, words_in_docs):
     '''
     This function will return a list consisting of all the words in all the cleaned files.
     '''
-
-    # list that will contain cleaned text
-    cleaned_text = list()
-
     count = 0
+    try:
+        os.remove("preprocessed.txt")
+    except:
+        pass
+
+    f = open("preprocessed.txt", 'a')
 
     for url in links:
 
@@ -55,29 +58,34 @@ def clean_all_files(links, all_words):
         soup = bs(data, "html.parser")
         text = soup.text
         text = clean_file.text_cleaning(text)
-        cleaned_text.append(text)
+        words_in_docs = get_words(text, words_in_docs, f)
         count += 1
         print(f"URLs checked: {count}")
     
-    all_words = get_words(cleaned_text, all_words)
-    return cleaned_text, all_words
-
-
-
+    f.close()
+    return words_in_docs
 
 
 if __name__ == "__main__":
+    '''
+    Main function
+    '''
 
     # get all the links
     links = list()
-    all_words = dict()
+    words_in_docs = dict()
     links = get_files(links)
 
     # get all the text
-    cleaned_text = list()
-    cleaned_text, all_words = clean_all_files(links, all_words)
+    words_in_docs = clean_all_files(links, words_in_docs)
 
-    f = open("all words and counts.txt", 'w')
-    for i, j in all_words.items():
+    f = open("docs where word appear.txt", 'w')
+    for i, j in words_in_docs.items():
         f.write(i + " : " + str(j) + "\n")
+    f.close()
+
+    f = open("common_words.txt", 'w')
+    for i in words_in_docs.keys():
+        if words_in_docs[i] > 40:
+            f.write(i + "\n")
     f.close()
