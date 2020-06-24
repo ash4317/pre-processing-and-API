@@ -1,4 +1,5 @@
 import clean_file
+import sys
 import os
 from bs4 import BeautifulSoup as bs
 from urllib import request, parse, error
@@ -9,6 +10,7 @@ def get_files(links):
     '''
     Function that will return list of URLs of all the .htm files in a list
     '''
+    no_of_docs = int(sys.argv[1])
 
     # defining path of the excel sheet
     file_path = os.getcwd().replace('\\', '/') + '/ISINS_Dataset/ISINS.xlsx'
@@ -17,7 +19,7 @@ def get_files(links):
     wb = xlrd.open_workbook(file_path)
     sheet = wb.sheet_by_index(0)
 
-    for i in range(1, 500):
+    for i in range(1, no_of_docs + 1):
         links.append(sheet.cell_value(i, 1))
     return links
 
@@ -79,7 +81,7 @@ if __name__ == "__main__":
     # get all the text
     words_in_docs = clean_all_files(links, words_in_docs)
 
-    f = open("docs where word appear.txt", 'w')
+    f = open("no. of docs where word appear.txt", 'w')
     for i, j in words_in_docs.items():
         f.write(i + " : " + str(j) + "\n")
     f.close()
