@@ -86,7 +86,7 @@ def rmv_URLs(text):
     txt = ""
     words = text.split()
     for word in words:
-        if re.search('^www.*', word):
+        if re.search('^www.*', word) or re.search('^us.*', word):
             continue
         txt += word + " "
     txt = txt.strip()
