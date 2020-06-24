@@ -86,6 +86,6 @@ if __name__ == "__main__":
 
     f = open("common_words.txt", 'w')
     for i in words_in_docs.keys():
-        if words_in_docs[i] > 40:
+        if words_in_docs[i] > 400:
             f.write(i + "\n")
     f.close()
