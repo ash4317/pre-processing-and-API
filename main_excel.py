@@ -81,13 +81,13 @@ if __name__ == "__main__":
     # get all the text
     words_in_docs = clean_all_files(links, words_in_docs)
 
-    f = open("no. of docs where word appear.txt", 'w')
+    f = open("no. of docs where words appear.txt", 'w')
     for i, j in words_in_docs.items():
         f.write(i + " : " + str(j) + "\n")
     f.close()
 
     f = open("common_words.txt", 'w')
     for i in words_in_docs.keys():
-        if words_in_docs[i] > 400:
+        if words_in_docs[i] > 2250:
             f.write(i + "\n")
     f.close()
