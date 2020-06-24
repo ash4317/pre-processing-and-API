@@ -1,6 +1,6 @@
 # module for text cleaning
 
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords, words
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 import re
 from unidecode import unidecode
@@ -36,6 +36,14 @@ def rmv_stopAndCommon_words(words):
             continue
         cleaned_text = cleaned_text + " " + i
     return cleaned_text
+
+#Remove non-english words
+def unusual_words(text):
+    text_vocab = set(w.lower() for w in text.split() if w.isalpha())
+    english_vocab = set(w.lower() for w in words.words())
+    unusual = text_vocab - english_vocab
+    data = " ".join(w for w in sorted(text_vocab - unusual))
+    return data
 
 
 def rmv_punctAndNos(text):
@@ -75,10 +83,10 @@ def lemmatize_and_stem(text):
     ps = PorterStemmer()
     txt = ""
     words = text.split()
-    for i in range(len(words)):
-        txt = txt + ps.stem(wnl.lemmatize(words[i])) + " "
-    txt = txt.strip()
-    return txt
+    words = [wnl.lemmatize(w) for w in words]
+    words = [wnl.lemmatize(w, pos = "a") for w in words]
+    words = [wnl.lemmatize(w, pos = "v") for w in words]
+    return " ".join(ps.stem(w) for w in words)
 
 
 
@@ -106,6 +114,7 @@ def text_cleaning(text):
 
     text = rmv_punctAndNos(text)
     text = rmv_unknown_char(text)
+    text = unusual_words(text)
     text = lemmatize_and_stem(text)
     text = rmv_stopAndCommon_words(text.split())
     text = rmv_URLs(text)
