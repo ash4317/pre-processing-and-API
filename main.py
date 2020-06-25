@@ -1,6 +1,7 @@
 '''
 Run the file through terminal as: python main_excel.py 50 - This will run the program for 50 URLs.
 This file along with 'clean_file.py' and the directory with the excel file 'ISINS.xlsx' should be in the same directory.
+This code reads and extract all the data from the .htm URLs present in the excel sheet and preprocesses it, calculates TFIDF matrix and makes clusters using DBSCAN algorithm.
 '''
 
 import clean_file
