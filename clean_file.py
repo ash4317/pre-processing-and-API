@@ -75,18 +75,23 @@ def rmv_unknown_char(text):
     return text
 
 
-def lemmatize_and_stem(text):
+def stemming(text):
+    '''
+    Apply stemming to the text to reduce all words to their root
+    '''
+    ps = PorterStemmer()
+    return " ".join(ps.stem(word) for word in text.split())
+
+def lemmatize(text):
     '''
     lemmatize and stem every word and then concatenate into a string separated by whitespaces
     '''
     wnl = WordNetLemmatizer()
-    ps = PorterStemmer()
-    txt = ""
     words = text.split()
     words = [wnl.lemmatize(w) for w in words]
     words = [wnl.lemmatize(w, pos = "a") for w in words]
     words = [wnl.lemmatize(w, pos = "v") for w in words]
-    return " ".join(ps.stem(w) for w in words)
+    return " ".join(word for word in words)
 
 
 
@@ -120,7 +125,8 @@ def text_cleaning(text, commonWords):
     text = rmv_punctAndNos(text)
     text = rmv_unknown_char(text)
     text = unusual_words(text)
-    text = lemmatize_and_stem(text)
+    text = lemmatize(text)
+    text = stemming(text)
     text = rmv_stopWords(text.split())
     text = rmv_URLs(text)
     text = rmv_commonWords(text.split(), commonWords)
