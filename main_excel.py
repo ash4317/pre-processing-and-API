@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
     f = open("no. of docs where words appear.txt", 'w')
     for i, j in words_in_docs.items():
-        f.write(i + " : " + str(j) + "\n")
+        f.write(i + ":" + str(j) + "\n")
     f.close()
 
     f = open("common_words.txt", 'w')
