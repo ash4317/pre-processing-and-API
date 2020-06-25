@@ -23,7 +23,7 @@ def rmv_newline_char(text):
     return text
 
 
-def rmv_stopAndCommon_words(words):
+def rmv_stopWords(words):
     '''
     removes stopwords like has, and, the etc.
     '''
@@ -90,6 +90,11 @@ def lemmatize_and_stem(text):
 
 
 
+def rmv_commonWords(words, commonWords):
+    return " ".join(word for word in words if word not in commonWords)
+
+
+
 def rmv_URLs(text):
     txt = ""
     words = text.split()
@@ -101,7 +106,7 @@ def rmv_URLs(text):
     return txt
 
 
-def text_cleaning(text):
+def text_cleaning(text, commonWords):
     '''
     function for cleaning the text which will be given later to the preprocessing algorithm
     '''
@@ -116,6 +121,7 @@ def text_cleaning(text):
     text = rmv_unknown_char(text)
     text = unusual_words(text)
     text = lemmatize_and_stem(text)
-    text = rmv_stopAndCommon_words(text.split())
+    text = rmv_stopWords(text.split())
     text = rmv_URLs(text)
+    text = rmv_commonWords(text.split(), commonWords)
     return text

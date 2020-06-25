@@ -4,6 +4,10 @@ import os
 from bs4 import BeautifulSoup as bs
 from urllib import request, parse, error
 import xlrd
+import pandas as pd
+import numpy as np
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.cluster import DBSCAN
 
 
 def get_files(links):
@@ -37,11 +41,12 @@ def get_words(text, words_in_docs, fhand):
 
 
 
-def clean_all_files(links, words_in_docs):
+def clean_all_files(links, words_in_docs, commonWords):
     '''
     This function will return a list consisting of all the words in all the cleaned files.
     '''
     count = 0
+    cleaned_words = list()
     try:
         os.remove("preprocessed.txt")
     except:
@@ -59,13 +64,32 @@ def clean_all_files(links, words_in_docs):
             
         soup = bs(data, "html.parser")
         text = soup.text
-        text = clean_file.text_cleaning(text)
+        text = clean_file.text_cleaning(text, commonWords)
+        cleaned_words.append(text)
         words_in_docs = get_words(text, words_in_docs, f)
         count += 1
         print(f"URLs checked: {count}")
     
     f.close()
-    return words_in_docs
+    return words_in_docs, cleaned_words
+
+
+def load():
+    f = open("common_words.txt")
+    data = f.read().strip().split('\n')
+    return data
+
+def eval_clusters(tfidf, word_list, epsilon, minSamples):
+    db = DBSCAN(eps=epsilon, min_samples=minSamples, metric='cosine').fit(tfidf)
+    clusters = db.labels_.tolist()
+
+    idea_3={'Idea':word_list, 'Cluster':clusters} #Creating dict having doc with the corresponding cluster number.
+    frame_3=pd.DataFrame(idea_3,index=[clusters], columns=['Idea','Cluster']) # Converting it into a dataframe.
+
+    print("\n")
+    print(f"For epsilon:{epsilon}, minSamples:{minSamples}")
+    print(frame_3['Cluster'].value_counts()) #Print the counts of doc belonging to each cluster.
+    print("\n")
 
 
 if __name__ == "__main__":
@@ -76,18 +100,27 @@ if __name__ == "__main__":
     # get all the links
     links = list()
     words_in_docs = dict()
+    word_list = list()
     links = get_files(links)
 
+
     # get all the text
-    words_in_docs = clean_all_files(links, words_in_docs)
+    words_in_docs, word_list = clean_all_files(links, words_in_docs, load())
+        
 
-    f = open("no. of docs where words appear.txt", 'w')
-    for i, j in words_in_docs.items():
-        f.write(i + ":" + str(j) + "\n")
-    f.close()
+    vectorizer = CountVectorizer()
+    X = vectorizer.fit_transform(word_list)
+    Y = vectorizer.get_feature_names()
 
-    f = open("common_words.txt", 'w')
-    for i in words_in_docs.keys():
-        if words_in_docs[i] > 2250:
-            f.write(i + "\n")
-    f.close()
+    transformer = TfidfTransformer(smooth_idf=False)
+    tfidf = transformer.fit_transform(X)
+    print("\n")
+    print("tfidf matrix shape:")
+    print(tfidf.shape)
+
+    eval_clusters(tfidf, word_list, epsilon=0.18, minSamples=3)
+    eval_clusters(tfidf, word_list, epsilon=0.3, minSamples=5)
+    eval_clusters(tfidf, word_list, epsilon=0.2, minSamples=10)
+    eval_clusters(tfidf, word_list, epsilon=0.1, minSamples=5)
+    eval_clusters(tfidf, word_list, epsilon=0.35, minSamples=10)
+    print(f"No. of features:{len(Y)}")
