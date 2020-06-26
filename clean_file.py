@@ -40,7 +40,7 @@ def rmv_stopWords(words):
     return cleaned_text
 
 
-def unusual_words(text):
+def rmv_unusual_words(text):
     '''
     Remove words that are not in the english vocab (meaningless words)
     '''
@@ -120,23 +120,10 @@ def rmv_URLs(text):
     return txt
 
 
-
-def text_cleaning(text):
+def rmv_commonWords(word_list, common_words):
     '''
-    function for cleaning the text which will be given later to the preprocessing algorithm
+    Removes all common words from the preprocessed text
     '''
-    # will be able to process all characters
-    text = unidecode(text)
-    text = rmv_newline_char(text)
-
-    # convert all text to lowercase
-    text = text.lower()
-
-    text = rmv_punctAndNos(text)
-    text = rmv_unknown_char(text)
-    text = unusual_words(text)
-    text = lemmatize(text)
-    text = stemming(text)
-    text = rmv_stopWords(text.split())
-    text = rmv_URLs(text)
-    return text
+    for i in range(len(word_list)):
+        word_list[i] = " ".join(words for words in word_list[i].split() if words not in common_words)
+    return word_list
