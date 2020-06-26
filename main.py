@@ -4,12 +4,18 @@ This file along with 'clean_file.py' and the directory with the excel file 'ISIN
 This code reads and extract all the data from the .htm URLs present in the excel sheet and preprocesses it, calculates TFIDF matrix and makes clusters using DBSCAN algorithm.
 '''
 
-import clean_file
+# User-Developed Modules
+import clean_file as cf
+
+# Inbuilt modules for extracting data
 import sys
 import json
 import os
 from bs4 import BeautifulSoup as bs
 from urllib import request, parse, error
+from unidecode import unidecode
+
+# Modules for Clustering
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.feature_selection import VarianceThreshold
@@ -76,7 +82,16 @@ def clean_all_files(links, words_in_docs, word_list):
         text = soup.text
 
         # returns preprocessed text.
-        text = clean_file.text_cleaning(text)
+        text = unidecode(text)
+        text = cf.rmv_newline_char(text)
+        text = text.lower()
+        text = cf.rmv_punctAndNos(text)
+        text = cf.rmv_unknown_char(text)
+        text = cf.rmv_unusual_words(text)
+        text = cf.lemmatize(text)
+        text = cf.stemming(text)
+        text = cf.rmv_stopWords(text.split())
+        text = cf.rmv_URLs(text)
 
         # Preprocessed text in every .htm file is added to the list 'word_list'
         word_list.append(text)
@@ -89,26 +104,44 @@ def clean_all_files(links, words_in_docs, word_list):
     return words_in_docs, word_list
 
 
-def write_preprocessed(words_in_docs):
+def write_preprocessed(word_list):
     '''
     Writes the preprocessed data into the file 'preprocessed.json'
     '''
-    f = open("preprocessed.json", 'w')
-    js = json.dumps(words_in_docs)
+    f = open("preprocessed-1.json", 'w')
+    js = json.dumps(word_list)
     f.write(js)
     f.close()
     
 
 
-def get_commonWords(words_in_docs):
-    return [word for word, count in words_in_docs.items() if count > 2000 or count <= 2]
+def get_commonWords(words_in_docs, no_of_docs):
+    '''
+    Returns all words which are present in more than 80% of total docs and less than 3 docs
+    '''
+    return [word for word, count in words_in_docs.items() if count > (0.7 * no_of_docs) or count <= 2]
 
 
-def rmv_commonWords(word_list, common_words):
-    for i in range(len(word_list)):
-        word_list[i] = " ".join(words for words in word_list[i].split() if words not in common_words)
-    return word_list
 
+def calc_TFIDF(word_list, threshold):
+
+    # object to transform words into vectors
+    vectorizer = CountVectorizer()
+
+    # for applying variance thrshold to reduce features
+    selector = VarianceThreshold(threshold=threshold)
+
+    '''
+    Transform into TFIDF matrix, apply variance threshold to reduce features,
+    print the order of TFIDF matrix and return the TFIDF matrix
+    '''
+    X = vectorizer.fit_transform(word_list)
+    X = selector.fit_transform(X)
+    transformer = TfidfTransformer(smooth_idf=False)
+    tfidf = transformer.fit_transform(X)
+    print("\n")
+    print(f"TFIDF matrix order: {tfidf.shape}")
+    return tfidf
 
 
 def eval_clusters(tfidf, word_list, epsilon, minSamples):
@@ -116,16 +149,25 @@ def eval_clusters(tfidf, word_list, epsilon, minSamples):
     This function applies DBSCAN clustering algorithm and prints clusters, number of features and Silhouette coefficient
     '''
     db = DBSCAN(eps=epsilon, min_samples=minSamples, metric='cosine').fit(tfidf)
-    clusters = db.labels_.tolist() # all clusters
-    labels = db.labels_ # all cluster labels
 
-    idea_3={'Idea':word_list, 'Cluster':clusters} #Creating dict having doc with the corresponding cluster number.
-    frame_3=pd.DataFrame(idea_3,index=[clusters], columns=['Idea','Cluster']) # Converting it into a dataframe.
+    # get all clusters and clusters labels
+    clusters = db.labels_.tolist()
+    labels = db.labels_
+
+    #Creating dictionary having doc with the corresponding cluster number.
+    idea_3={'Idea':word_list, 'Cluster':clusters}
+
+    # Converting it into a dataframe.
+    frame_3=pd.DataFrame(idea_3,index=[clusters], columns=['Idea','Cluster'])
 
     print("\n")
     print(f"For epsilon:{epsilon}, minSamples:{minSamples}")
-    print(frame_3['Cluster'].value_counts()) #Print the counts of doc belonging to each cluster.
+
+    #Print the counts of doc belonging to each cluster.
+    print(frame_3['Cluster'].value_counts())
     print("\n")
+
+    # Print the Silhouette Coefficient
     print(f"Silhouette Coefficient: {metrics.silhouette_score(tfidf, labels)}")
 
 
@@ -148,11 +190,11 @@ if __name__ == "__main__":
     # get all the preprocessed text and no. of docs where words appear
     words_in_docs, word_list = clean_all_files(get_links(), words_in_docs, word_list)
 
-    # get all common words from the preprocessed text (present in more than 2000 or less than 2 docs)
-    common_words = get_commonWords(words_in_docs)
+    # get all common words from the preprocessed text (present in more than 80% of total docs or less than 2 docs)
+    common_words = get_commonWords(words_in_docs, int(sys.argv[1]))
 
     # remove common words
-    word_list = rmv_commonWords(word_list, common_words)
+    word_list = cf.rmv_commonWords(word_list, common_words)
     
     # writing preprocessed text to the file 'preprocessed.json'
     write_preprocessed(word_list)
@@ -160,15 +202,7 @@ if __name__ == "__main__":
     '''
     Calculate TFIDF matrix for the preprocessed text
     '''
-    vectorizer = CountVectorizer()
-    selector = VarianceThreshold(threshold=0.05) # for applying variance thrshold to reduce features
-    X = vectorizer.fit_transform(word_list)
-    X = selector.fit_transform(X)
-    transformer = TfidfTransformer(smooth_idf=False)
-    tfidf = transformer.fit_transform(X)
-    print("\n")
-    print("tfidf matrix shape:")
-    print(tfidf.shape)
+    tfidf = calc_TFIDF(word_list, 0.05)
 
     # evaluate clusters with given epsilon and min_sample values
     eval_clusters(tfidf, word_list, epsilon=0.18, minSamples=3)
