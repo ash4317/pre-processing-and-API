@@ -9,6 +9,7 @@ import clean_file as cf
 
 # Inbuilt modules for extracting data
 import sys
+import shutil
 import json
 import os
 from bs4 import BeautifulSoup as bs
@@ -171,6 +172,16 @@ def eval_clusters(tfidf, word_list, epsilon, minSamples):
     print(f"Silhouette Coefficient: {metrics.silhouette_score(tfidf, labels)}")
 
 
+def removeCache():
+    '''
+    Removes cache file generated due to this code
+    '''
+    try:
+        shutil.rmtree("__pycache__")
+    except:
+        pass
+
+
 #-------------------------------------------------------------------MAIN FUNCTION---------------------------------------------------------------------------------------
 
 
@@ -210,3 +221,6 @@ if __name__ == "__main__":
     eval_clusters(tfidf, word_list, epsilon=0.2, minSamples=10)
     eval_clusters(tfidf, word_list, epsilon=0.1, minSamples=5)
     eval_clusters(tfidf, word_list, epsilon=0.35, minSamples=10)
+
+    # to remove useless cache data
+    removeCache()
