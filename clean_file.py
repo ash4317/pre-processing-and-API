@@ -1,4 +1,6 @@
-# module for text cleaning
+'''
+Module which is imported in 'main.py' which cleans the text
+'''
 
 from nltk.corpus import stopwords, words
 from nltk.stem import PorterStemmer, WordNetLemmatizer
@@ -37,13 +39,17 @@ def rmv_stopWords(words):
         cleaned_text = cleaned_text + " " + i
     return cleaned_text
 
-#Remove non-english words
+
 def unusual_words(text):
+    '''
+    Remove words that are not in the english vocab (meaningless words)
+    '''
     text_vocab = set(w.lower() for w in text.split() if w.isalpha())
     english_vocab = set(w.lower() for w in words.words())
     unusual = text_vocab - english_vocab
     data = " ".join(w for w in sorted(text_vocab - unusual))
     return data
+
 
 
 def rmv_punctAndNos(text):
@@ -53,6 +59,7 @@ def rmv_punctAndNos(text):
     punctuations = '[.+()\-=_,;:0-9$#\[\]%"&*' + "'" + ']'
     text = re.sub(punctuations, "", text)
     return text
+
 
 
 def rmv_unknown_char(text):
@@ -75,12 +82,15 @@ def rmv_unknown_char(text):
     return text
 
 
+
 def stemming(text):
     '''
     Apply stemming to the text to reduce all words to their root
     '''
     ps = PorterStemmer()
     return " ".join(ps.stem(word) for word in text.split())
+
+
 
 def lemmatize(text):
     '''
@@ -95,12 +105,11 @@ def lemmatize(text):
 
 
 
-def rmv_commonWords(words, commonWords):
-    return " ".join(word for word in words if word not in commonWords)
-
-
 
 def rmv_URLs(text):
+    '''
+    remove all URLs
+    '''
     txt = ""
     words = text.split()
     for word in words:
@@ -111,7 +120,8 @@ def rmv_URLs(text):
     return txt
 
 
-def text_cleaning(text, commonWords):
+
+def text_cleaning(text):
     '''
     function for cleaning the text which will be given later to the preprocessing algorithm
     '''
@@ -129,5 +139,4 @@ def text_cleaning(text, commonWords):
     text = stemming(text)
     text = rmv_stopWords(text.split())
     text = rmv_URLs(text)
-    text = rmv_commonWords(text.split(), commonWords)
     return text
