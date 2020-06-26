@@ -93,3 +93,9 @@ def extract(path):
 
     return ISINs, URLs, textlist
 
+def readdataset(path):
+    df = pd.read_csv(path)
+    urlList = df['Termsheet Link'].tolist()
+    isinList = df['ISIN'].tolist()
+    text = df['Text'].tolist()
+    return isinList, urlList, text

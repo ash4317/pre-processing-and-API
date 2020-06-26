@@ -21,6 +21,8 @@ from pandas import DataFrame
 from nltk.corpus import wordnet
 from unidecode import unidecode
 from csv import writer 
+from sklearn.feature_selection import VarianceThreshold
+from scipy.sparse import csr_matrix
 
 MONTHS = ['january', 'february', 'march', 'april', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 NUMBERS = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety', 'hundred', 'thousand']
@@ -146,6 +148,13 @@ def tfidf(text):
     df = pd.DataFrame(denselist, columns=features)
     return df
 
+def varThreshold(tfidf):
+    selector = VarianceThreshold(threshold=0.001) #set threshold
+    selector.fit(tfidf)
+    data = tfidf[tfidf.columns[selector.get_support(indices=True)]]
+    print(data)
+    return data
+
 def preprocessing(textdata, steps):
     data = []
     for text in textdata:
@@ -166,7 +175,6 @@ def preprocessing(textdata, steps):
             text = apply_lemmatization(text)
         if steps.index('stemming', 0, len(steps)) != -1:
             text = apply_stemming(text)
-        text = unusual_words(text)
         data.append(text)
     DF, datawords = get_count(data)
     data = rmv_words(data, DF)
