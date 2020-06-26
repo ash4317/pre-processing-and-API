@@ -1,16 +1,18 @@
 '''
-Run the file through terminal as: python main_excel.py 50 - This will run the program for 50 URLs.
+Run the file through terminal as: python main.py 50 - This will run the program for 50 URLs.
 This file along with 'clean_file.py' and the directory with the excel file 'ISINS.xlsx' should be in the same directory.
 This code reads and extract all the data from the .htm URLs present in the excel sheet and preprocesses it, calculates TFIDF matrix and makes clusters using DBSCAN algorithm.
 '''
 
 import clean_file
 import sys
+import json
 import os
 from bs4 import BeautifulSoup as bs
 from urllib import request, parse, error
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.feature_selection import VarianceThreshold
 from sklearn.cluster import DBSCAN
 from sklearn import metrics
 
@@ -35,17 +37,16 @@ def get_links():
     # validation check
     if no_of_docs > len(links):
         sys.exit("No. of docs exceeds limit.")
-    return links
+    return links[:no_of_docs]
 
 
-def get_words(text, words_in_docs, fhand):
+def get_words(text, words_in_docs):
     '''
     Returns all the distinct words present along with number of docs in which they appear.
     '''
     all_words = dict()
     text = text.split()
     for word in text:
-        fhand.write(word + " ")
         all_words[word] = all_words.get(word, 0) + 1
     
     # This loop checks for all the distinct words stored in the dictionary 'all_words' and will increment count by 1 which will measure the number of docs where word appears.
@@ -55,20 +56,13 @@ def get_words(text, words_in_docs, fhand):
 
 
 
-def clean_all_files(links, words_in_docs, commonWords, word_list):
+def clean_all_files(links, words_in_docs, word_list):
     '''
     This function will return a list consisting of all the words in all the cleaned files.
     '''
     # keeps count of number of URLs processed.
     count = 0
 
-    # remove the txt file if already present
-    try:
-        os.remove("preprocessed.txt")
-    except:
-        pass
-
-    f = open("preprocessed.txt", 'a')
     for url in links:
 
         # using beautiful soup to parse the .htm files
@@ -82,27 +76,39 @@ def clean_all_files(links, words_in_docs, commonWords, word_list):
         text = soup.text
 
         # returns preprocessed text.
-        text = clean_file.text_cleaning(text, commonWords)
+        text = clean_file.text_cleaning(text)
 
         # Preprocessed text in every .htm file is added to the list 'word_list'
         word_list.append(text)
 
         # returns the number of docs in which words appear
-        words_in_docs = get_words(text, words_in_docs, f)
+        words_in_docs = get_words(text, words_in_docs)
         count += 1
         print(f"URLs checked: {count}")
     
-    f.close()
     return words_in_docs, word_list
 
 
-def load():
+def write_preprocessed(words_in_docs):
     '''
-    Function to read the common words present and add them to a list
+    Writes the preprocessed data into the file 'preprocessed.json'
     '''
-    f = open("common_words.txt")
-    data = f.read().strip().split('\n')
-    return data
+    f = open("preprocessed.json", 'w')
+    js = json.dumps(words_in_docs)
+    f.write(js)
+    f.close()
+    
+
+
+def get_commonWords(words_in_docs):
+    return [word for word, count in words_in_docs.items() if count > 2000 or count <= 2]
+
+
+def rmv_commonWords(word_list, common_words):
+    for i in range(len(word_list)):
+        word_list[i] = " ".join(words for words in word_list[i].split() if words not in common_words)
+    return word_list
+
 
 
 def eval_clusters(tfidf, word_list, epsilon, minSamples):
@@ -133,20 +139,31 @@ if __name__ == "__main__":
 
     # words_in_docs stores number of docs where every distinct word appears
     # word_list stores all the preprocessed data from all docs
+    # common_words stores all words which appear very frequently or very rarely
     words_in_docs = dict()
     word_list = list()
+    common_words = list()
 
 
     # get all the preprocessed text and no. of docs where words appear
-    words_in_docs, word_list = clean_all_files(get_links(), words_in_docs, load(), word_list)
-        
+    words_in_docs, word_list = clean_all_files(get_links(), words_in_docs, word_list)
+
+    # get all common words from the preprocessed text (present in more than 2000 or less than 2 docs)
+    common_words = get_commonWords(words_in_docs)
+
+    # remove common words
+    word_list = rmv_commonWords(word_list, common_words)
+    
+    # writing preprocessed text to the file 'preprocessed.json'
+    write_preprocessed(word_list)
 
     '''
     Calculate TFIDF matrix for the preprocessed text
     '''
     vectorizer = CountVectorizer()
+    selector = VarianceThreshold(threshold=0.05) # for applying variance thrshold to reduce features
     X = vectorizer.fit_transform(word_list)
-    Y = vectorizer.get_feature_names()
+    X = selector.fit_transform(X)
     transformer = TfidfTransformer(smooth_idf=False)
     tfidf = transformer.fit_transform(X)
     print("\n")
@@ -159,4 +176,3 @@ if __name__ == "__main__":
     eval_clusters(tfidf, word_list, epsilon=0.2, minSamples=10)
     eval_clusters(tfidf, word_list, epsilon=0.1, minSamples=5)
     eval_clusters(tfidf, word_list, epsilon=0.35, minSamples=10)
-    print(f"No. of features:{len(Y)}")
