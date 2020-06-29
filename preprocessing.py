@@ -34,13 +34,14 @@ def clean_all_files(links, words_in_docs, word_list):
     # keeps count of number of URLs processed.
     count = 0
 
-    for url in links:
+    for i in range(len(links)):
 
         # using beautiful soup to parse the .htm files
         # using error check because all files may not be able to get parsed
         try:
-            data = request.urlopen(url).read().decode()
+            data = request.urlopen(links[i]).read().decode()
         except:
+            del links[i]
             continue
             
         soup = bs(data, "html.parser")
@@ -66,7 +67,7 @@ def clean_all_files(links, words_in_docs, word_list):
         count += 1
         print(f"URLs checked: {count}")
     
-    return words_in_docs, word_list
+    return words_in_docs, word_list, links
 
 
 def write_preprocessed(word_list):

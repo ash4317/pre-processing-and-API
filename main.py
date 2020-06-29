@@ -65,10 +65,12 @@ if __name__ == "__main__":
     words_in_docs = dict()
     word_list = list()
     common_words = list()
+    links = list()
 
 
     # get all the preprocessed text and no. of docs where words appear
-    words_in_docs, word_list = prep.clean_all_files(get_links(), words_in_docs, word_list)
+    links = get_links()
+    words_in_docs, word_list, links = prep.clean_all_files(links, words_in_docs, word_list)
 
     # get all common words from the preprocessed text (present in more than 80% of total docs or less than 2 docs)
     common_words = prep.get_commonWords(words_in_docs, int(sys.argv[1]))
@@ -85,11 +87,13 @@ if __name__ == "__main__":
     tfidf = cluster.calc_TFIDF(word_list, 0.05)
 
     # evaluate clusters with given epsilon and min_sample values
-    cluster.eval_clusters(tfidf, word_list, epsilon=0.18, minSamples=3)
-    cluster.eval_clusters(tfidf, word_list, epsilon=0.3, minSamples=5)
-    cluster.eval_clusters(tfidf, word_list, epsilon=0.2, minSamples=10)
-    cluster.eval_clusters(tfidf, word_list, epsilon=0.1, minSamples=5)
-    cluster.eval_clusters(tfidf, word_list, epsilon=0.35, minSamples=10)
-
+    results = cluster.eval_clusters(tfidf, word_list, links, epsilon=0.18, minSamples=3)
+    '''
+    cluster.eval_clusters(tfidf, word_list, links, epsilon=0.3, minSamples=5)
+    cluster.eval_clusters(tfidf, word_list, links, epsilon=0.2, minSamples=1)
+    cluster.eval_clusters(tfidf, word_list, links, epsilon=0.1, minSamples=5)
+    cluster.eval_clusters(tfidf, word_list, links, epsilon=0.35, minSamples=1)
+    '''
+    print(results)
     # to remove useless cache data
     removeCache()

@@ -26,10 +26,30 @@ def calc_TFIDF(word_list, threshold):
     return tfidf
 
 
-def eval_clusters(tfidf, word_list, epsilon, minSamples):
+def show_results(links, clusters, results):
+    '''
+    This function will return a dictionary which stores all files in respective clusters
+    '''
+    for i in range(len(clusters)):
+        if clusters[i] in results.keys():
+
+            # if list is already made
+            results[clusters[i]].append(links[i])
+        else:
+
+            # initialize value of the key to a list
+            results[clusters[i]] = list()
+            results[clusters[i]].append(links[i])
+    return results
+
+
+def eval_clusters(tfidf, word_list, links, epsilon, minSamples):
     '''
     This function applies DBSCAN clustering algorithm and prints clusters, number of features and Silhouette coefficient
     '''
+
+    # stores all docs in different clusters
+    results = dict()
     db = DBSCAN(eps=epsilon, min_samples=minSamples, metric='cosine').fit(tfidf)
 
     # get all clusters and clusters labels
@@ -51,3 +71,7 @@ def eval_clusters(tfidf, word_list, epsilon, minSamples):
 
     # Print the Silhouette Coefficient
     print(f"Silhouette Coefficient: {metrics.silhouette_score(tfidf, labels)}")
+
+    # get docs in different clusters
+    results = show_results(links, labels.tolist(), results)
+    return results
