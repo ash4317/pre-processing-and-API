@@ -104,7 +104,7 @@ def extract(path):
             URLs.append(url)
             textlist.append(text)
             print('Done:'+url)
-            i = i+1
+        i = i+1
 
     return ISINs, URLs, textlist
 
