@@ -10,18 +10,23 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from string import digits
 from xlsxwriter.workbook import Workbook
+import json
+import xlsxwriter
 
+#Checks for substring, returns 1 (present) or 0 (not present)
 def check(string, sub_str): 
     if (string.find(sub_str) == -1):
-        return 1
-    else: 
         return 0
+    else: 
+        return 1
 
+#Appends new row to the existing csv file
 def append_list_as_row(file_name, list_of_elem):
     with open(file_name, 'a+', newline='',encoding="utf8") as write_obj:
         csv_writer = writer(write_obj)
         csv_writer.writerow(list_of_elem)
-
+    
+#Converts csv file to excel file
 def csv_to_excel(path):
     csvfile = path
     workbook = Workbook(csvfile[:-4] + '.xlsx')
@@ -33,19 +38,29 @@ def csv_to_excel(path):
                 worksheet.write(r, c, col)
     workbook.close()
 
-
-def exportexcel(filename, isinList, urlList, data, fields):
+#Exports data in the form of excel file, datalist is a list of lists, fields is a list of fields
+def exportexcel(filename='export.xlsx', datalist=[], fields=['ISIN', 'Termsheet Link', 'Text']):
     if os.path.isfile(filename):
         os.remove(filename)
-    append_list_as_row(filename, fields)
+
+    workbook = Workbook(filename)
+    worksheet = workbook.add_worksheet()
     i = 0
-    for d in data:
-        append_list_as_row(filename, [isinList[i], urlList[i], d])
+    for field in fields:
+        worksheet.write(0, i, field)
         i += 1
-    csv_to_excel(filename)
-    if os.path.isfile(filename):
-        os.remove(filename)
+    
+    j = 0
+    for data in datalist:
+        i = 1
+        for d in data:
+            worksheet.write(i, j, d)
+            i += 1
+        j += 1
 
+    workbook.close()
+
+#Extracts data, performs basic pre-processings and returns list of ISINs, URLs, and extracted text
 def extract(path):
     df = pd.read_excel(path, sheet_name=0)
     try:
@@ -61,7 +76,7 @@ def extract(path):
     i = 0
     for url in urlList:
         r = check(url, ".htm")
-        if r == 0:
+        if r == 1:
             try:
                 html = urlopen(url).read()
             except:
@@ -93,9 +108,39 @@ def extract(path):
 
     return ISINs, URLs, textlist
 
+#Reads extracted dataset if in csv format and returns ISINs, Termshit links, and text
 def readdataset(path):
-    df = pd.read_csv(path)
+    if check(path, '.csv'):
+        df = pd.read_csv(path)
+    elif check(path, '.xlsx'):
+        df = pd.read_excel(path)
+
     urlList = df['Termsheet Link'].tolist()
     isinList = df['ISIN'].tolist()
     text = df['Text'].tolist()
     return isinList, urlList, text
+    
+#Exports data to json file
+def exportjson(ISINs, URLs, data, path):
+    datajson = []
+    i = 0
+    for ISIN in ISINs:
+        datajson.append({
+            'ISIN': ISIN,
+            'URL': URLs[i],
+            'Data': data[i]
+        })
+        i += 1
+
+    with open(path, 'w') as outfile:
+        json.dump(datajson, outfile)
+
+#Reads json file and prints data
+def printjson(path):
+    with open(path) as json_file:
+        data = json.load(json_file)
+        for p in data:
+            print('ISIN: ' + p['ISIN'])
+            print('URL: ' + p['URL'])
+            print('Data: ' + p['Data'])
+            print('')

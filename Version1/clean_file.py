@@ -1,5 +1,3 @@
-# module for text cleaning
-
 from nltk.corpus import stopwords, words
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 import re
@@ -14,7 +12,7 @@ import nltk
 import csv
 import time
 from xlsxwriter.workbook import Workbook
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer, TfidfTransformer
 from nltk.tokenize import word_tokenize
 from collections import Counter
 from pandas import DataFrame
@@ -28,6 +26,7 @@ MONTHS = ['january', 'february', 'march', 'april', 'june', 'july', 'august', 'se
 NUMBERS = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety', 'hundred', 'thousand']
 EXTRA_WORDS = ['number', 'month', 'note', 'will']
 
+#To remove newline characters
 def rmv_newline_char(text):
     '''
     removes newline character '\n' and non-breaking space '\xa0' from the doc
@@ -42,7 +41,7 @@ def rmv_stopWords(text):
     words = stopwords.words('english')
     extra = ["inc", "citigroup", "markets", "price", "would", "without", "follow"]
     words = words + extra + NUMBERS + MONTHS + EXTRA_WORDS
-    data = " ".join(w for w in word_tokenize(text) if not w in words or len(w) > 3)
+    data = " ".join(w for w in word_tokenize(text) if not w in words and len(w) > 3)
     return data
 
 #Remove non-english words
@@ -64,11 +63,8 @@ def rmv_numbers(text):
     data = ''.join(i for i in text if not i.isdigit())
     return data
 
-
+#function to remove special characters that cannot be removed by RegEx
 def rmv_unknown_char(text):
-    '''
-    function to remove special characters that cannot be removed by RegEx
-    '''
     # unknown_chars_ascii contains ascii values of some special characters that are present in the doc but cannot be removed using regex
     unknown_chars_ascii = [9642, 9618, 8212, 8220, 8221, 8217, 174, 167, 168, 183, 47, 8211, 8226]
 
@@ -114,13 +110,13 @@ def get_count(textlist):
                 DF[w] = {text}
 
     for i in DF:
-        if len(DF[i]) == 1 or len(DF[i]) >= (len(textlist) * (6 / 10)):
+        if len(DF[i]) == 1 or len(DF[i]) >= (len(textlist) * (7 / 10)):
             data.append(i)
         DF[i] = len(DF[i])
     return DF, data
 
-#Removes words having document frequency = 1 or more than 80%
-def rmv_words(textlist, DF):
+#Removes words having document frequency = 1 or more than 60%
+def rmv_common_words(textlist, DF):
     data = []
     for text in textlist:
         dataitem = " ".join(w for w in word_tokenize(text) if DF[w] < (len(textlist) * (6/10)) and DF[w] != 1)
@@ -138,8 +134,9 @@ def rmv_URLs(text):
     txt = txt.strip()
     return txt
 
+#To calculate tfidf
 def tfidf(text):
-    vectorizer = TfidfVectorizer()
+    vectorizer = TfidfVectorizer(smooth_idf=False)
     vectors = vectorizer.fit_transform(text)
     features = vectorizer.get_feature_names()
     print(len(features))
@@ -148,13 +145,30 @@ def tfidf(text):
     df = pd.DataFrame(denselist, columns=features)
     return df
 
-def varThreshold(tfidf):
-    selector = VarianceThreshold(threshold=0.001) #set threshold
+#To get reduce features using Variance Threshold. Parameters- tfidf dataframe, threshold
+def varThresh_tfidf(tfidf, thresh):
+    selector = VarianceThreshold(threshold=thresh) 
     selector.fit(tfidf)
     data = tfidf[tfidf.columns[selector.get_support(indices=True)]]
-    print(data)
+    #print(data)
     return data
 
+#Returns reduced features and document count for each word using VarianceThreshold. Parameters- textlist, threshold
+def varThresh_textlist(text, thresh):
+    vectorizer = CountVectorizer()
+    selector = VarianceThreshold(threshold=thresh)
+    vectors = vectorizer.fit_transform(text)
+    features = vectorizer.get_feature_names()
+    dense = vectors.todense()
+    denselist = dense.tolist()
+    df = pd.DataFrame(denselist, columns=features)
+    selector.fit(df)
+    data = df[df.columns[selector.get_support(indices=True)]]
+    print(data)
+    print(data.shape)
+    return data
+
+#Apply pre-processing
 def preprocessing(textdata, steps):
     data = []
     for text in textdata:
@@ -175,7 +189,8 @@ def preprocessing(textdata, steps):
             text = apply_lemmatization(text)
         if steps.index('stemming', 0, len(steps)) != -1:
             text = apply_stemming(text)
+            text = rmv_stopWords(text)
         data.append(text)
     DF, datawords = get_count(data)
-    data = rmv_words(data, DF)
+    data = rmv_common_words(data, DF)
     return data

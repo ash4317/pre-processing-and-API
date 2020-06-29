@@ -1,18 +1,7 @@
 import clean_file
 import extract
-import sys
 import time
-import os
-from bs4 import BeautifulSoup
-from urllib import request, parse, error
-import xlrd
 import pandas as pd
-import numpy as np
-from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from sklearn.cluster import DBSCAN
-from urllib.request import urlopen
-import re
-from csv import writer  
 
 
 if __name__ == "__main__":
@@ -26,10 +15,11 @@ if __name__ == "__main__":
     data = clean_file.preprocessing(textlist, steps)
     df = clean_file.tfidf(data)
     print(df.shape)
-    tfidf = clean_file.varThreshold(df)
+    tfidf = clean_file.varThresh_tfidf(df, 0.001)
     print(tfidf.shape)
     tfidf.to_csv('new.csv')
-    filename = './prep.csv'
+    filename = './prep.xlsx'
     fields = ['ISIN', 'Termsheet Link', 'Text'] 
-    extract.exportexcel(filename, ISINs, URLs, data, fields)
+    datalist = [ISINs, URLs, data]
+    extract.exportexcel(filename, datalist, fields)
     print("---%s seconds" % (time.time() - start_time))
