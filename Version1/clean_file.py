@@ -171,23 +171,24 @@ def varThresh_textlist(text, thresh):
 #Apply pre-processing
 def preprocessing(textdata, steps):
     data = []
+    steps = set(steps)
     for text in textdata:
         # will be able to process all characters
         text = unidecode(text)
         text = rmv_newline_char(text)
-        if steps.index('url', 0, len(steps)) != -1:
+        if 'url' in steps:
             text = rmv_URLs(text)
-        if steps.index('numbers', 0, len(steps)) != -1:
+        if 'numbers' in steps:
             text = rmv_numbers(text)
-        if steps.index('punctuations', 0, len(steps)) != -1:
+        if 'punctuations' in steps:
             text = rmv_punct(text)
             text = rmv_unknown_char(text)
-        if steps.index('stopwords', 0, len(steps)) != -1:
+        if 'stopwords' in steps:
             text = unusual_words(text)    
             text = rmv_stopWords(text)
-        if steps.index('lemmatization', 0, len(steps)) != -1:
+        if 'lemmatization' in steps:
             text = apply_lemmatization(text)
-        if steps.index('stemming', 0, len(steps)) != -1:
+        if 'stemming' in steps:
             text = apply_stemming(text)
             text = rmv_stopWords(text)
         data.append(text)
