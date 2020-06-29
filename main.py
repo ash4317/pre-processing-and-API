@@ -6,14 +6,13 @@ This code reads and extract all the data from the .htm URLs present in the excel
 
 # User-Developed Modules
 import clean_file as cf
+import preprocessing as prep
 
 # Inbuilt modules for extracting data
 import sys
 import shutil
 import json
 import os
-from bs4 import BeautifulSoup as bs
-from urllib import request, parse, error
 from unidecode import unidecode
 
 # Modules for Clustering
@@ -45,83 +44,6 @@ def get_links():
     if no_of_docs > len(links):
         sys.exit("No. of docs exceeds limit.")
     return links[:no_of_docs]
-
-
-def get_words(text, words_in_docs):
-    '''
-    Returns all the distinct words present along with number of docs in which they appear.
-    '''
-    all_words = dict()
-    text = text.split()
-    for word in text:
-        all_words[word] = all_words.get(word, 0) + 1
-    
-    # This loop checks for all the distinct words stored in the dictionary 'all_words' and will increment count by 1 which will measure the number of docs where word appears.
-    for word in all_words.keys():
-        words_in_docs[word] = words_in_docs.get(word, 0) + 1
-    return words_in_docs
-
-
-
-def clean_all_files(links, words_in_docs, word_list):
-    '''
-    This function will return a list consisting of all the words in all the cleaned files.
-    '''
-    # keeps count of number of URLs processed.
-    count = 0
-
-    for url in links:
-
-        # using beautiful soup to parse the .htm files
-        # using error check because all files may not be able to get parsed
-        try:
-            data = request.urlopen(url).read().decode()
-        except:
-            continue
-            
-        soup = bs(data, "html.parser")
-        text = soup.text
-
-        # returns preprocessed text.
-        text = unidecode(text)
-        text = cf.rmv_newline_char(text)
-        text = text.lower()
-        text = cf.rmv_punctAndNos(text)
-        text = cf.rmv_unknown_char(text)
-        text = cf.rmv_unusual_words(text)
-        text = cf.lemmatize(text)
-        text = cf.stemming(text)
-        text = cf.rmv_stopWords(text.split())
-        text = cf.rmv_URLs(text)
-
-        # Preprocessed text in every .htm file is added to the list 'word_list'
-        word_list.append(text)
-
-        # returns the number of docs in which words appear
-        words_in_docs = get_words(text, words_in_docs)
-        count += 1
-        print(f"URLs checked: {count}")
-    
-    return words_in_docs, word_list
-
-
-def write_preprocessed(word_list):
-    '''
-    Writes the preprocessed data into the file 'preprocessed.json'
-    '''
-    f = open("preprocessed-1.json", 'w')
-    js = json.dumps(word_list)
-    f.write(js)
-    f.close()
-    
-
-
-def get_commonWords(words_in_docs, no_of_docs):
-    '''
-    Returns all words which are present in more than 80% of total docs and less than 3 docs
-    '''
-    return [word for word, count in words_in_docs.items() if count > (0.7 * no_of_docs) or count <= 2]
-
 
 
 def calc_TFIDF(word_list, threshold):
@@ -199,16 +121,16 @@ if __name__ == "__main__":
 
 
     # get all the preprocessed text and no. of docs where words appear
-    words_in_docs, word_list = clean_all_files(get_links(), words_in_docs, word_list)
+    words_in_docs, word_list = prep.clean_all_files(get_links(), words_in_docs, word_list)
 
     # get all common words from the preprocessed text (present in more than 80% of total docs or less than 2 docs)
-    common_words = get_commonWords(words_in_docs, int(sys.argv[1]))
+    common_words = prep.get_commonWords(words_in_docs, int(sys.argv[1]))
 
     # remove common words
     word_list = cf.rmv_commonWords(word_list, common_words)
     
     # writing preprocessed text to the file 'preprocessed.json'
-    write_preprocessed(word_list)
+    prep.write_preprocessed(word_list)
 
     '''
     Calculate TFIDF matrix for the preprocessed text
