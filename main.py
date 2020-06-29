@@ -87,13 +87,12 @@ if __name__ == "__main__":
     tfidf = cluster.calc_TFIDF(word_list, 0.05)
 
     # evaluate clusters with given epsilon and min_sample values
-    results = cluster.eval_clusters(tfidf, word_list, links, epsilon=0.18, minSamples=3)
+    cluster.eval_clusters(tfidf, word_list, links, epsilon=0.18, minSamples=3)
     '''
     cluster.eval_clusters(tfidf, word_list, links, epsilon=0.3, minSamples=5)
     cluster.eval_clusters(tfidf, word_list, links, epsilon=0.2, minSamples=1)
     cluster.eval_clusters(tfidf, word_list, links, epsilon=0.1, minSamples=5)
     cluster.eval_clusters(tfidf, word_list, links, epsilon=0.35, minSamples=1)
     '''
-    print(results)
     # to remove useless cache data
     removeCache()
