@@ -1,21 +1,37 @@
-'''
-Module which is imported in 'main.py' which cleans the text
-'''
-
 from nltk.corpus import stopwords, words
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 import re
 from unidecode import unidecode
+import pandas as pd
+import numpy as np
+import math
+import os
+import re
+import string
+import nltk
+import csv
+import time
+from xlsxwriter.workbook import Workbook
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer, TfidfTransformer
+from nltk.tokenize import word_tokenize
+from collections import Counter
+from pandas import DataFrame
+from nltk.corpus import wordnet
+from unidecode import unidecode
+from csv import writer 
+from sklearn.feature_selection import VarianceThreshold
+from scipy.sparse import csr_matrix
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+#from sknn import ae
+import matplotlib.pyplot as plt
 
 
-def rmv_URL(text):
-    '''
-    removes URL links (if any) from the files
-    '''
-    url_pattern = re.compile(r'https?://\S+|www\.\S+')
-    return url_pattern.sub(r'', text)
+MONTHS = ['january', 'february', 'march', 'april', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
+NUMBERS = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety', 'hundred', 'thousand']
+EXTRA_WORDS = ['number', 'month', 'note', 'will']
 
-
+#To remove newline characters
 def rmv_newline_char(text):
     '''
     removes newline character '\n' and non-breaking space '\xa0' from the doc
@@ -24,48 +40,36 @@ def rmv_newline_char(text):
     text = text.replace("\xa0", " ")
     return text
 
-
-def rmv_stopWords(words):
-    '''
-    removes stopwords like has, and, the etc.
-    '''
-    del_words = stopwords.words('english')
+#To remove stopwords
+def rmv_stopWords(text):
+    global NUMBERS, MONTHS, EXTRA_WORDS
+    words = stopwords.words('english')
     extra = ["inc", "citigroup", "markets", "price", "would", "without", "follow"]
-    del_words += extra
-    cleaned_text = str()
-    for i in words:
-        if i in del_words or len(i) <= 3:
-            continue
-        cleaned_text = cleaned_text + " " + i
-    return cleaned_text
+    words = words + extra + NUMBERS + MONTHS + EXTRA_WORDS
+    data = " ".join(w for w in word_tokenize(text) if not w in words and len(w) > 3)
+    return data
 
-
-def rmv_unusual_words(text):
-    '''
-    Remove words that are not in the english vocab (meaningless words)
-    '''
+#Remove non-english words
+def unusual_words(text):
     text_vocab = set(w.lower() for w in text.split() if w.isalpha())
     english_vocab = set(w.lower() for w in words.words())
     unusual = text_vocab - english_vocab
     data = " ".join(w for w in sorted(text_vocab - unusual))
     return data
 
+#regex-remove punctuations
+def rmv_punct(text):
+    punct = list(string.punctuation)
+    data = ''.join(i for i in text if i not in string.punctuation)
+    return data
 
+#Remove numbers
+def rmv_numbers(text):
+    data = ''.join(i for i in text if not i.isdigit())
+    return data
 
-def rmv_punctAndNos(text):
-    '''
-    remove punctuation marks and numbers
-    '''
-    punctuations = '[.+()\-=_,;:0-9$#\[\]%"&*' + "'" + ']'
-    text = re.sub(punctuations, "", text)
-    return text
-
-
-
+#function to remove special characters that cannot be removed by RegEx
 def rmv_unknown_char(text):
-    '''
-    function to remove special characters that cannot be removed by RegEx
-    '''
     # unknown_chars_ascii contains ascii values of some special characters that are present in the doc but cannot be removed using regex
     unknown_chars_ascii = [9642, 9618, 8212, 8220, 8221, 8217, 174, 167, 168, 183, 47, 8211, 8226]
 
@@ -82,34 +86,47 @@ def rmv_unknown_char(text):
     return text
 
 
+#Stemming
+def apply_stemming(text):
+    stemmer = PorterStemmer()
+    data = " ".join(stemmer.stem(w) for w in word_tokenize(text))
+    return data
 
-def stemming(text):
-    '''
-    Apply stemming to the text to reduce all words to their root
-    '''
-    ps = PorterStemmer()
-    return " ".join(ps.stem(word) for word in text.split())
+#Lemmatization
+def apply_lemmatization(text):
+    lemmatizer = WordNetLemmatizer()
+    tokens = word_tokenize(text)
+    tokens = [lemmatizer.lemmatize(w) for w in tokens]
+    tokens = [lemmatizer.lemmatize(w, pos = "a") for w in tokens]
+    tokens = [lemmatizer.lemmatize(w, pos = "v") for w in tokens]
+    data = " ".join(w for w in tokens)
+    return data
 
+#Returns document frequency of each word and list of most common and rare words
+def get_count(textlist):
+    DF = {}
+    for text in textlist:
+        tokens = word_tokenize(text)
+        for w in tokens:
+            try:
+                DF[w].add(text)
+            except:
+                DF[w] = {text}
 
+    for i in DF:
+        DF[i] = len(DF[i])
+    return DF
 
-def lemmatize(text):
-    '''
-    lemmatize and stem every word and then concatenate into a string separated by whitespaces
-    '''
-    wnl = WordNetLemmatizer()
-    words = text.split()
-    words = [wnl.lemmatize(w) for w in words]
-    words = [wnl.lemmatize(w, pos = "a") for w in words]
-    words = [wnl.lemmatize(w, pos = "v") for w in words]
-    return " ".join(word for word in words)
+#Removes words having document frequency = 1 or more than 60%
+def rmv_common_words(textlist, DF):
+    data = []
+    for text in textlist:
+        dataitem = " ".join(w for w in word_tokenize(text) if DF[w] < (len(textlist) * (6/10)) and DF[w] != 1)
+        data.append(dataitem)
+    return data
 
-
-
-
+#To remove URLs
 def rmv_URLs(text):
-    '''
-    remove all URLs
-    '''
     txt = ""
     words = text.split()
     for word in words:
@@ -119,11 +136,76 @@ def rmv_URLs(text):
     txt = txt.strip()
     return txt
 
+#To calculate tfidf
+def tfidf(text):
+    vectorizer = TfidfVectorizer(smooth_idf=False)
+    vectors = vectorizer.fit_transform(text)
+    features = vectorizer.get_feature_names()
+    dense = vectors.todense()
+    denselist = dense.tolist()
+    df = pd.DataFrame(denselist, columns=features)
+    return df
 
-def rmv_commonWords(word_list, common_words):
-    '''
-    Removes all common words from the preprocessed text
-    '''
-    for i in range(len(word_list)):
-        word_list[i] = " ".join(words for words in word_list[i].split() if words not in common_words)
-    return word_list
+#To get reduce features using Variance Threshold. Parameters- tfidf dataframe, threshold
+def varThresh_tfidf(tfidf, thresh):
+    selector = VarianceThreshold(threshold=thresh) 
+    selector.fit(tfidf)
+    data = tfidf[tfidf.columns[selector.get_support(indices=True)]]
+    #print(data)
+    return data
+
+def pca_tfidf(tfidf, n):
+    scaler = StandardScaler()
+    segmentation_std = scaler.fit_transform(tfidf) 
+    pca = PCA(n_components=n)
+    scores_pca = pca.fit_transform(segmentation_std)
+    df = pd.DataFrame(pca.components_,columns=tfidf.columns)
+    #print(df)
+    ratio = pca.explained_variance_ratio_
+    #print(ratio)
+    return ratio, scores_pca, df
+
+#Returns reduced features and document count for each word using VarianceThreshold. Parameters- textlist, threshold
+def varThresh_textlist(text, thresh):
+    vectorizer = CountVectorizer()
+    selector = VarianceThreshold(threshold=thresh)
+    vectors = vectorizer.fit_transform(text)
+    features = vectorizer.get_feature_names()
+    dense = vectors.todense()
+    denselist = dense.tolist()
+    df = pd.DataFrame(denselist, columns=features)
+    selector.fit(df)
+    data = df[df.columns[selector.get_support(indices=True)]]
+    return data
+
+#Apply pre-processing
+def preprocessing(textdata, steps):
+    data = []
+    count = 0
+    steps = set(steps)
+    for text in textdata:
+        # will be able to process all characters
+        text = unidecode(text)
+        text = rmv_newline_char(text)
+        text = text.lower()
+        #Checking in steps to customize pre-processing task according to user's need
+        if 'url' in steps:
+            text = rmv_URLs(text)
+        text = rmv_numbers(text)
+        text = rmv_punct(text)
+        text = rmv_unknown_char(text)
+        if 'stopwords' in steps:  
+            text = rmv_stopWords(text)
+        text = unusual_words(text)  
+        if 'lemmatization' in steps:
+            text = apply_lemmatization(text)
+        if 'stemming' in steps:
+            text = apply_stemming(text)
+        if 'unusual' in steps:
+            text = unusual_words(text)
+        data.append(text)
+        count += 1
+        print(f"Preprocessed: {count}")
+    DF = get_count(data)
+    data = rmv_common_words(data, DF)
+    return data
