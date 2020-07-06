@@ -5,13 +5,13 @@ import matplotlib.pyplot as plt
 import io
 
 #Extract data
-url = "http://127.0.0.1:5000/extract?filepath=ISINS_v3.xlsx&no_of_docs=30"
+url = "http://127.0.0.1:5000/extract?filepath=ISINS_v3.xlsx&no_of_docs=all"
 r = requests.post(url=url)
 print(r.text)
 
 
 #Export extracted data
-url = "http://127.0.0.1:5000/extract/export?filepath=extract.csv"
+url = "http://127.0.0.1:5000/extract/export?filepath=extract.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
@@ -22,13 +22,13 @@ r = requests.post(url=url)
 print(r.text)
 
 #Export pre-processed data
-url = "http://127.0.0.1:5000/preprocess/export?filepath=prep.csv"
+url = "http://127.0.0.1:5000/preprocess/export?filepath=prep.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
 
 #Perform K-Means clustering 
-url = "http://127.0.0.1:5000/clustering/kmeans?filepath=prep.csv&k=4"
+url = "http://127.0.0.1:5000/clustering/kmeans?filepath=prep.xlsx&k=4"
 r = requests.post(url=url)
 img = Image.open(io.BytesIO(r.content))
 print(img)
@@ -39,7 +39,7 @@ r = requests.get(url=url)
 print(r.text)
 
 #Export clustered data
-url = "http://127.0.0.1:5000/clustering/kmeans/export?filepath=kmeans.csv"
+url = "http://127.0.0.1:5000/clustering/kmeans/export?filepath=kmeans.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
@@ -50,7 +50,7 @@ print(r.text)
 
 
 #Perform DBSCAN clustering
-url = "http://127.0.0.1:5000/clustering/dbscan?filepath=prep.csv&eps=0.3&min=1"
+url = "http://127.0.0.1:5000/clustering/dbscan?filepath=prep.xlsx&eps=0.3&min=1"
 r = requests.post(url=url)
 img = Image.open(io.BytesIO(r.content))
 print(img)
@@ -61,7 +61,7 @@ r = requests.get(url=url)
 print(r.text)
 
 #Export clustered data
-url = "http://127.0.0.1:5000/clustering/dbscan/export?filepath=dbscan.csv"
+url = "http://127.0.0.1:5000/clustering/dbscan/export?filepath=dbscan.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
@@ -70,7 +70,7 @@ r = requests.get(url=url)
 print(r.text)
 
 #Perform Agglomerative clustering
-url = "http://127.0.0.1:5000/clustering/agglomerative?filepath=prep.csv&k=5"
+url = "http://127.0.0.1:5000/clustering/agglomerative?filepath=prep.xlsx&k=5"
 r = requests.post(url=url)
 img = Image.open(io.BytesIO(r.content))
 print(img)
@@ -82,7 +82,7 @@ print(r.text)
 
 
 #Export clustered data
-url = "http://127.0.0.1:5000/clustering/agglomerative/export?filepath=agglomerative.csv"
+url = "http://127.0.0.1:5000/clustering/agglomerative/export?filepath=agglomerative.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
@@ -91,7 +91,7 @@ r = requests.get(url=url)
 print(r.text)
 
 #Perform Birch clustering
-url = "http://127.0.0.1:5000/clustering/birch?filepath=prep.csv&k=5"
+url = "http://127.0.0.1:5000/clustering/birch?filepath=prep.xlsx&k=5"
 r = requests.post(url=url)
 print(type(r.content))
 img = Image.open(io.BytesIO(r.content))
@@ -103,7 +103,7 @@ r = requests.get(url=url)
 print(r.text)
 
 #Export clustered data
-url = "http://127.0.0.1:5000/clustering/birch/export?filepath=birch.csv"
+url = "http://127.0.0.1:5000/clustering/birch/export?filepath=birch.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
