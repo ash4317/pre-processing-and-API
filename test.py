@@ -3,7 +3,7 @@ import requests
 from PIL import Image
 import matplotlib.pyplot as plt
 import io
-'''
+
 #Extract data
 url = "http://127.0.0.1:5000/extract?filepath=ISINS_v3.xlsx&no_of_docs=30"
 r = requests.post(url=url)
@@ -26,7 +26,7 @@ url = "http://127.0.0.1:5000/preprocess/export?filepath=prep.xlsx"
 r = requests.post(url=url)
 print(r.text)
 
-'''
+
 #Perform K-Means clustering 
 url = "http://127.0.0.1:5000/clustering/kmeans?filepath=prep.xlsx&k=4&format=csv"
 r = requests.post(url=url)
