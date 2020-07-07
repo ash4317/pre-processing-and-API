@@ -196,13 +196,12 @@ def preprocessing(textdata, steps):
         text = rmv_unknown_char(text)
         if 'stopwords' in steps:  
             text = rmv_stopWords(text)
-        text = unusual_words(text)  
+        if 'unusual' in steps:
+            text = unusual_words(text)
         if 'lemmatization' in steps:
             text = apply_lemmatization(text)
         if 'stemming' in steps:
             text = apply_stemming(text)
-        if 'unusual' in steps:
-            text = unusual_words(text)
         data.append(text)
         count += 1
         print(f"Preprocessed: {count}")
