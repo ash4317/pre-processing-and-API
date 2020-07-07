@@ -224,41 +224,18 @@ def printjson(path):
             print('Data: ' + p['Data'])
             print('')
 
-def sort_by_key(x):
-    return x[0]
 
 
-def sort(results):
-    '''
-    Sort the dictionary by cluster number
-    '''
-    results = list(results.items())
-    results.sort(key=sort_by_key)
-    return dict(results)
+def export(data, format, fname):
+    if format == 'excel':
+        export_to_excel(data, fname, '.xls')
+    elif format == 'csv':
+        export_to_csv(data, fname, '.csv')
+    else:
+        print('Invalid file format. Valid file formats are "excel" and "csv". Could not export results.')
 
 
-def show_results(isin_list, urllist, clusters):
-    '''
-    This function will return a dictionary which stores all files in respective clusters
-    '''
-    results = dict()
-    for i in range(len(clusters)):
-        if clusters[i] in results.keys():
-
-            # if list is already made
-            results[clusters[i]].append([isin_list[i], urllist[i]])
-        else:
-
-            # initialize value of the key to a list
-            results[clusters[i]] = list()
-            results[clusters[i]].append([isin_list[i], urllist[i]])
-    
-    # function to sort results by cluster number
-    results = sort(results)
-    return results
-
-
-def export_to_excel(results, fname):
+def export_to_excel(results, fname, extension):
     '''
     Writes all the doc URLs along with the cluster to which they belong
     '''
@@ -269,11 +246,22 @@ def export_to_excel(results, fname):
     sheet.write(0, 0, 'Cluster', style)
     sheet.write(0, 2, 'ISIN', style)
     sheet.write(0, 4, 'Termsheet URL', style)
-    for x, y in results.items():
-        count += 2
-        for data in y:
-            sheet.write(count, 0, x)
-            sheet.write(count, 2, data[0])
-            sheet.write(count, 4, data[1])
+    count = 2
+    cluster_no = results[0]['Cluster']
+    for data in results:
+        if data['Cluster'] == cluster_no:
             count += 1
-    fhand.save(fname)
+        else:
+            count += 2
+            cluster_no = data['Cluster']
+        sheet.write(count, 0, data['Cluster'])
+        sheet.write(count, 2, data['ISIN'])
+        sheet.write(count, 4, data['URL'])
+    fhand.save(fname + extension)
+
+def export_to_csv(results, fname, extension):
+    with open(fname + extension, 'w') as fhand:
+        writer=csv.writer(fhand)
+        writer.writerow(['Cluster No.', 'ISIN', 'URL'])
+        for data in results:
+                writer.writerow([data['Cluster'], data['ISIN'], data['URL']])
