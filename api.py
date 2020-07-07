@@ -25,6 +25,8 @@ class ExtractData(Resource):
         parser.add_argument('filepath', type=str)
         parser.add_argument('no_of_docs', type=str)
         args = parser.parse_args()
+        if not args['no_of_docs']:
+            args['no_of_docs'] = 'all'
         ISINs, URLs, text = ex.extract(args['filepath'], args['no_of_docs'])
         jsondata = ex.tojson(ISINs, URLs, text)
         ex.write_json(jsondata, 'extract.json')
@@ -32,12 +34,11 @@ class ExtractData(Resource):
 
     #curl http://127.0.0.1:5000/extract -X GET 
     def get(self):
-        db = TinyDB('db.json')
-        return db.all(), 200
+        return ex.read_json('extract.json'), 200
 
 class ExportExtractedData(Resource):
     #curl http://127.0.0.1:5000/export?prep.xlsx -X GET 
-    def get(self):
+    def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         args = parser.parse_args()
@@ -56,7 +57,7 @@ class ExportExtractedData(Resource):
         
 class ExportPrepData(Resource):
     #curl http://127.0.0.1:5000/export?prep.xlsx -X GET 
-    def get(self):
+    def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         args = parser.parse_args()
@@ -72,26 +73,7 @@ class ExportPrepData(Resource):
             print("Invalid file format. Valid file formats are .xlsx and .csv")
             return 400
         return 200
-                
-
-class ExportClusterData(Resource):
-    #curl http://127.0.0.1:5000/export?prep.xlsx -X GET 
-    def get(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('filepath', type=str)
-        args = parser.parse_args()
-        jsondata = ex.read_json('cluster.json')
-        cluster, ISINs, URLs = ex.jsontolistsC(jsondata)
-        if os.path.exists(args['filepath']):
-            os.remove(args['filepath'])
-        if ex.check(args['filepath'], '.xlsx'):
-            ex.exportexcel(filename = args['filepath'], datalist = [cluster, ISINs, URLs], fields=['Cluster', 'ISIN', 'Termsheet Link'])
-        elif ex.check(args['filepath'], '.csv'):
-            ex.exportcsv(filename=args['filepath'], field1 = cluster, field2 = ISINs, field3 = URLs, fields=['Cluster', 'ISIN', 'Termsheet Link'])
-        else:
-            print("Invalid file format. Valid file formats are .xlsx and .csv")
-            return 400
-        return 200
+ 
 
 class PreProcess(Resource):
     #curl http://127.0.0.1:5000/preprocess -d "filepath=extract.xlsx" -d "steps=numbers" -d "steps=url" -d "steps=stemming" -d "steps=lemmatization" -d "steps=punctuations" -d "steps=stopwords" -d "steps=case" -d "steps=words" -X POST
@@ -125,7 +107,10 @@ class Kmeans(Resource):
         parser.add_argument('k', type=int)
         parser.add_argument('thresh', type=float)
         parser.add_argument('pca_comp', type=float)
+        parser.add_argument('format', type=str)
         args = parser.parse_args()
+        if not args['format']:
+            args['format'] = 'excel'
         if not args['filepath']:
             jsondata = ex.read_json('preprocess.json')
             ISINs, URLs, text = ex.jsontolists(jsondata)
@@ -157,6 +142,9 @@ class Kmeans(Resource):
         for c in clusters:
             clusters[c] = len(clusters[c])
         
+
+        ex.export(datajson, args['format'], 'kmeans results')
+
         ex.write_json(clusters, 'summary.json')
         ex.write_json(datajson, 'cluster.json')
 
@@ -179,7 +167,10 @@ class DBSCAN(Resource):
         parser.add_argument('min', type=int)
         parser.add_argument('thresh', type=float)
         parser.add_argument('pca_comp', type=float)
+        parser.add_argument('format', type=str)
         args = parser.parse_args()
+        if not args['format']:
+            args['format'] = 'excel'
         if not args['filepath']:
             jsondata = ex.read_json('preprocess.json')
             ISINs, URLs, text = ex.jsontolists(jsondata)
@@ -211,6 +202,9 @@ class DBSCAN(Resource):
         for c in clusters:
             clusters[c] = len(clusters[c])
         
+        
+        ex.export(datajson, args['format'], 'DBSCAN results')
+
         ex.write_json(clusters, 'summary.json')
         ex.write_json(datajson, 'cluster.json')
 
@@ -233,7 +227,10 @@ class Agglomerative(Resource):
         parser.add_argument('k', type=int)
         parser.add_argument('thresh', type=float)
         parser.add_argument('pca_comp', type=float)
+        parser.add_argument('format', type=str)
         args = parser.parse_args()
+        if not args['format']:
+            args['format'] = 'excel'
         if not args['filepath']:
             jsondata = ex.read_json('preprocess.json')
             ISINs, URLs, text = ex.jsontolists(jsondata)
@@ -264,7 +261,8 @@ class Agglomerative(Resource):
 
         for c in clusters:
             clusters[c] = len(clusters[c])
-        
+        ex.export(datajson, args['format'], 'agglomerative results')
+
         ex.write_json(clusters, 'summary.json')
         ex.write_json(datajson, 'cluster.json')
 
@@ -286,7 +284,10 @@ class Birch(Resource):
         parser.add_argument('k', type=int)
         parser.add_argument('thresh', type=float)
         parser.add_argument('pca_comp', type=float)
+        parser.add_argument('format', type=str)
         args = parser.parse_args()
+        if not args['format']:
+            args['format'] = 'excel'
         if not args['filepath']:
             jsondata = ex.read_json('preprocess.json')
             ISINs, URLs, text = ex.jsontolists(jsondata)
@@ -317,7 +318,8 @@ class Birch(Resource):
 
         for c in clusters:
             clusters[c] = len(clusters[c])
-        
+        ex.export(datajson, args['format'], 'birch results')
+
         ex.write_json(clusters, 'summary.json')
         ex.write_json(datajson, 'cluster.json')
 
@@ -341,12 +343,6 @@ api.add_resource(ExtractData, '/extract')
 api.add_resource(ExportExtractedData, '/extract/export')
 api.add_resource(PreProcess, '/preprocess')
 api.add_resource(ExportPrepData, '/preprocess/export')
-#api.add_resource(ExportClusterData, '/clustering/export')
-api.add_resource(ExportClusterData, '/clustering/kmeans/export', endpoint="kmeans-export")
-api.add_resource(ExportClusterData, '/clustering/dbscan/export', endpoint="dbscan-export")
-api.add_resource(ExportClusterData, '/clustering/agglomerative/export', endpoint="agglomerative-export")
-api.add_resource(ExportClusterData, '/clustering/birch/export', endpoint="birch-export")
-#api.add_resource(ClusterSummary, '/clustering/summary')
 api.add_resource(ClusterSummary, '/clustering/kmeans/summary', endpoint="kmeans-summary")
 api.add_resource(ClusterSummary, '/clustering/dbscan/summary', endpoint="dbscan-summary")
 api.add_resource(ClusterSummary, '/clustering/agglomerative/summary', endpoint="agglomerative-summary")
