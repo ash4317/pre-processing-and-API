@@ -1,7 +1,6 @@
 import requests
 #python -m pip install --upgrade pillow
 from PIL import Image
-import matplotlib.pyplot as plt
 import io
 
 #Extract data
@@ -76,7 +75,6 @@ print(r.text)
 #Perform Birch clustering
 url = "http://127.0.0.1:5000/clustering/birch?filepath=prep.xlsx&k=5&format=csv"
 r = requests.post(url=url)
-print(type(r.content))
 img = Image.open(io.BytesIO(r.content))
 img.show()
 
