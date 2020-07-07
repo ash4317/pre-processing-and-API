@@ -81,11 +81,11 @@ Input arguments-
                
 2) steps (optional)- The different pre-processing techniques to be applied on the extracted text. Valid arguments are:
 
- 1. url- Removes URLs from the text
- 2. stemming- Performs stemming on the text
- 3. lemmatization- Performs lemmatization on the text
- 4. stopwords- Removes stopwords from the text
- 5. unusual- Removes words that don't have any meaning
+ a. url- Removes URLs from the text
+ b. stemming- Performs stemming on the text
+ c. lemmatization- Performs lemmatization on the text
+ d. stopwords- Removes stopwords from the text
+ e. unusual- Removes words that don't have any meaning
 
 The API performs some basic pre-processing like removal of numbers, punctuations, unknown ASCII characters, converting text to lowercase etc. by default.
      
