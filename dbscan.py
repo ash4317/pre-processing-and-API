@@ -42,9 +42,6 @@ def dbscan_clustering(db_eps, min_points, tfidf, isin_list, urllist):
     print("\n")
     '''
 
-    results = ex.show_results(isin_list, urllist, clusters)
-    # write results to excel sheet
-    ex.export_to_excel(results, 'dbscan results.xls')
 
     return frame, [1,2,3]
 

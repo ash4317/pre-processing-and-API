@@ -42,9 +42,6 @@ def kmeans_clustering(k,tfidf,isin_list, urllist): #isin_list is the list of ISI
     print("\n")
     '''
 
-    results = ex.show_results(isin_list, urllist, clusters)
-    # write results to excel sheet
-    ex.export_to_excel(results, 'kmeans results.xls')
     return frame, scores
 
 

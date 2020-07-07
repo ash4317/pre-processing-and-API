@@ -40,10 +40,6 @@ def birch_clustering(k, tfidf, isin_list, urllist):
     print(f"Davies Bouldin score: {db}")
     print("\n")
     '''
-
-    results = ex.show_results(isin_list, urllist, clusters)
-    # write results to excel sheet
-    ex.export_to_excel(results, 'birch results.xls')
     return frame, scores
 
 def visualize_scatter(k, tfidf):
