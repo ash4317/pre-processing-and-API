@@ -267,13 +267,13 @@ def export_to_excel(results, fname):
     sheet = fhand.add_sheet('Sheet 1')
     style = xlwt.easyxf('font: bold 1')
     sheet.write(0, 0, 'Cluster', style)
-    sheet.write(0, 1, 'ISIN', style)
-    sheet.write(0, 2, 'Termsheet URL', style)
+    sheet.write(0, 2, 'ISIN', style)
+    sheet.write(0, 4, 'Termsheet URL', style)
     for x, y in results.items():
         count += 2
         for data in y:
             sheet.write(count, 0, x)
-            sheet.write(count, 1, data[0])
-            sheet.write(count, 2, data[1])
+            sheet.write(count, 2, data[0])
+            sheet.write(count, 4, data[1])
             count += 1
     fhand.save(fname)
