@@ -15,12 +15,11 @@ This API is created for extracting data from only ".htm" files present on some U
 
 
 For Windows users: Open command prompt and go to the directory where this API along with the modules that it imports is located. Then, set the environment variables "FLASK_APP" and "FLASK_ENV" and run the flask API as follows-
-
- > set FLASK_APP=api.py
- 
- > set FLASK_ENV=development
- 
- > flask run
+```
+ set FLASK_APP=api.py
+ set FLASK_ENV=development
+ flask run
+```
 
 For MAC/Linux users: Open terminal window and go to the directory where this API along with the modules that it imports is located. Then, set the environment variables "FLASK_APP" and "FLASK_ENV" and run the flask API as follows-
 
