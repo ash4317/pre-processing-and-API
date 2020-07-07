@@ -198,7 +198,8 @@ def preprocessing(textdata, steps):
             text = unusual_words(text)
         if 'stopwords' in steps:  
             text = rmv_stopWords(text)
-        text = unusual_words(text)  
+        if 'unusual' in steps:
+            text = unusual_words(text)
         if 'lemmatization' in steps:
             text = apply_lemmatization(text)
         if 'stemming' in steps:
