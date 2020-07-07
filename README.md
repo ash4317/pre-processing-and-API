@@ -139,7 +139,7 @@ This will return all the documents with their cluster number.
 
 Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
 __________________________________________________________________________________________________________________________________________________________________________
-4) Performing DBSCAN clustering on pre-processed data and exporting it
+##### 4) Performing DBSCAN clustering on pre-processed data and exporting it
 
 > Clustering example:
 ```
