@@ -33,7 +33,7 @@ For MAC/Linux users: Open terminal window and go to the directory where this API
 ### API functions
 
 
-1) Extracting and Exporting data present at URLs given in an excel sheet
+##### 1) Extracting and Exporting data present at URLs given in an excel sheet
 
 > Extracting data example:
 ```
@@ -43,9 +43,10 @@ r = requests.post(url=url)
 print(r.text)
 ```
 Input arguments- 
-* filepath- The path of the excel sheet where all the URLs where the htm files are located. Format of the excel sheet should be- (ISIN, URL)
+- filepath- The path of the excel sheet where all the URLs where the htm files are located. Format of the excel sheet should be- (ISIN, URL)
 - no_of_docs (optional)- Number of URLs from which data is to be extracted. By default, it will extract from ALL the URLs.
 Writes the extracted data into the file "extract.json".
+
 > To get extracted data:
 ```
 import requests
@@ -53,6 +54,7 @@ url = "http://127.0.0.1:5000/extract"
 r = requests.get(url=url)
 print(r.text)
 ```
+
 > Exporting data example:
 ```
 import requests
@@ -60,10 +62,11 @@ url = "http://127.0.0.1:5000/extract/export?filepath=extract.xlsx"
 r = requests.post(url=url)
 print(r.text)
 ```
-Input arguments- a) filepath- Path of the file to which data is to be exported. The output file can be of formats ".csv" & ".xlsx"
+Input arguments- 
+- filepath- Path of the file to which data is to be exported. The output file can be of formats ".csv" & ".xlsx"
 The format of the exported file is- (ISIN, URL, text) for every htm file
 __________________________________________________________________________________________________________________________________________________________________________
-2) Pre-processing the extracted data and exporting it
+##### 2) Pre-processing the extracted data and exporting it
 
 > Pre-processing data example:
 ```
@@ -72,15 +75,18 @@ url = "http://127.0.0.1:5000/preprocess?filepath=ISINS_v3.xlsx&steps=url&steps=s
 r = requests.post(url=url)
 print(r.text)
 ```
-Input arguments- a) filepath (optional)- The path of the excel sheet where all the URLs where the htm files are located. If filepath is given, then
+Input arguments- 
+- filepath (optional)- The path of the excel sheet where all the URLs where the htm files are located. If filepath is given, then
                                          API will extract first from the URLs present in the excel sheet given in the filepath and then pre-process it. If filepath is not given, API will assume that data is extracted first (which is stored in the file "extract.json") and directly pre-process it.
-                 b) steps (optional)- The different pre-processing techniques to be applied on the extracted text. Valid arguments are:
-                                      i) url- Removes URLs from the text
-                                      ii) stemming- Performs stemming on the text
-                                      iii) lemmatization- Performs lemmatization on the text
-                                      iv) stopwords- Removes stopwords from the text
-                                      v) unusual- Removes words that don't have any meaning
-                                      The API performs some basic pre-processing like removal of numbers, punctuations, unknown ASCII characters, converting text to lowercase etc. by default.
+               
+- steps (optional)- The different pre-processing techniques to be applied on the extracted text. Valid arguments are:
+     1. url- Removes URLs from the text
+     2. stemming- Performs stemming on the text
+     3. lemmatization- Performs lemmatization on the text
+     4. stopwords- Removes stopwords from the text
+     5. unusual- Removes words that don't have any meaning
+     The API performs some basic pre-processing like removal of numbers, punctuations, unknown ASCII characters, converting text to lowercase etc. by default.
+     
 > To get pre-processed data,
 ```
 import requests
