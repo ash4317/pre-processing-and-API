@@ -80,11 +80,12 @@ Input arguments-
                                          API will extract first from the URLs present in the excel sheet given in the filepath and then pre-process it. If filepath is not given, API will assume that data is extracted first (which is stored in the file "extract.json") and directly pre-process it.
                
 - steps (optional)- The different pre-processing techniques to be applied on the extracted text. Valid arguments are:
-1) url- Removes URLs from the text
-2) stemming- Performs stemming on the text
-3) lemmatization- Performs lemmatization on the text
-4) stopwords- Removes stopwords from the text
-5) unusual- Removes words that don't have any meaning
+
+ 1) url- Removes URLs from the text
+ 2) stemming- Performs stemming on the text
+ 3) lemmatization- Performs lemmatization on the text
+ 4) stopwords- Removes stopwords from the text
+ 5) unusual- Removes words that don't have any meaning
 
 The API performs some basic pre-processing like removal of numbers, punctuations, unknown ASCII characters, converting text to lowercase etc. by default.
      
