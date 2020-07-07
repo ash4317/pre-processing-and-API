@@ -43,8 +43,8 @@ r = requests.post(url=url)
 print(r.text)
 ```
 Input arguments- 
-- a) filepath- The path of the excel sheet where all the URLs where the htm files are located. Format of the excel sheet should be- (ISIN, URL)
-- b) no_of_docs (optional)- Number of URLs from which data is to be extracted. By default, it will extract from ALL the URLs.
+* filepath- The path of the excel sheet where all the URLs where the htm files are located. Format of the excel sheet should be- (ISIN, URL)
+- no_of_docs (optional)- Number of URLs from which data is to be extracted. By default, it will extract from ALL the URLs.
 Writes the extracted data into the file "extract.json".
 > To get extracted data:
 ```
