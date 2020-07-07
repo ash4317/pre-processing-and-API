@@ -4,7 +4,7 @@ from PIL import Image
 import io
 
 #Extract data
-url = "http://127.0.0.1:5000/extract?filepath=ISINS_v3.xlsx&no_of_docs=30"
+url = "http://127.0.0.1:5000/extract?filepath=ISINS_v3.xlsx&no_of_docs=9"
 r = requests.post(url=url)
 print(r.text)
 

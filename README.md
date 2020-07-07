@@ -74,6 +74,7 @@ import requests
 url = "http://127.0.0.1:5000/preprocess"
 r = requests.get(url=url)
 print(r.text)
+Response is a JSON object of the format [{ISIN: (value), URL: (value), Preprocessed text: (value)}] for all the documents
 
 Exporting pre-processed data example:
 import requests
@@ -100,12 +101,14 @@ Input arguments- a) filepath (optional)- Path of excel sheet or csv file where t
                  c) thresh (optional)- The threshold value of variance in the variance threshold algorithm for reducing number of features. Default value is 0.001
                  d) pca_comp (optional)- The number of components in the Principal Component Analysis algorithm to again, reduce the features. Default value is 0.8
                  e) format (optional)- Output format of file where clustered data is exported. Valid values are "excel" and "csv". Default value is "excel".
+
 To get the output of k-means clustering,
 import requests
 url = "http://127.0.0.1:5000/clustering/kmeans"
 r = requests.get(url=url)
 print(r.text)
 This will return all the documents with their cluster number.
+Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
 __________________________________________________________________________________________________________________________________________________________________________
 4) Performing DBSCAN clustering on pre-processed data and exporting it
 
@@ -125,12 +128,14 @@ Input arguments- a) filepath (optional)- Path of excel sheet or csv file where t
                  d) thresh (optional)- The threshold value of variance in the variance threshold algorithm for reducing number of features. Default value is 0.001
                  e) pca_comp (optional)- The number of components in the Principal Component Analysis algorithm to again, reduce the features. Default value is 0.8
                  f) format (optional)- Output format of file where clustered data is exported. Valid values are "excel" and "csv". Default value is "excel".
+
 To get the output of DBSCAN clustering,
 import requests
 url = "http://127.0.0.1:5000/clustering/dbscan"
 r = requests.get(url=url)
 print(r.text)
 This will return all the documents with their cluster number.
+Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
 __________________________________________________________________________________________________________________________________________________________________________
 5) Performing Agglomerative clustering on pre-processed data and exporting it
 
@@ -149,12 +154,14 @@ Input arguments- a) filepath (optional)- Path of excel sheet or csv file where t
                  c) thresh (optional)- The threshold value of variance in the variance threshold algorithm for reducing number of features. Default value is 0.001
                  d) pca_comp (optional)- The number of components in the Principal Component Analysis algorithm to again, reduce the features. Default value is 0.8
                  e) format (optional)- Output format of file where clustered data is exported. Valid values are "excel" and "csv". Default value is "excel".
+
 To get the output of Agglomerative clustering,
 import requests
 url = "http://127.0.0.1:5000/clustering/agglomerative"
 r = requests.get(url=url)
 print(r.text)
 This will return all the documents with their cluster number.
+Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
 __________________________________________________________________________________________________________________________________________________________________________
 6) Performing Birch clustering on pre-processed data and exporting it
 
@@ -173,12 +180,14 @@ Input arguments- a) filepath (optional)- Path of excel sheet or csv file where t
                  c) thresh (optional)- The threshold value of variance in the variance threshold algorithm for reducing number of features. Default value is 0.001
                  d) pca_comp (optional)- The number of components in the Principal Component Analysis algorithm to again, reduce the features. Default value is 0.8
                  e) format (optional)- Output format of file where clustered data is exported. Valid values are "excel" and "csv". Default value is "excel".
+
 To get the output of Birch clustering,
 import requests
 url = "http://127.0.0.1:5000/clustering/birch"
 r = requests.get(url=url)
 print(r.text)
 This will return all the documents with their cluster number.
+Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
 __________________________________________________________________________________________________________________________________________________________________________
 7) Getting cluster summary (number of documents in each cluster)
 
@@ -186,7 +195,7 @@ Example:
 url = "http://127.0.0.1:5000/clustering/birch/summary"
 r = requests.get(url=url)
 print(r.text)
-Returns JSON object which shows cluster number and number of documents in that cluster.
+Returns JSON object of the form [{cluster number: number of docs in the cluster}] for all clusters
 
 ==========================================================================================================================================================================
 
