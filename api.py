@@ -30,10 +30,6 @@ class ExtractData(Resource):
         ex.write_json(jsondata, 'extract.json')
         return 200
 
-    #curl http://127.0.0.1:5000/extract -X GET 
-    def get(self):
-        db = TinyDB('db.json')
-        return db.all(), 200
 
 class ExportExtractedData(Resource):
     #curl http://127.0.0.1:5000/export?prep.xlsx -X GET 
