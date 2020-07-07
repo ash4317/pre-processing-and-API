@@ -3,7 +3,6 @@ import kmeans
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from flask_restful import Api, Resource, reqparse
-from tinydb import TinyDB, Query
 import extract as ex
 import clean_file as cf
 import json
@@ -81,8 +80,7 @@ class ExportClusterData(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         args = parser.parse_args()
-        db = TinyDB('cluster.json')
-        jsondata = db.all()
+        jsondata = ex.read_json('cluster.json')
         cluster, ISINs, URLs = ex.jsontolistsC(jsondata)
         if os.path.exists(args['filepath']):
             os.remove(args['filepath'])
@@ -93,7 +91,6 @@ class ExportClusterData(Resource):
         else:
             print("Invalid file format. Valid file formats are .xlsx and .csv")
             return 400
-        db.close()
         return 200
 
 class PreProcess(Resource):
@@ -138,10 +135,6 @@ class Kmeans(Resource):
             args['thresh'] = 0.0001
         if not args['pca_comp']:
             args['pca_comp'] = 0.8
-        db = TinyDB('summary.json')
-        db.truncate()
-        cdb = TinyDB('cluster.json')
-        cdb.truncate()
         df = cf.tfidf(text)
         tfidf = cf.varThresh_tfidf(df, args['thresh'])
         score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
@@ -149,7 +142,7 @@ class Kmeans(Resource):
         
         frame = frame.sort_values(by=['Cluster'])
         datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
-        #ex.write_json(datajson, 'clusters.json')
+        
         clusts = frame['Cluster'].to_list()
         clusts.sort()
         clusters = {}
@@ -163,12 +156,10 @@ class Kmeans(Resource):
 
         for c in clusters:
             clusters[c] = len(clusters[c])
+        
+        ex.write_json(clusters, 'summary.json')
+        ex.write_json(datajson, 'cluster.json')
 
-        for data in datajson:
-            cdb.insert(data)
-        db.insert(clusters)
-        db.close()
-        cdb.close()
         fig = kmeans.visualize_scatter(args['k'], ratio)
         canvas = FigureCanvas(fig)
         output = io.BytesIO()
@@ -178,9 +169,7 @@ class Kmeans(Resource):
         return response
 
     def get(self):
-        db = TinyDB('cluster.json')
-        data = db.all()
-        return data, 200
+        return ex.read_json('cluster.json'), 200
 
 class DBSCAN(Resource):
     def post(self):
@@ -200,10 +189,6 @@ class DBSCAN(Resource):
             args['thresh'] = 0.0001
         if not args['pca_comp']:
             args['pca_comp'] = 0.8
-        db = TinyDB('summary.json')
-        db.truncate()
-        cdb = TinyDB('cluster.json')
-        cdb.truncate()
         df = cf.tfidf(text)
         tfidf = cf.varThresh_tfidf(df, args['thresh'])
         score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
@@ -211,7 +196,7 @@ class DBSCAN(Resource):
 
         frame = frame.sort_values(by=['Cluster'])
         datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
-        #ex.write_json(datajson, 'clusters.json')
+        
         clusts = frame['Cluster'].to_list()
         clusts.sort()
         clusters = {}
@@ -225,12 +210,10 @@ class DBSCAN(Resource):
 
         for c in clusters:
             clusters[c] = len(clusters[c])
+        
+        ex.write_json(clusters, 'summary.json')
+        ex.write_json(datajson, 'cluster.json')
 
-        for data in datajson:
-            cdb.insert(data)
-        db.insert(clusters)
-        db.close()
-        cdb.close()
         fig = dbscan.visualize_scatter(args['eps'], args['min'], ratio)
         canvas = FigureCanvas(fig)
         output = io.BytesIO()
@@ -241,9 +224,7 @@ class DBSCAN(Resource):
         return response
         
     def get(self):
-        db = TinyDB('cluster.json')
-        data = db.all()
-        return data, 200
+        return ex.read_json('cluster.json'), 200
 
 class Agglomerative(Resource):
     def post(self):
@@ -262,10 +243,6 @@ class Agglomerative(Resource):
             args['thresh'] = 0.0001
         if not args['pca_comp']:
             args['pca_comp'] = 0.8
-        db = TinyDB('summary.json')
-        db.truncate()
-        cdb = TinyDB('cluster.json')
-        cdb.truncate()
         df = cf.tfidf(text)
         tfidf = cf.varThresh_tfidf(df, args['thresh'])
         score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
@@ -273,7 +250,7 @@ class Agglomerative(Resource):
         
         frame = frame.sort_values(by=['Cluster'])
         datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
-        #ex.write_json(datajson, 'clusters.json')
+        
         clusts = frame['Cluster'].to_list()
         clusts.sort()
         clusters = {}
@@ -287,12 +264,10 @@ class Agglomerative(Resource):
 
         for c in clusters:
             clusters[c] = len(clusters[c])
+        
+        ex.write_json(clusters, 'summary.json')
+        ex.write_json(datajson, 'cluster.json')
 
-        for data in datajson:
-            cdb.insert(data)
-        db.insert(clusters)
-        db.close()
-        cdb.close()
         fig = ag.visualize_scatter(args['k'], ratio)
         canvas = FigureCanvas(fig)
         output = io.BytesIO()
@@ -302,9 +277,7 @@ class Agglomerative(Resource):
         return response
         
     def get(self):
-        db = TinyDB('cluster.json')
-        data = db.all()
-        return data, 200
+        return ex.read_json('cluster.json'), 200
 
 class Birch(Resource):
     def post(self):
@@ -323,10 +296,6 @@ class Birch(Resource):
             args['thresh'] = 0.0001
         if not args['pca_comp']:
             args['pca_comp'] = 0.8
-        db = TinyDB('summary.json')
-        db.truncate()
-        cdb = TinyDB('cluster.json')
-        cdb.truncate()
         df = cf.tfidf(text)
         tfidf = cf.varThresh_tfidf(df, args['thresh'])
         score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
@@ -334,7 +303,7 @@ class Birch(Resource):
 
         frame = frame.sort_values(by=['Cluster'])
         datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
-        #ex.write_json(datajson, 'clusters.json')
+        
         clusts = frame['Cluster'].to_list()
         clusts.sort()
         clusters = {}
@@ -348,12 +317,10 @@ class Birch(Resource):
 
         for c in clusters:
             clusters[c] = len(clusters[c])
+        
+        ex.write_json(clusters, 'summary.json')
+        ex.write_json(datajson, 'cluster.json')
 
-        for data in datajson:
-            cdb.insert(data)
-        db.insert(clusters)
-        db.close()
-        cdb.close()
         fig = birch.visualize_scatter(args['k'], ratio)
         canvas = FigureCanvas(fig)
         output = io.BytesIO()
@@ -363,15 +330,11 @@ class Birch(Resource):
         return response
         
     def get(self):
-        db = TinyDB('cluster.json')
-        data = db.all()
-        return data, 200
+        return ex.read_json('cluster.json'), 200
 
 class ClusterSummary(Resource):
     def get(self):
-        db = TinyDB('summary.json')
-        data = db.all()
-        return data, 200
+        return ex.read_json('summary.json'), 200
 
 
 api.add_resource(ExtractData, '/extract')
