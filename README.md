@@ -65,7 +65,7 @@ print(r.text)
 Input arguments- 
 1) filepath- Path of the file to which data is to be exported. The output file can be of formats ".csv" & ".xlsx"
 The format of the exported file is- (ISIN, URL, text) for every htm file
-__________________________________________________________________________________________________________________________________________________________________________
+
 ##### 2) Pre-processing the extracted data and exporting it
 
 > Pre-processing data example:
@@ -106,7 +106,7 @@ print(r.text)
 Input arguments- 
 1) filepath- Path of the file to which pre-processed data is to be exported. The output file can be of formats ".csv" & ".xlsx"
 The format of the exported file is- (ISIN, URL, text) for every htm file
-__________________________________________________________________________________________________________________________________________________________________________
+
 ##### 3) Performing k-means clustering on pre-processed data and exporting it
 
 > Clustering example:
@@ -138,7 +138,7 @@ print(r.text)
 This will return all the documents with their cluster number.
 
 Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
-__________________________________________________________________________________________________________________________________________________________________________
+
 ##### 4) Performing DBSCAN clustering on pre-processed data and exporting it
 
 > Clustering example:
@@ -171,7 +171,7 @@ print(r.text)
 This will return all the documents with their cluster number.
 
 Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
-__________________________________________________________________________________________________________________________________________________________________________
+
 ##### 5) Performing Agglomerative clustering on pre-processed data and exporting it
 
 > Clustering example:
@@ -203,7 +203,7 @@ print(r.text)
 This will return all the documents with their cluster number.
 
 Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
-__________________________________________________________________________________________________________________________________________________________________________
+
 ##### 6) Performing Birch clustering on pre-processed data and exporting it
 
 > Clustering example:
@@ -235,7 +235,7 @@ print(r.text)
 This will return all the documents with their cluster number.
 
 Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
-__________________________________________________________________________________________________________________________________________________________________________
+
 ##### 7) Getting cluster summary (number of documents in each cluster)
 
 > Example:
