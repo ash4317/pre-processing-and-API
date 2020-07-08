@@ -53,7 +53,7 @@ def unusual_words(text):
     text_vocab = set(w.lower() for w in text.split() if w.isalpha())
     english_vocab = set(w.lower() for w in words.words())
     unusual = text_vocab - english_vocab
-    data = ' '.join(w for w in sorted(text_vocab - unusual))
+    data = ' '.join(w for w in (text_vocab - unusual))
     return data
 
 
