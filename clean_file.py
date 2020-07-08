@@ -117,11 +117,11 @@ def get_count(textlist):
         DF[i] = len(DF[i])
     return DF
 
-#Removes words having document frequency = 1 or more than 60%
+#Removes words having document frequency = 1 or more than 90%
 def rmv_common_words(textlist, DF):
     data = []
     for text in textlist:
-        dataitem = " ".join(w for w in word_tokenize(text) if DF[w] < (len(textlist) * (6/10)) and DF[w] != 1)
+        dataitem = " ".join(w for w in word_tokenize(text) if DF[w] < (len(textlist) * (9/10)) and DF[w] != 1)
         data.append(dataitem)
     return data
 
