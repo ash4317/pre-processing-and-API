@@ -2,14 +2,14 @@
 
 ###### Created by: Ashwin Kulkarni, Vaishnavi Patil
 
-==========================================================================================================================================================================
+
 
 ### Introduction
 
 
 This API is created for extracting data from only ".htm" files present on some URL, pre-processing the data and using clustering algorithms to group them into various clusters on the basis of any similarity present between the documents.
 
-==========================================================================================================================================================================
+
 
 ### How to run this API locally
 
@@ -28,7 +28,7 @@ For MAC/Linux users: Open terminal window and go to the directory where this API
  flask run
 ```
 
-==========================================================================================================================================================================
+
 
 ### API functions
 
@@ -246,7 +246,7 @@ print(r.text)
 ```
 Returns JSON object of the form [{cluster number: number of docs in the cluster}] for all clusters
 
-==========================================================================================================================================================================
+
 
 ### User-written modules
 
