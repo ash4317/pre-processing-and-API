@@ -38,7 +38,7 @@ print(r.text)
 
 
 # Get clustered data
-url = "http://127.0.0.1:5000/clustering/kmeans/summary"
+url = "http://127.0.0.1:5000/clustering/summary/kmeans"
 r = requests.get(url=url)
 print(r.text)
 
@@ -53,7 +53,7 @@ url = "http://127.0.0.1:5000/clustering/dbscan"
 r = requests.get(url=url)
 print(r.text)
 
-url = "http://127.0.0.1:5000/clustering/dbscan/summary"
+url = "http://127.0.0.1:5000/clustering/summary/dbscan"
 r = requests.get(url=url)
 print(r.text)
 
@@ -68,7 +68,7 @@ r = requests.get(url=url)
 print(r.text)
 
 
-url = "http://127.0.0.1:5000/clustering/agglomerative/summary"
+url = "http://127.0.0.1:5000/clustering/summary/agglomerative"
 r = requests.get(url=url)
 print(r.text)
 
@@ -82,6 +82,6 @@ url = "http://127.0.0.1:5000/clustering/birch"
 r = requests.get(url=url)
 print(r.text)
 
-url = "http://127.0.0.1:5000/clustering/birch/summary"
+url = "http://127.0.0.1:5000/clustering/summary/birch"
 r = requests.get(url=url)
 print(r.text)
