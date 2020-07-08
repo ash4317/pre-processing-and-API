@@ -244,8 +244,16 @@ url = "http://127.0.0.1:5000/clustering/birch/summary"
 r = requests.get(url=url)
 print(r.text)
 ```
-Returns JSON object of the form [{cluster number: number of docs in the cluster}] for all clusters
-
+Returns JSON object of the form given below:
+```
+(for 4 clusters)
+{
+    "Cluster 0": 11,
+    "Cluster 1": 3,
+    "Cluster 2": 2,
+    "Cluster 3": 14
+}
+```
 
 
 ### User-written modules
