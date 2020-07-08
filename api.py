@@ -475,10 +475,7 @@ api.add_resource(Kmeans, '/clustering/kmeans')
 api.add_resource(DBSCAN, '/clustering/dbscan')
 api.add_resource(Agglomerative, '/clustering/agglomerative')
 api.add_resource(Birch, '/clustering/birch')
-api.add_resource(ClusterSummary, '/clustering/summary/kmeans', endpoint="kmeans-summary")
-api.add_resource(ClusterSummary, '/clustering/summary/dbscan', endpoint="dbscan-summary")
-api.add_resource(ClusterSummary, '/clustering/summary/agglomerative', endpoint="agglomerative-summary")
-api.add_resource(ClusterSummary, '/clustering/summary/birch', endpoint="birch-summary")
+api.add_resource(ClusterSummary, '/clustering/summary')
 
 
 
