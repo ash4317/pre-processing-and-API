@@ -1,59 +1,64 @@
+'''
+Module created for extracting data from input excel sheet and exporting various data in either list object or JSON object into excel or csv format.
+This modules also includes functions to write data to json and read data from json, convert data from lists into json file and vice-versa.
+'''
+
+# modules imported
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
-from csv import writer  
 import csv
+from csv import writer  
 import pandas as pd
 import os
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from string import digits
-from xlsxwriter.workbook import Workbook
-import json
 import xlsxwriter
+from xlsxwriter.workbook import Workbook
 import xlwt
 from xlwt import Workbook as wb
-import clean_file as cf
+import json
+import clean_file as cf # module created for text cleaning
 
-#Checks for substring, returns 1 (present) or 0 (not present)
-def check(string, sub_str): 
+
+def check(string, sub_str):
+    '''
+    Checks for substring, returns 1 (present) or 0 (not present)
+    '''
     if (string.find(sub_str) == -1):
         return 0
     else: 
         return 1
 
-#Appends new row to the existing csv file
+
 def append_list_as_row(file_name, list_of_elem):
+    '''
+    Appends new row to the existing csv file
+    '''
     with open(file_name, 'a+', newline='',encoding="utf8") as write_obj:
         csv_writer = writer(write_obj)
         csv_writer.writerow(list_of_elem)
     
-#Converts csv file to excel file
-def csv_to_excel(path):
-    csvfile = path
-    workbook = Workbook(csvfile[:-4] + '.xlsx')
-    worksheet = workbook.add_worksheet()
-    with open(csvfile, 'rt', encoding='utf8') as f:
-        reader = csv.reader(f)
-        for r, row in enumerate(reader):
-            for c, col in enumerate(row):
-                worksheet.write(r, c, col)
-    workbook.close()
 
 def exportcsv(filename='export.csv', field1 = [], field2 = [], field3 = [], fields=['ISIN', 'Termsheet Link', 'Text']):
+    '''
+    Export all the data in the fields into a csv file (by default, "export.csv")
+    '''
     if os.path.isfile(filename):
         os.remove(filename)
-
     append_list_as_row(filename, fields)
     i = 0
     for ilist in field1:
         append_list_as_row(filename, [ilist, field2[i], field3[i]])
         i += 1
 
-#Exports data in the form of excel file, datalist is a list of lists, fields is a list of fields
-def exportexcel(filename='export.xlsx', datalist=[], fields=['ISIN', 'Termsheet Link', 'Text']):
 
+def exportexcel(filename='export.xlsx', datalist=[], fields=['ISIN', 'Termsheet Link', 'Text']):
+    '''
+    Exports data in the form of excel file, datalist is a list of lists, fields is a list of fields
+    '''
     workbook = Workbook(filename)
     worksheet = workbook.add_worksheet()
     cell_format = workbook.add_format({'bold': True})
@@ -61,7 +66,6 @@ def exportexcel(filename='export.xlsx', datalist=[], fields=['ISIN', 'Termsheet 
     for field in fields:
         worksheet.write(0, i, field, cell_format)
         i += 1
-    
     j = 0
     for data in datalist:
         i = 1
@@ -69,20 +73,29 @@ def exportexcel(filename='export.xlsx', datalist=[], fields=['ISIN', 'Termsheet 
             worksheet.write(i, j, d)
             i += 1
         j += 1
-
     workbook.close()
 
-#Extracts data, performs basic pre-processings and returns list of ISINs, URLs, and extracted text
+
 def extract(path, no_of_docs):
+    '''
+    Extracts data, performs basic pre-processings and returns list of ISINs, URLs, and extracted text
+    '''
+
+    # read the data present in the excel sheet
     df = pd.read_excel(path, sheet_name=0)
+
+    # check if excel file is present in the available format
     try:
         urlList = df['Termsheet Link'].tolist()
         isinList = df['ISIN'].tolist()
     except:
         return 'Invalid File'
+
+    # if no_of_docs is 'all', then extract from ALL the URLs given in the excel sheet. If no_of_docs = int, select only those many URLs.
     if no_of_docs != 'all':
         urlList = urlList[:int(no_of_docs)]
         isinList = isinList[:int(no_of_docs)]
+
     ISINs = []
     URLs = []
     textlist = []
@@ -90,8 +103,12 @@ def extract(path, no_of_docs):
     count = 0
     i = 0
     for url in urlList:
+
+        # only extract data from ".htm" files
         r = check(url, ".htm")
         if r == 1:
+
+            # check if url is valid
             try:
                 html = urlopen(url).read()
             except:
@@ -106,15 +123,17 @@ def extract(path, no_of_docs):
 
             # break into lines and remove leading and trailing space on each
             lines = (line.strip() for line in text.splitlines())
+
             # break multi-headlines into a line each
             chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+
             # drop blank lines
             text = '\n'.join(chunk for chunk in chunks if chunk)
-
             text = re.sub(r' +', ' ', text)
             text = re.sub(r'\n+', ' ', text)
             text = text.encode('ascii', 'ignore').decode()
 
+            # append all the extracted data to the respective lists
             ISINs.append(isinList[i])
             URLs.append(url)
             textlist.append(text)
@@ -124,8 +143,13 @@ def extract(path, no_of_docs):
 
     return ISINs, URLs, textlist
 
-#Reads extracted dataset if in csv format and returns ISINs, Termshit links, and text
+
+
+
 def readdataset(path):
+    '''
+    Reads extracted dataset and returns ISINs, Termsheet links and Text
+    '''
     if check(path, '.csv'):
         df = pd.read_csv(path)
     elif check(path, '.xlsx'):
@@ -137,6 +161,9 @@ def readdataset(path):
     return isinList, urlList, text
 
 def write_json(data, fname):
+    '''
+    Write data into a JSON file
+    '''
     fhand = open(fname, 'w')
     js = json.dumps(data)
     fhand.write(js)
@@ -144,13 +171,19 @@ def write_json(data, fname):
 
 
 def read_json(fname):
+    '''
+    Read data from a JSON file
+    '''
     fhand = open(fname)
     data = fhand.read()
     js = json.loads(data)
     return js
 
-#Returns data in json format
+
 def tojson(ISINs, URLs, data):
+    '''
+    Returns data in json format
+    '''
     datajson = []
     i = 0
     for ISIN in ISINs:
@@ -163,8 +196,11 @@ def tojson(ISINs, URLs, data):
 
     return datajson
 
-#Returns data in json format
+
 def tojsondf(ISINs, URLs, cluster):
+    '''
+    Returns clustered data in json format
+    '''
     datajson = []
     i = 0
     for clust in cluster:
@@ -176,24 +212,12 @@ def tojsondf(ISINs, URLs, cluster):
         i += 1
 
     return datajson
-    
-#Exports data to json file
-def exportjson(ISINs, URLs, data, path):
-    datajson = []
-    i = 0
-    for ISIN in ISINs:
-        datajson.append({
-            'ISIN': ISIN,
-            'URL': URLs[i],
-            'Data': data[i]
-        })
-        i += 1
 
-    with open(path, 'w') as outfile:
-        json.dump(datajson, outfile)
 
-#Returns lists from json data
 def jsontolists(jsondata):
+    '''
+    Converts json data into lists
+    '''
     ISINs = []
     URLs = []
     text = []
@@ -201,32 +225,13 @@ def jsontolists(jsondata):
         ISINs.append(data['ISIN'])
         URLs.append(data['URL'])
         text.append(data['Data'])
-    return ISINs, URLs, text  
-
-    
-def jsontolistsC(jsondata):
-    ISINs = []
-    URLs = []
-    cluster = []
-    for data in jsondata:
-        ISINs.append(data['ISIN'])
-        URLs.append(data['URL'])
-        cluster.append(data['Cluster'])
-    return cluster, ISINs, URLs
-
-#Reads json file and prints data
-def printjson(path):
-    with open(path) as json_file:
-        data = json.load(json_file)
-        for p in data:
-            print('ISIN: ' + p['ISIN'])
-            print('URL: ' + p['URL'])
-            print('Data: ' + p['Data'])
-            print('')
-
+    return ISINs, URLs, text
 
 
 def export(data, format, fname):
+    '''
+    Exports the data to either excel file or a csv file depending on the "format" argument
+    '''
     if format == 'excel':
         export_to_excel(data, fname, '.xls')
     elif format == 'csv':
@@ -237,7 +242,7 @@ def export(data, format, fname):
 
 def export_to_excel(results, fname, extension):
     '''
-    Writes all the doc URLs along with the cluster to which they belong
+    Writes all the doc URLs along with the cluster to which they belong to an excel file
     '''
     fhand = wb()
     count = 1
@@ -260,6 +265,9 @@ def export_to_excel(results, fname, extension):
     fhand.save(fname + extension)
 
 def export_to_csv(results, fname, extension):
+    '''
+    Writes all the doc URLs along with the cluster to which they belong to a csv file
+    '''
     with open(fname + extension, 'w') as fhand:
         writer=csv.writer(fhand)
         writer.writerow(['Cluster No.', 'ISIN', 'URL'])
