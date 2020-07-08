@@ -1,26 +1,37 @@
-from flask import Flask, request, jsonify, make_response, send_file
-import kmeans
+'''
+The main flask REST API which uses all the other created modules and performs clustering, pre-processing
+'''
+
+# Modules imported
+from flask import Flask, request, make_response, send_file
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
 from flask_restful import Api, Resource, reqparse
 import extract as ex
 import clean_file as cf
-import json
-import io
-import os
+import kmeans
 import dbscan
 import birch
 import agglomerative as ag
-import matplotlib.pyplot as plt
+import json
+import io
+import os
 
 
+# defining program as a flask api
 app = Flask(__name__)
 api = Api(app)
 
 
+
 class ExtractData(Resource):
-    #curl http://127.0.0.1:5000/extract?filepath=ISINS_v3.xlsx -X POST 
+    '''
+    For extracting data and getting the extracted data
+    '''
     def post(self):
+        '''
+        POST request extracts the data and writes it into the file "extract.json"
+        '''
+        # curl http://127.0.0.1:5000/extract -d "filepath=ISINS_v3.xlsx" -d "no_of_docs=30" -X POST
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         parser.add_argument('no_of_docs', type=str)
@@ -32,13 +43,24 @@ class ExtractData(Resource):
         ex.write_json(jsondata, 'extract.json')
         return 200
 
-    #curl http://127.0.0.1:5000/extract -X GET 
     def get(self):
+        '''
+        GET request returns the extracted data back to the user as a JSON object
+        '''
+        # curl http://127.0.0.1:5000/extract -X GET
         return ex.read_json('extract.json'), 200
 
+
+
 class ExportExtractedData(Resource):
-    #curl http://127.0.0.1:5000/export?prep.xlsx -X GET 
+    '''
+    For exporting the extracted data into excel or csv file (if the user wishes to)
+    '''
     def post(self):
+        '''
+        POST request exports the data
+        '''
+        # curl http://127.0.0.1:5000/export -d "filepath=prep.xlsx" -X POST 
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         args = parser.parse_args()
@@ -46,6 +68,8 @@ class ExportExtractedData(Resource):
         ISINs, URLs, text = ex.jsontolists(jsondata)
         if os.path.exists(args['filepath']):
             os.remove(args['filepath'])
+
+        # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
         if ex.check(args['filepath'], '.xlsx'):
             ex.exportexcel(filename = args['filepath'], datalist = [ISINs, URLs, text])
         elif ex.check(args['filepath'], '.csv'):
@@ -54,15 +78,65 @@ class ExportExtractedData(Resource):
             print("Invalid file format. Valid file formats are .xlsx and .csv")
             return 400
         return 200
-        
-class ExportPrepData(Resource):
-    #curl http://127.0.0.1:5000/export?prep.xlsx -X GET 
+
+
+
+
+class PreProcess(Resource):
+    '''
+    For performing text pre-processing on the extracted data.
+    User can select any number of pre-processing techniques out of the 5 given.
+    '''
     def post(self):
+        '''
+        POST request performs the pre-processing
+        '''
+        # curl http://127.0.0.1:5000/preprocess -d "filepath=extract.xlsx" -d "steps=stopwords" -d "steps=url" -d "steps=stemming" -d "steps=lemmatization" -d "steps=unusual" -X POST
+        parser = reqparse.RequestParser()
+        parser.add_argument('filepath', type=str)
+        parser.add_argument('steps', action='append')
+        args = parser.parse_args()
+        argset = set(args)
+        # if external filepath for extracted data is not given, then this means that extraction is done using this API itself and is stored in the file "extract.json"
+        if not args['filepath']:
+            jsondata = ex.read_json('extract.json')
+            ISINs, URLs, text = ex.jsontolists(jsondata)
+        else:
+            ISINs, URLs, text = ex.readdataset(args['filepath'])
+        
+        # text pre-processing function call
+        data = cf.preprocessing(text, args['steps'])
+        jsondata = ex.tojson(ISINs, URLs, data)
+
+        # writes the pre-processed text into the file "preprocess.json"
+        ex.write_json(jsondata, 'preprocess.json')
+        return 200
+
+    def get(self):
+        '''
+        GET request returns the pre-processed data back to the user
+        '''
+        #curl http://127.0.0.1:5000/preprocess -X GET 
+        data = ex.read_json('preprocess.json')
+        return data, 200
+
+
+
+class ExportPrepData(Resource):
+    '''
+    For exporting pre-processed data into excel or csv file (if the user wishes to)
+    '''
+    def post(self):
+        # curl http://127.0.0.1:5000/export -d "filepath=prep.xlsx" -X POST
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         args = parser.parse_args()
+
+        # pre-processed data is stored in the file "preprocess.json"
         jsondata = ex.read_json('preprocess.json')
         ISINs, URLs, text = ex.jsontolists(jsondata)
+
+        # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
         if os.path.exists(args['filepath']):
             os.remove(args['filepath'])
         if ex.check(args['filepath'], '.xlsx'):
@@ -73,35 +147,18 @@ class ExportPrepData(Resource):
             print("Invalid file format. Valid file formats are .xlsx and .csv")
             return 400
         return 200
- 
-
-class PreProcess(Resource):
-    #curl http://127.0.0.1:5000/preprocess -d "filepath=extract.xlsx" -d "steps=numbers" -d "steps=url" -d "steps=stemming" -d "steps=lemmatization" -d "steps=punctuations" -d "steps=stopwords" -d "steps=case" -d "steps=words" -X POST
-    def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('filepath', type=str)
-        parser.add_argument('steps', action='append')
-        args = parser.parse_args()
-        argset = set(args)
-        if not args['filepath']:
-            jsondata = ex.read_json('extract.json')
-            ISINs, URLs, text = ex.jsontolists(jsondata)
-        else:
-            ISINs, URLs, text = ex.readdataset(args['filepath'])
-        
-        data = cf.preprocessing(text, args['steps'])
-        jsondata = ex.tojson(ISINs, URLs, data)
-        ex.write_json(jsondata, 'preprocess.json')
-        return 200
-
-    #curl http://127.0.0.1:5000/preprocess -X GET 
-    def get(self):
-        data = ex.read_json('preprocess.json')
-        return data, 200
+    
 
 
 class Kmeans(Resource):
+    '''
+    Performs k means clustering to group all the documents into various clusters.
+    '''
     def post(self):
+        '''
+        POST request will perform clustering and return a scatter plot providing a visual comprehension of how clustering is done
+        '''
+        # curl http://127.0.0.1:5000/clustering/kmeans -d "filepath=prep.xlsx" -d "k=4" -d "format=csv" -X POST
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         parser.add_argument('k', type=int)
@@ -109,25 +166,31 @@ class Kmeans(Resource):
         parser.add_argument('pca_comp', type=float)
         parser.add_argument('format', type=str)
         args = parser.parse_args()
+
+        # by default, format is excel
         if not args['format']:
             args['format'] = 'excel'
+
+        # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
         if not args['filepath']:
             jsondata = ex.read_json('preprocess.json')
             ISINs, URLs, text = ex.jsontolists(jsondata)
         else:
             ISINs, URLs, text = ex.readdataset(args['filepath'])
+
+        # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
         if not args['thresh']:
             args['thresh'] = 0.0001
         if not args['pca_comp']:
             args['pca_comp'] = 0.8
+
+        # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
         df = cf.tfidf(text)
         tfidf = cf.varThresh_tfidf(df, args['thresh'])
         score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
         frame, scores = kmeans.kmeans_clustering(args['k'],ratio,ISINs, URLs)
-        
         frame = frame.sort_values(by=['Cluster'])
         datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
-        
         clusts = frame['Cluster'].to_list()
         clusts.sort()
         clusters = {}
@@ -138,16 +201,17 @@ class Kmeans(Resource):
             except:
                 clusters['Cluster '+str(c)] = {i}
             i += 1
-
         for c in clusters:
             clusters[c] = len(clusters[c])
         
-
+        # export the clustered output to csv/excel file according to the user's requirement
         ex.export(datajson, args['format'], 'kmeans results')
 
+        # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
         ex.write_json(clusters, 'summary.json')
         ex.write_json(datajson, 'cluster.json')
 
+        # plots scatter plot and returns it
         fig = kmeans.visualize_scatter(args['k'], ratio)
         canvas = FigureCanvas(fig)
         output = io.BytesIO()
@@ -157,10 +221,22 @@ class Kmeans(Resource):
         return response
 
     def get(self):
+        '''
+        GET request will return all the docs along with the cluster to which they belong
+        '''
         return ex.read_json('cluster.json'), 200
 
+
+
 class DBSCAN(Resource):
+    '''
+    Performs DBSCAN clustering to group all the documents into various clusters.
+    '''
     def post(self):
+        '''
+        POST request will perform clustering and return a scatter plot providing a visual comprehension of how clustering is done
+        '''
+        # curl http://127.0.0.1:5000/clustering/dbscan -d "filepath=prep.xlsx" -d "eps=0.3" -d "min=5" -d "format=csv" -X POST
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         parser.add_argument('eps', type=float)
@@ -169,25 +245,31 @@ class DBSCAN(Resource):
         parser.add_argument('pca_comp', type=float)
         parser.add_argument('format', type=str)
         args = parser.parse_args()
+
+        # by default, format is excel
         if not args['format']:
             args['format'] = 'excel'
+
+        # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
         if not args['filepath']:
             jsondata = ex.read_json('preprocess.json')
             ISINs, URLs, text = ex.jsontolists(jsondata)
         else:
             ISINs, URLs, text = ex.readdataset(args['filepath'])
+        
+        # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
         if not args['thresh']:
             args['thresh'] = 0.0001
         if not args['pca_comp']:
             args['pca_comp'] = 0.8
+        
+        # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs DBSCAN clustering
         df = cf.tfidf(text)
         tfidf = cf.varThresh_tfidf(df, args['thresh'])
         score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
         frame, scores = dbscan.dbscan_clustering(args['eps'], args['min'], ratio, ISINs, URLs)
-
         frame = frame.sort_values(by=['Cluster'])
         datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
-        
         clusts = frame['Cluster'].to_list()
         clusts.sort()
         clusters = {}
@@ -198,30 +280,40 @@ class DBSCAN(Resource):
             except:
                 clusters['Cluster '+str(c)] = {i}
             i += 1
-
         for c in clusters:
             clusters[c] = len(clusters[c])
         
-        
+        # export the clustered output to csv/excel file according to the user's requirement
         ex.export(datajson, args['format'], 'DBSCAN results')
 
+        # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
         ex.write_json(clusters, 'summary.json')
         ex.write_json(datajson, 'cluster.json')
 
+        # plots scatter plot and returns it
         fig = dbscan.visualize_scatter(args['eps'], args['min'], ratio)
         canvas = FigureCanvas(fig)
         output = io.BytesIO()
         canvas.print_png(output)
         response = make_response(output.getvalue())
         response.mimetype = 'image/png'
-        
         return response
         
     def get(self):
+        '''
+        GET request will return all the docs along with the cluster to which they belong
+        '''
         return ex.read_json('cluster.json'), 200
 
 class Agglomerative(Resource):
+    '''
+    Performs Agglomerative clustering to group all the documents into various clusters.
+    '''
     def post(self):
+        '''
+        POST request will perform clustering and return a scatter plot providing a visual comprehension of how clustering is done
+        '''
+        # curl http://127.0.0.1:5000/clustering/dbscan -d "filepath=prep.xlsx" -d "k=5" -d "format=csv" -X POST
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         parser.add_argument('k', type=int)
@@ -229,25 +321,31 @@ class Agglomerative(Resource):
         parser.add_argument('pca_comp', type=float)
         parser.add_argument('format', type=str)
         args = parser.parse_args()
+
+        # by default, format is excel
         if not args['format']:
             args['format'] = 'excel'
+        
+        # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
         if not args['filepath']:
             jsondata = ex.read_json('preprocess.json')
             ISINs, URLs, text = ex.jsontolists(jsondata)
         else:
             ISINs, URLs, text = ex.readdataset(args['filepath'])
+        
+        # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
         if not args['thresh']:
             args['thresh'] = 0.0001
         if not args['pca_comp']:
             args['pca_comp'] = 0.8
+        
+        # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs Agglomerative clustering
         df = cf.tfidf(text)
         tfidf = cf.varThresh_tfidf(df, args['thresh'])
         score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
         frame, scores = ag.agglomerative_clustering(args['k'],ratio,ISINs, URLs)
-        
         frame = frame.sort_values(by=['Cluster'])
         datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
-        
         clusts = frame['Cluster'].to_list()
         clusts.sort()
         clusters = {}
@@ -258,14 +356,17 @@ class Agglomerative(Resource):
             except:
                 clusters['Cluster '+str(c)] = {i}
             i += 1
-
         for c in clusters:
             clusters[c] = len(clusters[c])
+        
+        # export the clustered output to csv/excel file according to the user's requirement
         ex.export(datajson, args['format'], 'agglomerative results')
 
+        # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
         ex.write_json(clusters, 'summary.json')
         ex.write_json(datajson, 'cluster.json')
 
+        # plots scatter plot and returns it
         fig = ag.visualize_scatter(args['k'], ratio)
         canvas = FigureCanvas(fig)
         output = io.BytesIO()
@@ -275,10 +376,20 @@ class Agglomerative(Resource):
         return response
         
     def get(self):
+        '''
+        GET request will return all the docs along with the cluster to which they belong
+        '''
         return ex.read_json('cluster.json'), 200
 
 class Birch(Resource):
+    '''
+    Performs Birch clustering to group all the documents into various clusters.
+    '''
     def post(self):
+        '''
+        POST request will perform clustering and return a scatter plot providing a visual comprehension of how clustering is done
+        '''
+        # curl http://127.0.0.1:5000/clustering/birch -d "filepath=prep.xlsx" -d "k=5" -d "format=csv" -X POST
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         parser.add_argument('k', type=int)
@@ -286,25 +397,31 @@ class Birch(Resource):
         parser.add_argument('pca_comp', type=float)
         parser.add_argument('format', type=str)
         args = parser.parse_args()
+
+        # by default, format is excel
         if not args['format']:
             args['format'] = 'excel'
+        
+        # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
         if not args['filepath']:
             jsondata = ex.read_json('preprocess.json')
             ISINs, URLs, text = ex.jsontolists(jsondata)
         else:
             ISINs, URLs, text = ex.readdataset(args['filepath'])
+
+        # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
         if not args['thresh']:
             args['thresh'] = 0.0001
         if not args['pca_comp']:
             args['pca_comp'] = 0.8
+
+        # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs Agglomerative clustering
         df = cf.tfidf(text)
         tfidf = cf.varThresh_tfidf(df, args['thresh'])
         score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
         frame, scores = birch.birch_clustering(args['k'],ratio,ISINs, URLs)
-
         frame = frame.sort_values(by=['Cluster'])
         datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
-        
         clusts = frame['Cluster'].to_list()
         clusts.sort()
         clusters = {}
@@ -315,14 +432,17 @@ class Birch(Resource):
             except:
                 clusters['Cluster '+str(c)] = {i}
             i += 1
-
         for c in clusters:
             clusters[c] = len(clusters[c])
+
+        # export the clustered output to csv/excel file according to the user's requirement
         ex.export(datajson, args['format'], 'birch results')
 
+        # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
         ex.write_json(clusters, 'summary.json')
         ex.write_json(datajson, 'cluster.json')
 
+        # plots scatter plot and returns it
         fig = birch.visualize_scatter(args['k'], ratio)
         canvas = FigureCanvas(fig)
         output = io.BytesIO()
@@ -332,25 +452,36 @@ class Birch(Resource):
         return response
         
     def get(self):
+        '''
+        GET request will return all the docs along with the cluster to which they belong
+        '''
         return ex.read_json('cluster.json'), 200
 
 class ClusterSummary(Resource):
+    '''
+    GET request returns a summary of clustering done to the user
+    '''
     def get(self):
         return ex.read_json('summary.json'), 200
 
 
+
+# Adding all URL paths
 api.add_resource(ExtractData, '/extract')
 api.add_resource(ExportExtractedData, '/extract/export')
 api.add_resource(PreProcess, '/preprocess')
 api.add_resource(ExportPrepData, '/preprocess/export')
-api.add_resource(ClusterSummary, '/clustering/summary/kmeans', endpoint="kmeans-summary")
-api.add_resource(ClusterSummary, '/clustering/summary/dbscan', endpoint="dbscan-summary")
-api.add_resource(ClusterSummary, '/clustering/summary/agglomerative', endpoint="agglomerative-summary")
-api.add_resource(ClusterSummary, '/clustering/summary/birch', endpoint="birch-summary")
 api.add_resource(Kmeans, '/clustering/kmeans')
 api.add_resource(DBSCAN, '/clustering/dbscan')
 api.add_resource(Agglomerative, '/clustering/agglomerative')
 api.add_resource(Birch, '/clustering/birch')
+api.add_resource(ClusterSummary, '/clustering/summary/kmeans', endpoint="kmeans-summary")
+api.add_resource(ClusterSummary, '/clustering/summary/dbscan', endpoint="dbscan-summary")
+api.add_resource(ClusterSummary, '/clustering/summary/agglomerative', endpoint="agglomerative-summary")
+api.add_resource(ClusterSummary, '/clustering/summary/birch', endpoint="birch-summary")
 
+
+
+# main function
 if __name__ == '__main__':
     app.run(debug=True)
