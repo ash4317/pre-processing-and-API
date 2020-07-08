@@ -136,8 +136,16 @@ print(r.text)
 ```
 This will return all the documents with their cluster number.
 
-Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
-
+Response is a JSON object of the form:
+```
+[
+    {
+        Cluster Number: Cluster number to which document belongs,
+        ISIN: ISIN number of htm file,
+        URL: url of htm file
+    }
+]
+```
 **4) Performing DBSCAN clustering on pre-processed data and exporting it**
 
 > Clustering example:
@@ -169,7 +177,16 @@ print(r.text)
 ```
 This will return all the documents with their cluster number.
 
-Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
+Response is a JSON object of the form:
+```
+[
+    {
+        Cluster Number: Cluster number to which document belongs,
+        ISIN: ISIN number of htm file,
+        URL: url of htm file
+    }
+]
+```
 
 **5) Performing Agglomerative clustering on pre-processed data and exporting it**
 
@@ -201,7 +218,16 @@ print(r.text)
 ```
 This will return all the documents with their cluster number.
 
-Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
+Response is a JSON object of the form:
+```
+[
+    {
+        Cluster Number: Cluster number to which document belongs,
+        ISIN: ISIN number of htm file,
+        URL: url of htm file
+    }
+]
+```
 
 **6) Performing Birch clustering on pre-processed data and exporting it**
 
@@ -233,7 +259,16 @@ print(r.text)
 ```
 This will return all the documents with their cluster number.
 
-Response is a JSON object of the form [{Cluster Number:(value), ISIN: (value), URL: (value)}] for all the documents
+Response is a JSON object of the form:
+```
+[
+    {
+        Cluster Number: Cluster number to which document belongs,
+        ISIN: ISIN number of htm file,
+        URL: url of htm file
+    }
+]
+```
 
 **7) Getting cluster summary (number of documents in each cluster)**
 
