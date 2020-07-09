@@ -79,20 +79,10 @@ def exportexcel(filename='export.xlsx', datalist=[], fields=['ISIN', 'Termsheet 
     workbook.close()
 
 
-def extract(path, no_of_docs):
+def extract(isinList, urlList, no_of_docs):
     '''
     Extracts data, performs basic pre-processings and returns list of ISINs, URLs, and extracted text
     '''
-
-    # read the data present in the excel sheet
-    df = pd.read_excel(path, sheet_name=0)
-
-    # check if excel file is present in the available format
-    try:
-        urlList = df['Termsheet Link'].tolist()
-        isinList = df['ISIN'].tolist()
-    except:
-        return 'Invalid File'
 
     # if no_of_docs is 'all', then extract from ALL the URLs given in the excel sheet. If no_of_docs = int, select only those many URLs.
     if no_of_docs != 'all':

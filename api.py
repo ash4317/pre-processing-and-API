@@ -33,13 +33,15 @@ class ExtractData(Resource):
         POST request extracts the data and writes it into the file "extract.json"
         '''
         # curl http://127.0.0.1:5000/extract -d "filepath=ISINS_v3.xlsx" -d "no_of_docs=30" -X POST
+        content = request.json
+        ISINs = list(content.keys())
+        URLs = list(content.values())
         parser = reqparse.RequestParser()
-        parser.add_argument('filepath', type=str)
         parser.add_argument('no_of_docs', type=str)
         args = parser.parse_args()
         if not args['no_of_docs']:
             args['no_of_docs'] = 'all'
-        ISINs, URLs, text = ex.extract(args['filepath'], args['no_of_docs'])
+        ISINs, URLs, text = ex.extract(ISINs, URLs, args['no_of_docs'])
         jsondata = ex.tojson(ISINs, URLs, text)
         ex.write_json(jsondata, ex.give_filename('extract', '.json'))
         return 200
