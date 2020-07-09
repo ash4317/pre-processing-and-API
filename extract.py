@@ -201,14 +201,16 @@ def tojsondf(ISINs, URLs, cluster):
     '''
     Returns clustered data in json format
     '''
-    datajson = []
+    datajson = dict()
     i = 0
+    x = -100
     for clust in cluster:
-        datajson.append({
-            'Cluster': clust,
-            'ISIN': ISINs[i],
-            'URL': URLs[i]
-        })
+        if clust == x:
+            pass
+        else:
+            datajson['Cluster ' + str(clust)] = list()
+        datajson['Cluster ' + str(clust)].append({'ISIN': ISINs[i], 'URL': URLs[i]})
+        x = clust
         i += 1
 
     return datajson
@@ -252,16 +254,13 @@ def export_to_excel(results, fname, extension):
     sheet.write(0, 2, 'ISIN', style)
     sheet.write(0, 4, 'Termsheet URL', style)
     count = 2
-    cluster_no = results[0]['Cluster']
-    for data in results:
-        if data['Cluster'] == cluster_no:
+    for c in results.keys():
+        for val in results[c]:
+            sheet.write(count, 0, c)
+            sheet.write(count, 2, val['ISIN'])
+            sheet.write(count, 4, val['URL'])
             count += 1
-        else:
-            count += 2
-            cluster_no = data['Cluster']
-        sheet.write(count, 0, data['Cluster'])
-        sheet.write(count, 2, data['ISIN'])
-        sheet.write(count, 4, data['URL'])
+        count += 2
     fhand.save(fname + extension)
 
 def export_to_csv(results, fname, extension):
