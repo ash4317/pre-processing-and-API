@@ -295,6 +295,6 @@ def get_recent_file(name):
     '''
     Selects the most recent file updated/created
     '''
-    names = [x for x in os.listdir() if name in x]
+    names = [x for x in os.listdir() if name in x and '.json' in x]
     names.sort(reverse=True)
     return names[0]
