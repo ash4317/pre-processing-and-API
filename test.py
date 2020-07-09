@@ -4,7 +4,7 @@ from PIL import Image
 import io
 
 #Extract data
-url = "http://127.0.0.1:5000/extract?filepath=ISINS_v3.xlsx&no_of_docs=9"
+url = "http://127.0.0.1:5000/extract?filepath=ISINS_v3.xlsx&no_of_docs=30"
 r = requests.post(url=url)
 print(r.text)
 
@@ -27,7 +27,7 @@ print(r.text)
 
 
 #Perform K-Means clustering 
-url = "http://127.0.0.1:5000/clustering/kmeans?filepath=prep.xlsx&k=4&format=csv"
+url = "http://127.0.0.1:5000/clustering/kmeans?k=4&format=csv"
 r = requests.post(url=url)
 img = Image.open(io.BytesIO(r.content))
 img.show()
@@ -38,13 +38,13 @@ print(r.text)
 
 
 # Get clustered data
-url = "http://127.0.0.1:5000/clustering/summary/kmeans"
+url = "http://127.0.0.1:5000/clustering/summary"
 r = requests.get(url=url)
 print(r.text)
 
 
 #Perform DBSCAN clustering
-url = "http://127.0.0.1:5000/clustering/dbscan?filepath=prep.xlsx&eps=0.3&min=1&format=csv"
+url = "http://127.0.0.1:5000/clustering/dbscan?eps=0.3&min=1&format=csv"
 r = requests.post(url=url)
 img = Image.open(io.BytesIO(r.content))
 img.show()
@@ -53,12 +53,12 @@ url = "http://127.0.0.1:5000/clustering/dbscan"
 r = requests.get(url=url)
 print(r.text)
 
-url = "http://127.0.0.1:5000/clustering/summary/dbscan"
+url = "http://127.0.0.1:5000/clustering/summary"
 r = requests.get(url=url)
 print(r.text)
 
 #Perform Agglomerative clustering
-url = "http://127.0.0.1:5000/clustering/agglomerative?filepath=prep.xlsx&k=5&format=csv"
+url = "http://127.0.0.1:5000/clustering/agglomerative?k=5&format=csv"
 r = requests.post(url=url)
 img = Image.open(io.BytesIO(r.content))
 img.show()
@@ -68,12 +68,12 @@ r = requests.get(url=url)
 print(r.text)
 
 
-url = "http://127.0.0.1:5000/clustering/summary/agglomerative"
+url = "http://127.0.0.1:5000/clustering/summary"
 r = requests.get(url=url)
 print(r.text)
 
 #Perform Birch clustering
-url = "http://127.0.0.1:5000/clustering/birch?filepath=prep.xlsx&k=5&format=csv"
+url = "http://127.0.0.1:5000/clustering/birch?k=5&format=csv"
 r = requests.post(url=url)
 img = Image.open(io.BytesIO(r.content))
 img.show()
@@ -82,6 +82,6 @@ url = "http://127.0.0.1:5000/clustering/birch"
 r = requests.get(url=url)
 print(r.text)
 
-url = "http://127.0.0.1:5000/clustering/summary/birch"
+url = "http://127.0.0.1:5000/clustering/summary"
 r = requests.get(url=url)
 print(r.text)
