@@ -5,6 +5,8 @@ Performs Birch clustering
 # Modules imported
 from sklearn import metrics
 from sklearn.cluster import Birch
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 import extract as ex

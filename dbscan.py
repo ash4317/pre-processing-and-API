@@ -4,6 +4,8 @@ Performs DBSCAN clustering
 
 # Modules imported
 from sklearn.cluster import KMeans
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn import metrics
@@ -46,6 +48,3 @@ def visualize_scatter(db_eps, min_points, tfidf):
     plt.title("DBSCAN", figure=fig)
 
     return fig
-
-
-    

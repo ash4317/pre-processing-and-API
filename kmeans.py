@@ -4,6 +4,8 @@ Performs k means clustering
 
 # Modules imported
 from sklearn.cluster import KMeans
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn import metrics
@@ -20,7 +22,7 @@ def kmeans_clustering(k,tfidf,isin_list, urllist): #isin_list is the list of ISI
     clusters = km.labels_.tolist()
     clustered_data={'ISIN':isin_list, 'URL':urllist, 'Cluster':clusters} #Creating dict having url with the corresponding cluster number.
     frame=pd.DataFrame(clustered_data, columns=['ISIN','URL','Cluster']) # Converting it into a dataframe.
-    
+
     sil = metrics.silhouette_score(tfidf, km.labels_)
     cal= metrics.calinski_harabasz_score(tfidf, km.labels_)
     db = metrics.davies_bouldin_score(tfidf, km.labels_)
@@ -38,7 +40,7 @@ def visualize_scatter(k, tfidf):
     '''
     Plots scatter plot for clustering
     '''
-    kmeans = KMeans(n_clusters=k)  
+    kmeans = KMeans(n_clusters=k)
     kmeans.fit(tfidf)
     y_kmeans = kmeans.predict(tfidf)
     fig = plt.figure()

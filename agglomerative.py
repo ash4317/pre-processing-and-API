@@ -4,6 +4,8 @@ Performs Agglomerative clustering
 
 # Modules imported
 from sklearn.cluster import KMeans
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -39,7 +41,7 @@ def visualize_scatter(k, tfidf):
     '''
     Plots scatter plot for clustering
     '''
-    agg = AgglomerativeClustering(n_clusters=k)    
+    agg = AgglomerativeClustering(n_clusters=k)
     y_agglo = agg.fit_predict(tfidf)
     fig = plt.figure()
     plt.scatter(tfidf[:, 0], tfidf[:, 1], c=y_agglo, s=50, cmap='viridis')
