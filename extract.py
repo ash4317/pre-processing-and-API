@@ -113,7 +113,7 @@ def extract(path, no_of_docs):
 
             # check if url is valid
             try:
-                html = urlopen(url).read()
+                html = urlopen(url).read().decode()
             except:
                 continue
             soup = BeautifulSoup(html,features="html.parser")
