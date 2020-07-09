@@ -4,6 +4,7 @@ This modules also includes functions to write data to json and read data from js
 '''
 
 # modules imported
+from datetime import datetime
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import re
@@ -46,6 +47,7 @@ def exportcsv(filename='export.csv', field1 = [], field2 = [], field3 = [], fiel
     '''
     Export all the data in the fields into a csv file (by default, "export.csv")
     '''
+    filename = give_filename(filename.split('.')[0], filename.split('.')[1])
     if os.path.isfile(filename):
         os.remove(filename)
     append_list_as_row(filename, fields)
@@ -59,6 +61,7 @@ def exportexcel(filename='export.xlsx', datalist=[], fields=['ISIN', 'Termsheet 
     '''
     Exports data in the form of excel file, datalist is a list of lists, fields is a list of fields
     '''
+    filename = give_filename(filename.split('.')[0], filename.split('.')[1])
     workbook = Workbook(filename)
     worksheet = workbook.add_worksheet()
     cell_format = workbook.add_format({'bold': True})
@@ -270,8 +273,22 @@ def export_to_csv(results, fname, extension):
     with open(fname + extension, 'w') as fhand:
         writer=csv.writer(fhand)
         writer.writerow(['Cluster No.', 'ISIN', 'URL'])
-        print(results.keys())
         for c in results.keys():
             for val in results[c]:
                 c0 = c.split(' ')[0] + '_' + c.split(' ')[1]
                 writer.writerow([c0, val['ISIN'], val['URL']])
+
+
+
+def give_filename(fname, extension):
+    date = datetime.now()
+    name = date.strftime('%d') + '-' + date.strftime('%m')  + '-' + date.strftime('%Y') + '_' + date.strftime('%X').replace(':', '-')
+    fname += '_' + name + extension
+    return fname
+
+
+
+def get_recent_file(name):
+    names = [x for x in os.listdir() if name in x]
+    names.sort(reverse=True)
+    return names[0]
