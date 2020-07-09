@@ -281,6 +281,9 @@ def export_to_csv(results, fname, extension):
 
 
 def give_filename(fname, extension):
+    '''
+    Also adds date and time to the file name so that file can be identified
+    '''
     date = datetime.now()
     name = date.strftime('%d') + '-' + date.strftime('%m')  + '-' + date.strftime('%Y') + '_' + date.strftime('%X').replace(':', '-')
     fname += '_' + name + extension
@@ -289,6 +292,9 @@ def give_filename(fname, extension):
 
 
 def get_recent_file(name):
+    '''
+    Selects the most recent file updated/created
+    '''
     names = [x for x in os.listdir() if name in x]
     names.sort(reverse=True)
     return names[0]
