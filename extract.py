@@ -270,5 +270,8 @@ def export_to_csv(results, fname, extension):
     with open(fname + extension, 'w') as fhand:
         writer=csv.writer(fhand)
         writer.writerow(['Cluster No.', 'ISIN', 'URL'])
-        for data in results:
-                writer.writerow([data['Cluster'], data['ISIN'], data['URL']])
+        print(results.keys())
+        for c in results.keys():
+            for val in results[c]:
+                c0 = c.split(' ')[0] + '_' + c.split(' ')[1]
+                writer.writerow([c0, val['ISIN'], val['URL']])
