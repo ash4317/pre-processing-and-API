@@ -15,6 +15,7 @@ import agglomerative as ag
 import json
 import io
 import os
+import datetime
 
 
 # defining program as a flask api
@@ -40,7 +41,7 @@ class ExtractData(Resource):
             args['no_of_docs'] = 'all'
         ISINs, URLs, text = ex.extract(args['filepath'], args['no_of_docs'])
         jsondata = ex.tojson(ISINs, URLs, text)
-        ex.write_json(jsondata, 'extract.json')
+        ex.write_json(jsondata, ex.give_filename('extract', '.json'))
         return 200
 
     def get(self):
@@ -48,7 +49,7 @@ class ExtractData(Resource):
         GET request returns the extracted data back to the user as a JSON object
         '''
         # curl http://127.0.0.1:5000/extract -X GET
-        return ex.read_json('extract.json'), 200
+        return ex.read_json(ex.get_recent_file('extract')), 200
 
 
 
@@ -60,11 +61,11 @@ class ExportExtractedData(Resource):
         '''
         POST request exports the data
         '''
-        # curl http://127.0.0.1:5000/export -d "filepath=prep.xlsx" -X POST 
+        # curl http://127.0.0.1:5000/export -d "filepath=extract.xlsx" -X POST 
         parser = reqparse.RequestParser()
         parser.add_argument('filepath', type=str)
         args = parser.parse_args()
-        jsondata = ex.read_json('extract.json')
+        jsondata = ex.read_json(ex.get_recent_file('extract'))
         ISINs, URLs, text = ex.jsontolists(jsondata)
         if os.path.exists(args['filepath']):
             os.remove(args['filepath'])
@@ -99,7 +100,7 @@ class PreProcess(Resource):
         argset = set(args)
         # if external filepath for extracted data is not given, then this means that extraction is done using this API itself and is stored in the file "extract.json"
         if not args['filepath']:
-            jsondata = ex.read_json('extract.json')
+            jsondata = ex.read_json(ex.get_recent_file('extract'))
             ISINs, URLs, text = ex.jsontolists(jsondata)
         else:
             ISINs, URLs, text = ex.readdataset(args['filepath'])
@@ -109,7 +110,7 @@ class PreProcess(Resource):
         jsondata = ex.tojson(ISINs, URLs, data)
 
         # writes the pre-processed text into the file "preprocess.json"
-        ex.write_json(jsondata, 'preprocess.json')
+        ex.write_json(jsondata, ex.give_filename('preprocess', '.json'))
         return 200
 
     def get(self):
@@ -117,7 +118,7 @@ class PreProcess(Resource):
         GET request returns the pre-processed data back to the user
         '''
         #curl http://127.0.0.1:5000/preprocess -X GET 
-        data = ex.read_json('preprocess.json')
+        data = ex.read_json(ex.get_recent_file('preprocess'))
         return data, 200
 
 
@@ -133,7 +134,7 @@ class ExportPrepData(Resource):
         args = parser.parse_args()
 
         # pre-processed data is stored in the file "preprocess.json"
-        jsondata = ex.read_json('preprocess.json')
+        jsondata = ex.read_json(ex.get_recent_file('preprocess'))
         ISINs, URLs, text = ex.jsontolists(jsondata)
 
         # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
@@ -173,7 +174,7 @@ class Kmeans(Resource):
 
         # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
         if not args['filepath']:
-            jsondata = ex.read_json('preprocess.json')
+            jsondata = ex.read_json(ex.get_recent_file('preprocess'))
             ISINs, URLs, text = ex.jsontolists(jsondata)
         else:
             ISINs, URLs, text = ex.readdataset(args['filepath'])
@@ -205,11 +206,11 @@ class Kmeans(Resource):
             clusters[c] = len(clusters[c])
         
         # export the clustered output to csv/excel file according to the user's requirement
-        ex.export(datajson, args['format'], 'kmeans results')
+        ex.export(datajson, args['format'], ex.give_filename('kmeans results', ''))
 
         # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
-        ex.write_json(clusters, 'summary.json')
-        ex.write_json(datajson, 'cluster.json')
+        ex.write_json(clusters, ex.give_filename('summary', '.json'))
+        ex.write_json(datajson, ex.give_filename('cluster', '.json'))
 
         # plots scatter plot and returns it
         fig = kmeans.visualize_scatter(args['k'], ratio)
@@ -224,7 +225,7 @@ class Kmeans(Resource):
         '''
         GET request will return all the docs along with the cluster to which they belong
         '''
-        return ex.read_json('cluster.json'), 200
+        return ex.read_json(ex.get_recent_file('cluster')), 200
 
 
 
@@ -252,7 +253,7 @@ class DBSCAN(Resource):
 
         # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
         if not args['filepath']:
-            jsondata = ex.read_json('preprocess.json')
+            jsondata = ex.read_json(ex.get_recent_file('preprocess'))
             ISINs, URLs, text = ex.jsontolists(jsondata)
         else:
             ISINs, URLs, text = ex.readdataset(args['filepath'])
@@ -284,11 +285,11 @@ class DBSCAN(Resource):
             clusters[c] = len(clusters[c])
         
         # export the clustered output to csv/excel file according to the user's requirement
-        ex.export(datajson, args['format'], 'DBSCAN results')
+        ex.export(datajson, args['format'], ex.give_filename('dbscan results', ''))
 
         # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
-        ex.write_json(clusters, 'summary.json')
-        ex.write_json(datajson, 'cluster.json')
+        ex.write_json(clusters, ex.give_filename('summary', '.json'))
+        ex.write_json(datajson, ex.give_filename('cluster', '.json'))
 
         # plots scatter plot and returns it
         fig = dbscan.visualize_scatter(args['eps'], args['min'], ratio)
@@ -303,7 +304,7 @@ class DBSCAN(Resource):
         '''
         GET request will return all the docs along with the cluster to which they belong
         '''
-        return ex.read_json('cluster.json'), 200
+        return ex.read_json(ex.get_recent_file('cluster')), 200
 
 class Agglomerative(Resource):
     '''
@@ -328,7 +329,7 @@ class Agglomerative(Resource):
         
         # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
         if not args['filepath']:
-            jsondata = ex.read_json('preprocess.json')
+            jsondata = ex.read_json(ex.get_recent_file('preprocess'))
             ISINs, URLs, text = ex.jsontolists(jsondata)
         else:
             ISINs, URLs, text = ex.readdataset(args['filepath'])
@@ -360,11 +361,11 @@ class Agglomerative(Resource):
             clusters[c] = len(clusters[c])
         
         # export the clustered output to csv/excel file according to the user's requirement
-        ex.export(datajson, args['format'], 'agglomerative results')
+        ex.export(datajson, args['format'], ex.give_filename('agglomerative results', ''))
 
         # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
-        ex.write_json(clusters, 'summary.json')
-        ex.write_json(datajson, 'cluster.json')
+        ex.write_json(clusters, ex.give_filename('summary', '.json'))
+        ex.write_json(datajson, ex.give_filename('cluster', '.json'))
 
         # plots scatter plot and returns it
         fig = ag.visualize_scatter(args['k'], ratio)
@@ -379,7 +380,7 @@ class Agglomerative(Resource):
         '''
         GET request will return all the docs along with the cluster to which they belong
         '''
-        return ex.read_json('cluster.json'), 200
+        return ex.read_json(ex.get_recent_file('cluster')), 200
 
 class Birch(Resource):
     '''
@@ -404,7 +405,7 @@ class Birch(Resource):
         
         # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
         if not args['filepath']:
-            jsondata = ex.read_json('preprocess.json')
+            jsondata = ex.read_json(ex.get_recent_file('preprocess'))
             ISINs, URLs, text = ex.jsontolists(jsondata)
         else:
             ISINs, URLs, text = ex.readdataset(args['filepath'])
@@ -436,11 +437,11 @@ class Birch(Resource):
             clusters[c] = len(clusters[c])
 
         # export the clustered output to csv/excel file according to the user's requirement
-        ex.export(datajson, args['format'], 'birch results')
+        ex.export(datajson, args['format'], ex.give_filename('birch results', ''))
 
         # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
-        ex.write_json(clusters, 'summary.json')
-        ex.write_json(datajson, 'cluster.json')
+        ex.write_json(clusters, ex.give_filename('summary', '.json'))
+        ex.write_json(datajson, ex.give_filename('cluster', '.json'))
 
         # plots scatter plot and returns it
         fig = birch.visualize_scatter(args['k'], ratio)
@@ -455,14 +456,14 @@ class Birch(Resource):
         '''
         GET request will return all the docs along with the cluster to which they belong
         '''
-        return ex.read_json('cluster.json'), 200
+        return ex.read_json(ex.get_recent_file('cluster')), 200
 
 class ClusterSummary(Resource):
     '''
     GET request returns a summary of clustering done to the user
     '''
     def get(self):
-        return ex.read_json('summary.json'), 200
+        return ex.read_json(ex.get_recent_file('summary')), 200
 
 
 
