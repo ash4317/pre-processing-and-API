@@ -1167,17 +1167,17 @@ class ClusterSummary(Resource):
 
             # returns summary of clustering
             if args['content_type'] == 'summary':
-            return {
-                    'data':ex.read_json(data)['summary'], 
-                    'status':'success'
-                    }, 200
+                return {
+                        'data':ex.read_json(data)['summary'], 
+                        'status':'success'
+                        }, 200
             
             # returns cluster number of every document
             else args['content_type'] == 'clust':
-            return {
-                    'data':ex.read_json(data)['clust'], 
-                    'status':'success'
-                    }, 200
+                return {
+                        'data':ex.read_json(data)['clust'], 
+                        'status':'success'
+                        }, 200
         
         # error message if traceback occurs
         except Exception as e:
