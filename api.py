@@ -16,11 +16,25 @@ import json
 import io
 import os
 import datetime
+import userlogs as ul
+import logging
 
 # defining program as a flask api
 app = Flask(__name__)
 api = Api(app)
 
+cwd = os.getcwd()
+LOG_FOLDER = os.path.join(cwd,'LOGS')
+LOG_FORMAT = "%(levelname)s %(name)s %(asctime)s - %(message)s"
+logging.basicConfig(filename=os.path.join(LOG_FOLDER, 'rootlog.log'), level=logging.DEBUG, format= LOG_FORMAT)
+logger = logging.getLogger()
+
+class Hello(Resource):
+    def get(self):
+        logger = ul.setup_logger('first_logger', 'new.log')
+        logger.info('This is just info message')
+        return 200
+  
 
 class ExtractData(Resource):
     '''
@@ -48,6 +62,8 @@ class ExtractData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to extract data.')
             try:
                 strrep = args['fname'].split(".",1)[1]
                 fname = args['fname'].replace("."+strrep, "")
@@ -57,7 +73,9 @@ class ExtractData(Resource):
                 content = request.json
                 ISINs = list(content.keys())
                 URLs = list(content.values())
+                logger.debug('Extracted links and ISINs from JSON object.')
             except:
+                logger.error('Failed to extract links and ISINs from JSON object.')
                 return {
                         'data':'',
                         'message':'Error in json object parameter',
@@ -65,18 +83,21 @@ class ExtractData(Resource):
                         }, 400
             if not args['no_of_docs']:
                 args['no_of_docs'] = 'all'
+                logger.debug('Extracting all documents.')
             ISINs, URLs, text = ex.extract(ISINs, URLs, args['no_of_docs'])
             jsondata = ex.tojson(ISINs, URLs, text)
             ex.write_json(jsondata, ex.give_filename(args['uname'] + '_' + fname + '_' + 'extract', '.json'))
+            logger.info('Made entry for extracted data in datafile successfully.')
             return {
                     'data':'',
                     'message':'Data extracted',
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred:'+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message': e,
                     'status':'error'
                     }, 400
 
@@ -101,6 +122,8 @@ class ExtractData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get extracted data.')
             try:
                 strrep = args['fname'].split(".",1)[1]
                 fname = args['fname'].replace("."+strrep, "")
@@ -108,17 +131,21 @@ class ExtractData(Resource):
                 fname = args['fname']
             try:
                 data = ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'extract')
-            except:
+            except Exception as e:
+                logger.exception('Exception occurred while reading datafile:'+repr(e))
                 return {
                         'data':'', 
                         'message':'Error in reading file', 
                         'status':'error'
                         }, 400
+            
+            logger.info('Get request served successfully')
             return {
                     'data':ex.read_json(data), 
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred:'+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
@@ -152,6 +179,10 @@ class ExportExtractedData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to export extracted data.')
+
             try:
                 strrep = args['fname'].split(".",1)[1]
                 fname = args['fname'].replace("."+strrep, "")
@@ -160,7 +191,8 @@ class ExportExtractedData(Resource):
             try:
                 jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'extract'))
                 ISINs, URLs, text = ex.jsontolists(jsondata)
-            except:
+            except Exception as e:
+                logger.exception('Exception occurred while reading datafile:'+repr(e))
                 return {
                         'data':'',
                         'message':'Could not fetch data to export',
@@ -175,18 +207,20 @@ class ExportExtractedData(Resource):
             elif ex.check(args['filepath'], '.csv'):
                 ex.exportcsv(filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
             else:
+                logger.error('Invalid format for export file')
                 return {
                         'data':'',
                         'message':'Invalid format. Valid formats are .csv and .xlsx',
                         'status':'error'
                         }, 400
-
+            logger.info('Exported successfully')
             return {
                     'data':'',
                     'message':'Exported!',
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred:'+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
@@ -224,6 +258,8 @@ class PreProcess(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to pre-process data.')
             try:
                 strrep = args['fname'].split(".",1)[1]
                 fname = args['fname'].replace("."+strrep, "")
@@ -236,26 +272,32 @@ class PreProcess(Resource):
                     jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'extract'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
+                    logger.exception('Failed to read datafile')
                     return {
                             'data':'',
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
             else:
+                logger.debug('Reading dataset file')
                 ISINs, URLs, text = ex.readdataset(args['filepath'])
             
             # text pre-processing function call
             data = cf.preprocessing(text, args['steps'])
             jsondata = ex.tojson(ISINs, URLs, data)
-
+            logger.debug('Pre-processed data')
+            
             # writes the pre-processed text into the file "preprocess.json"
             ex.write_json(jsondata, ex.give_filename(args['uname'] + '_' + fname + '_' + 'preprocess', '.json'))
+            logger.debug('Made entry of pre-processed data in datafile successfully')
+
             return {
                     'data':'',
                     'message':'Pre-processed!',
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong!',
@@ -283,24 +325,30 @@ class PreProcess(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get pre-processed data.')
             try:
                 strrep = args['fname'].split(".",1)[1]
                 fname = args['fname'].replace("."+strrep, "")
             except:
                 fname = args['fname']
             try:
+                logger.debug('Reading pre-processed datafile')
                 data = ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess')
             except:
+                logger.error('Error in reading pre-processed data file')
                 return {
                         'data':'', 
                         'message':'Error in reading file', 
                         'status':'error'
                         }, 400
+            logger.info('Get request for pre-processed data served successfully')
             return {
                     'data':ex.read_json(data), 
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
@@ -336,15 +384,19 @@ class ExportPrepData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to export pre-processed data.')
             try:
                 strrep = args['fname'].split(".",1)[1]
                 fname = args['fname'].replace("."+strrep, "")
             except:
                 fname = args['fname']
             try:
+                logger.debug('Reading pre-processed datafile.')
                 jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess'))
                 ISINs, URLs, text = ex.jsontolists(jsondata)
             except:
+                logger.error('Error while reading pre-processed datafile.')
                 return {
                         'data':'',
                         'message':'Could not fetch data to export',
@@ -352,25 +404,31 @@ class ExportPrepData(Resource):
                         }, 400
             if os.path.exists(args['filepath']):
                 os.remove(args['filepath'])
+                
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             if ex.check(args['filepath'], '.xlsx'):
+                logger.debug('Exporting pre-processed data to excel file.')
                 ex.exportexcel(filename = args['filepath'], datalist = [ISINs, URLs, text])
             elif ex.check(args['filepath'], '.csv'):
+                logger.debug('Exporting pre-processed data to csv file.')
                 ex.exportcsv(filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
             else:
+                logger.error('Invalid file format.')
                 return {
                         'data':'',
                         'message':'Invalid format. Valid formats are .csv and .xlsx',
                         'status':'error'
                         }, 400
+            logger.info('Exported pre-processed data successfully.')
 
             return {
                     'data':'',
                     'message':'Exported!',
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
@@ -409,6 +467,8 @@ class Kmeans(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to cluster documents.')
             try:
                 strrep = args['fname'].split(".",1)[1]
                 fname = args['fname'].replace("."+strrep, "")
@@ -422,15 +482,18 @@ class Kmeans(Resource):
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
             if not args['filepath']:
                 try:
+                    logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
+                    logger.exception('Failed to read datafile')
                     return {
                             'data':'',
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
             else:
+                logger.debug('Reading dataset')
                 ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
@@ -440,11 +503,17 @@ class Kmeans(Resource):
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
+            logger.debug('Calculating tf-idf')
             df = cf.tfidf(text)
+            logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
+            logger.debug('Applying PCA')
             score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            logger.debug('Applying K-Means algorithm')
             frame, scores = kmeans.kmeans_clustering(args['k'],ratio,ISINs, URLs)
+            logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
+            logger.debug('Converting to JSON format')
             datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
             clusts = frame['Cluster'].to_list()
             clusts.sort()
@@ -459,22 +528,28 @@ class Kmeans(Resource):
             for c in clusters:
                 clusters[c] = len(clusters[c])
             
+            logger.debug('Exporting clustering results')
             # export the clustered output to csv/excel file according to the user's requirement
             ex.export(datajson, args['format'], ex.give_filename(args['uname'] + '_' + fname + '_' + 'kmeans results', ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
+            logger.debug('Writting summary')
             ex.write_json(clusters, ex.give_filename(args['uname'] + '_' + 'summary', '.json'))
+            logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename(args['uname'] + '_' + 'cluster', '.json'))
 
             # plots scatter plot and returns it
+            logger.debug('Getting scatter plot for clustered data')
             fig = kmeans.visualize_scatter(args['k'], ratio)
             canvas = FigureCanvas(fig)
             output = io.BytesIO()
             canvas.print_png(output)
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
+            logger.info('Performed clustering successfully')
             return response
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
@@ -495,16 +570,22 @@ class Kmeans(Resource):
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get clustering details.')
             
             try:
+                logger.debug('Reading datafile for clustered data')
                 data = ex.get_recent_file(args['uname'] + '_' + 'cluster')
             except:
+                logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
+            logger.info('Get request for clustered data served successfully')
             return {
                     'data':ex.read_json(data), 
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
@@ -544,6 +625,8 @@ class DBSCAN(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to cluster documents.')
             try:
                 strrep = args['fname'].split(".",1)[1]
                 fname = args['fname'].replace("."+strrep, "")
@@ -557,29 +640,38 @@ class DBSCAN(Resource):
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
             if not args['filepath']:
                 try:
+                    logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
+                    logger.exception('Failed to read datafile')
                     return {
                             'data':'',
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
             else:
+                logger.debug('Reading dataset')
                 ISINs, URLs, text = ex.readdataset(args['filepath'])
-            
+
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
                 args['pca_comp'] = 0.8
-            
-            # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs DBSCAN clustering
+
+            # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
+            logger.debug('Calculating tf-idf')
             df = cf.tfidf(text)
+            logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
+            logger.debug('Applying PCA')
             score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            logger.debug('Applying DBSCAN algorithm')
             frame, scores = dbscan.dbscan_clustering(args['eps'], args['min'], ratio, ISINs, URLs)
+            logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
+            logger.debug('Converting to JSON format')
             datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
             clusts = frame['Cluster'].to_list()
             clusts.sort()
@@ -594,28 +686,35 @@ class DBSCAN(Resource):
             for c in clusters:
                 clusters[c] = len(clusters[c])
             
+            logger.debug('Exporting clustering results')
             # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename('dbscan results', ''))
+            ex.export(datajson, args['format'], ex.give_filename(args['uname'] + '_' + fname + '_' + 'dbscan results', ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
+            logger.debug('Writting summary')
             ex.write_json(clusters, ex.give_filename(args['uname'] + '_' + 'summary', '.json'))
+            logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename(args['uname'] + '_' + 'cluster', '.json'))
 
             # plots scatter plot and returns it
+            logger.debug('Getting scatter plot for clustered data')
             fig = dbscan.visualize_scatter(args['eps'], args['min'], ratio)
             canvas = FigureCanvas(fig)
             output = io.BytesIO()
             canvas.print_png(output)
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
+            logger.info('Performed clustering successfully')
             return response
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
                     'status':'error'
                     }, 400
-            
+    
+    
     def get(self):
         '''
         GET request returns the extracted data back to the user as a JSON object
@@ -630,30 +729,34 @@ class DBSCAN(Resource):
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get clustering details.')
             
             try:
+                logger.debug('Reading datafile for clustered data')
                 data = ex.get_recent_file(args['uname'] + '_' + 'cluster')
             except:
-                return {
-                        'data':'', 
-                        'message':'Error in reading file', 
-                        'status':'error'
-                        }, 400
+                logger.exception('Error in reading datafile')
+                return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
+            logger.info('Get request for clustered data served successfully')
             return {
                     'data':ex.read_json(data), 
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
+
 class Agglomerative(Resource):
     '''
     Performs Agglomerative clustering to group all the documents into various clusters.
     '''
+    
     def post(self):
         '''
         POST request will perform clustering and return a scatter plot providing a visual comprehension of how clustering is done
@@ -680,6 +783,8 @@ class Agglomerative(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to cluster documents.')
             try:
                 strrep = args['fname'].split(".",1)[1]
                 fname = args['fname'].replace("."+strrep, "")
@@ -693,15 +798,18 @@ class Agglomerative(Resource):
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
             if not args['filepath']:
                 try:
+                    logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
+                    logger.exception('Failed to read datafile')
                     return {
                             'data':'',
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
             else:
+                logger.debug('Reading dataset')
                 ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
@@ -711,11 +819,17 @@ class Agglomerative(Resource):
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
+            logger.debug('Calculating tf-idf')
             df = cf.tfidf(text)
+            logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
+            logger.debug('Applying PCA')
             score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            logger.debug('Applying Agglomerative algorithm')
             frame, scores = ag.agglomerative_clustering(args['k'],ratio,ISINs, URLs)
+            logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
+            logger.debug('Converting to JSON format')
             datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
             clusts = frame['Cluster'].to_list()
             clusts.sort()
@@ -730,22 +844,28 @@ class Agglomerative(Resource):
             for c in clusters:
                 clusters[c] = len(clusters[c])
             
+            logger.debug('Exporting clustering results')
             # export the clustered output to csv/excel file according to the user's requirement
             ex.export(datajson, args['format'], ex.give_filename(args['uname'] + '_' + fname + '_' + 'agglomerative results', ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
+            logger.debug('Writting summary')
             ex.write_json(clusters, ex.give_filename(args['uname'] + '_' + 'summary', '.json'))
+            logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename(args['uname'] + '_' + 'cluster', '.json'))
 
             # plots scatter plot and returns it
+            logger.debug('Getting scatter plot for clustered data')
             fig = ag.visualize_scatter(args['k'], ratio)
             canvas = FigureCanvas(fig)
             output = io.BytesIO()
             canvas.print_png(output)
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
+            logger.info('Performed clustering successfully')
             return response
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
@@ -766,26 +886,34 @@ class Agglomerative(Resource):
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get clustering details.')
             
             try:
+                logger.debug('Reading datafile for clustered data')
                 data = ex.get_recent_file(args['uname'] + '_' + 'cluster')
             except:
+                logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
+            logger.info('Get request for clustered data served successfully')
             return {
                     'data':ex.read_json(data), 
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
+
 class Birch(Resource):
     '''
     Performs Birch clustering to group all the documents into various clusters.
     '''
+    
     def post(self):
         '''
         POST request will perform clustering and return a scatter plot providing a visual comprehension of how clustering is done
@@ -812,6 +940,8 @@ class Birch(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to cluster documents.')
             try:
                 strrep = args['fname'].split(".",1)[1]
                 fname = args['fname'].replace("."+strrep, "")
@@ -825,15 +955,18 @@ class Birch(Resource):
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
             if not args['filepath']:
                 try:
+                    logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
+                    logger.exception('Failed to read datafile')
                     return {
                             'data':'',
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
             else:
+                logger.debug('Reading dataset')
                 ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
@@ -843,11 +976,17 @@ class Birch(Resource):
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
+            logger.debug('Calculating tf-idf')
             df = cf.tfidf(text)
+            logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
+            logger.debug('Applying PCA')
             score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            logger.debug('Applying Birch algorithm')
             frame, scores = birch.birch_clustering(args['k'],ratio,ISINs, URLs)
+            logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
+            logger.debug('Converting to JSON format')
             datajson = ex.tojsondf(frame['ISIN'], frame['URL'], frame['Cluster'])
             clusts = frame['Cluster'].to_list()
             clusts.sort()
@@ -862,28 +1001,34 @@ class Birch(Resource):
             for c in clusters:
                 clusters[c] = len(clusters[c])
             
+            logger.debug('Exporting clustering results')
             # export the clustered output to csv/excel file according to the user's requirement
             ex.export(datajson, args['format'], ex.give_filename(args['uname'] + '_' + fname + '_' + 'birch results', ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
+            logger.debug('Writting summary')
             ex.write_json(clusters, ex.give_filename(args['uname'] + '_' + 'summary', '.json'))
+            logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename(args['uname'] + '_' + 'cluster', '.json'))
 
             # plots scatter plot and returns it
+            logger.debug('Getting scatter plot for clustered data')
             fig = birch.visualize_scatter(args['k'], ratio)
             canvas = FigureCanvas(fig)
             output = io.BytesIO()
             canvas.print_png(output)
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
+            logger.info('Performed clustering successfully')
             return response
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
                     'status':'error'
                     }, 400
-    
+
     def get(self):
         '''
         GET request returns the extracted data back to the user as a JSON object
@@ -898,25 +1043,28 @@ class Birch(Resource):
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get clustering details.')
             
             try:
+                logger.debug('Reading datafile for clustered data')
                 data = ex.get_recent_file(args['uname'] + '_' + 'cluster')
             except:
-                return {
-                        'data':'', 
-                        'message':'Error in reading file', 
-                        'status':'error'
-                        }, 400
+                logger.exception('Error in reading datafile')
+                return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
+            logger.info('Get request for clustered data served successfully')
             return {
                     'data':ex.read_json(data), 
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
                     'status':'error'
                     }, 400
+
 
 class ClusterSummary(Resource):
     '''
@@ -936,26 +1084,27 @@ class ClusterSummary(Resource):
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get clustering summary.')            
             
             try:
-                data = ex.get_recent_file(args['uname'] + '_' + 'summary')
+                logger.debug('Reading datafile for clustering summary')
+                data = ex.get_recent_file(args['uname'] + '_' + 'cluster')
             except:
-                return {
-                        'data':'', 
-                        'message':'Error in reading file', 
-                        'status':'error'
-                        }, 400
+                logger.exception('Error in reading datafile')
+                return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
+            logger.info('Get request for clustering summary served successfully')
             return {
-                    'data': ex.read_json(data), 
+                    'data':ex.read_json(data), 
                     'status':'success'
                     }, 200
-        except:
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
                     'message':'Something went wrong',
                     'status':'error'
                     }, 400
-
 
 
 # Adding all URL paths
