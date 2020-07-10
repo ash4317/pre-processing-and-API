@@ -18,6 +18,9 @@ import os
 import datetime
 import userlogs as ul
 import logging
+import concurrent.futures
+import matplotlib as plt
+plt.rcParams.update({'figure.max_open_warning': 0})
 
 # defining program as a flask api
 app = Flask(__name__)
@@ -564,7 +567,10 @@ class Kmeans(Resource):
 
             # plots scatter plot and returns it
             logger.debug('Getting scatter plot for clustered data')
-            fig = kmeans.visualize_scatter(args['k'], ratio)
+            #fig = kmeans.visualize_scatter(args['k'], ratio)
+            with concurrent.futures.ThreadPoolExecutor() as executor:
+                future = executor.submit(kmeans.visualize_scatter, args['k'], ratio)
+                fig = future.result()
             canvas = FigureCanvas(fig)
             output = io.BytesIO()
             canvas.print_png(output)
