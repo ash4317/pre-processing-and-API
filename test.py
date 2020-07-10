@@ -27,8 +27,6 @@ for ISIN in ISINs:
     datajson[ISIN] = URLs[i]    
     i += 1
 json_dumps = json.dumps(datajson)
-print(json_dumps)
-print(type(json_dumps))
 
 #Extract data
 url = "http://127.0.0.1:5000/extract?filepath=ISINS_v3.xlsx&no_of_docs=15&uname=vaishnavi&fname=ISINS_v3.xlsx"
