@@ -2363,3 +2363,796 @@ DEBUG ash4317 2020-07-10 10:36:44,494 - Reading datafile for clustering summary
 INFO ash4317 2020-07-10 10:36:44,494 - Get request for clustering summary served successfully
 INFO werkzeug 2020-07-10 10:36:44,495 - 127.0.0.1 - - [10/Jul/2020 10:36:44] "[37mGET /clustering/summary?uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
 INFO werkzeug 2020-07-10 10:37:41,327 -  * Detected change in 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\userlogs.py', reloading
+INFO ash4317 2020-07-10 11:17:38,030 - Requested to export extracted data.
+ERROR ash4317 2020-07-10 11:17:38,127 - Exception occurred while reading datafile:IndexError('list index out of range')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 202, in post
+    jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 290, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+INFO werkzeug 2020-07-10 11:17:38,131 - 127.0.0.1 - - [10/Jul/2020 11:17:38] "[31m[1mPOST /extract/export?filepath=extract.xlsx&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 400 -
+INFO ash4317 2020-07-10 11:17:38,145 - Requested to pre-process data.
+ERROR ash4317 2020-07-10 11:17:38,146 - Failed to read datafile
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 287, in post
+    jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 290, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+INFO werkzeug 2020-07-10 11:17:38,147 - 127.0.0.1 - - [10/Jul/2020 11:17:38] "[31m[1mPOST /preprocess?steps=url&steps=stemming&steps=lemmatization&steps=stopwords&steps=unusual&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 400 -
+INFO ash4317 2020-07-10 11:17:38,154 - Requested to export pre-processed data.
+DEBUG ash4317 2020-07-10 11:17:38,154 - Reading pre-processed datafile.
+ERROR ash4317 2020-07-10 11:17:38,155 - Error while reading pre-processed datafile.
+INFO werkzeug 2020-07-10 11:17:38,155 - 127.0.0.1 - - [10/Jul/2020 11:17:38] "[31m[1mPOST /preprocess/export?filepath=prep.xlsx&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 400 -
+INFO ash4317 2020-07-10 11:17:38,166 - Requested to cluster documents.
+DEBUG ash4317 2020-07-10 11:17:38,167 - Reading datafile..
+ERROR ash4317 2020-07-10 11:17:38,167 - Failed to read datafile
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 510, in post
+    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 290, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+INFO werkzeug 2020-07-10 11:17:38,168 - 127.0.0.1 - - [10/Jul/2020 11:17:38] "[31m[1mPOST /clustering/kmeans?k=4&format=csv&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 400 -
+INFO werkzeug 2020-07-10 11:17:38,667 -  * Detected change in 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\api.py', reloading
+INFO ash4317 2020-07-10 11:17:50,334 - Requested to extract data.
+DEBUG ash4317 2020-07-10 11:17:50,335 - Extracted links and ISINs from JSON object.
+INFO ash4317 2020-07-10 11:18:16,133 - Requested to extract data.
+DEBUG ash4317 2020-07-10 11:18:16,133 - Extracted links and ISINs from JSON object.
+INFO ash4317 2020-07-10 11:18:44,836 - Made entry for extracted data in datafile successfully.
+INFO werkzeug 2020-07-10 11:18:44,837 - 127.0.0.1 - - [10/Jul/2020 11:18:44] "[37mPOST /extract?no_of_docs=30&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:18:44,846 - Requested to export extracted data.
+INFO ash4317 2020-07-10 11:18:45,163 - Exported successfully
+INFO werkzeug 2020-07-10 11:18:45,164 - 127.0.0.1 - - [10/Jul/2020 11:18:45] "[37mPOST /extract/export?filepath=extract.xlsx&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:18:45,178 - Requested to pre-process data.
+DEBUG ash4317 2020-07-10 11:19:03,246 - Pre-processed data
+DEBUG ash4317 2020-07-10 11:19:03,248 - Made entry of pre-processed data in datafile successfully
+INFO werkzeug 2020-07-10 11:19:03,249 - 127.0.0.1 - - [10/Jul/2020 11:19:03] "[37mPOST /preprocess?steps=url&steps=stemming&steps=lemmatization&steps=stopwords&steps=unusual&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:03,256 - Requested to export pre-processed data.
+DEBUG ash4317 2020-07-10 11:19:03,256 - Reading pre-processed datafile.
+DEBUG ash4317 2020-07-10 11:19:03,257 - Exporting pre-processed data to excel file.
+INFO ash4317 2020-07-10 11:19:03,310 - Exported pre-processed data successfully.
+INFO werkzeug 2020-07-10 11:19:03,310 - 127.0.0.1 - - [10/Jul/2020 11:19:03] "[37mPOST /preprocess/export?filepath=prep.xlsx&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:03,319 - Requested to cluster documents.
+DEBUG ash4317 2020-07-10 11:19:03,320 - Reading datafile..
+DEBUG ash4317 2020-07-10 11:19:03,320 - Calculating tf-idf
+DEBUG ash4317 2020-07-10 11:19:03,355 - Calculating variance threshold
+DEBUG ash4317 2020-07-10 11:19:03,360 - Applying PCA
+DEBUG ash4317 2020-07-10 11:19:03,410 - Applying K-Means algorithm
+DEBUG ash4317 2020-07-10 11:19:03,434 - Sorting clusters
+DEBUG ash4317 2020-07-10 11:19:03,434 - Converting to JSON format
+DEBUG ash4317 2020-07-10 11:19:03,435 - Exporting clustering results
+DEBUG ash4317 2020-07-10 11:19:03,437 - Writting summary
+DEBUG ash4317 2020-07-10 11:19:03,438 - Writting clustering information to datafile
+DEBUG ash4317 2020-07-10 11:19:03,438 - Getting scatter plot for clustered data
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,475 - findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=12.0.
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,475 - findfont: score(<Font 'cmmi10' (cmmi10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'STIXSizeFiveSym' (STIXSizFiveSymReg.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'STIXSizeFourSym' (STIXSizFourSymBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'cmsy10' (cmsy10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'DejaVu Serif' (DejaVuSerif-Bold.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'DejaVu Serif' (DejaVuSerif-Italic.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'STIXNonUnicode' (STIXNonUniBolIta.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'DejaVu Serif' (DejaVuSerif-BoldItalic.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'cmss10' (cmss10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'cmex10' (cmex10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'DejaVu Serif Display' (DejaVuSerifDisplay.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'STIXNonUnicode' (STIXNonUni.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'STIXGeneral' (STIXGeneralItalic.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,476 - findfont: score(<Font 'STIXNonUnicode' (STIXNonUniIta.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'STIXGeneral' (STIXGeneralBolIta.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'cmtt10' (cmtt10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'cmb10' (cmb10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'STIXGeneral' (STIXGeneral.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'DejaVu Sans Mono' (DejaVuSansMono-Bold.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'STIXSizeTwoSym' (STIXSizTwoSymReg.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'cmr10' (cmr10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'STIXGeneral' (STIXGeneralBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'STIXSizeThreeSym' (STIXSizThreeSymBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'DejaVu Sans' (DejaVuSans-BoldOblique.ttf) oblique normal 700 normal>) = 1.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,477 - findfont: score(<Font 'DejaVu Sans Mono' (DejaVuSansMono.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'STIXNonUnicode' (STIXNonUniBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'STIXSizeThreeSym' (STIXSizThreeSymReg.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'DejaVu Sans Mono' (DejaVuSansMono-Oblique.ttf) oblique normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'STIXSizeOneSym' (STIXSizOneSymReg.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'DejaVu Sans' (DejaVuSans-Bold.ttf) normal normal 700 normal>) = 0.33499999999999996
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'DejaVu Sans Display' (DejaVuSansDisplay.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'DejaVu Sans Mono' (DejaVuSansMono-BoldOblique.ttf) oblique normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'STIXSizeOneSym' (STIXSizOneSymBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'DejaVu Serif' (DejaVuSerif.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'STIXSizeTwoSym' (STIXSizTwoSymBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'DejaVu Sans' (DejaVuSans-Oblique.ttf) oblique normal 400 normal>) = 1.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'DejaVu Sans' (DejaVuSans.ttf) normal normal 400 normal>) = 0.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,478 - findfont: score(<Font 'STIXSizeFourSym' (STIXSizFourSymReg.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Nirmala UI' (NirmalaB.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Courier New' (courbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Cambria' (cambriaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Sitka Small' (SitkaI.ttc) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Comic Sans MS' (comicz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Bahnschrift' (bahnschrift.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Segoe UI' (segoeuisl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Times New Roman' (times.ttf) normal normal roman normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Leelawadee UI' (LeelawUI.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Corbel' (corbelli.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Segoe UI' (segoeuil.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Myanmar Text' (mmrtext.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,479 - findfont: score(<Font 'Georgia' (georgiai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Trebuchet MS' (trebucbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Candara' (Candarab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Microsoft YaHei' (msyhbd.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Javanese Text' (javatext.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Comic Sans MS' (comic.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Gadugi' (gadugi.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Georgia' (georgiab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Yu Gothic' (YuGothR.ttc) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Leelawadee UI' (LeelUIsl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Corbel' (corbell.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Segoe MDL2 Assets' (segmdl2.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,480 - findfont: score(<Font 'Microsoft PhagsPa' (phagspa.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Arial' (arialbd.ttf) normal normal 700 normal>) = 6.698636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Calibri' (calibri.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Malgun Gothic' (malgunbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Tahoma' (tahoma.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Yu Gothic' (YuGothB.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Microsoft JhengHei' (msjhl.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Palatino Linotype' (palabi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Segoe UI Emoji' (seguiemj.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Segoe Script' (segoesc.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Constantia' (constan.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Segoe UI' (seguibl.ttf) normal normal black normal>) = 10.525
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Constantia' (constanb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,481 - findfont: score(<Font 'Lucida Console' (lucon.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Arial' (ariali.ttf) italic normal 400 normal>) = 7.413636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Constantia' (constanz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'HoloLens MDL2 Assets' (holomdl2.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Palatino Linotype' (palab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Ebrima' (ebrima.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Nirmala UI' (Nirmala.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Segoe UI Historic' (seguihis.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Sitka Small' (SitkaZ.ttc) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Wingdings' (wingding.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Lucida Console' (lucon.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Microsoft JhengHei' (msjhbd.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Palatino Linotype' (pala.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,482 - findfont: score(<Font 'Trebuchet MS' (trebuc.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Leelawadee UI' (LeelaUIb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Segoe UI' (seguisli.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Consolas' (consolab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Constantia' (constanz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Courier New' (courbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Microsoft YaHei' (msyh.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Corbel' (corbell.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Sitka Small' (Sitka.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Gadugi' (gadugi.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Segoe UI' (seguisli.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,483 - findfont: score(<Font 'Corbel' (corbeli.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'Arial' (arialbi.ttf) italic normal 700 normal>) = 7.698636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'Georgia' (georgia.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'Microsoft Himalaya' (himalaya.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'Segoe UI' (seguibl.ttf) normal normal black normal>) = 10.525
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'MV Boli' (mvboli.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'Segoe Script' (segoesc.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'Times New Roman' (timesbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'Candara' (Candaraz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'Courier New' (couri.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'Microsoft PhagsPa' (phagspab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,484 - findfont: score(<Font 'Microsoft New Tai Lue' (ntailub.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Microsoft Sans Serif' (micross.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Arial' (arial.ttf) normal normal 400 normal>) = 6.413636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'SimSun-ExtB' (simsunb.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Cambria' (cambriai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Microsoft Sans Serif' (micross.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Corbel' (corbelli.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Malgun Gothic' (malgunsl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Microsoft YaHei' (msyhbd.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Yu Gothic' (YuGothB.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Mongolian Baiti' (monbaiti.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Corbel' (corbelz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Candara' (Candaral.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,485 - findfont: score(<Font 'Microsoft YaHei' (msyh.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Symbol' (symbol.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Malgun Gothic' (malgun.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Corbel' (corbelb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Courier New' (cour.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Verdana' (verdana.ttf) normal normal 400 normal>) = 3.6863636363636365
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Trebuchet MS' (trebucit.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Candara' (Candarai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Microsoft PhagsPa' (phagspa.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Candara' (Candaral.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Times New Roman' (timesbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,486 - findfont: score(<Font 'Myanmar Text' (mmrtextb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Malgun Gothic' (malgunbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Segoe UI' (segoeuib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Calibri' (calibril.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Microsoft Tai Le' (taileb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Cambria' (cambria.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Consolas' (consolaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Segoe UI' (segoeuiz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Sitka Small' (SitkaB.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Sitka Small' (SitkaZ.ttc) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Microsoft PhagsPa' (phagspab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Cambria' (cambriab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Segoe Print' (segoeprb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,487 - findfont: score(<Font 'Times New Roman' (timesi.ttf) italic normal roman normal>) = 11.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Sylfaen' (sylfaen.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Microsoft Tai Le' (taileb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Cambria' (cambria.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Wingdings' (wingding.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Ink Free' (Inkfree.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Trebuchet MS' (trebuc.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'MS Gothic' (msgothic.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Ink Free' (Inkfree.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Verdana' (verdana.ttf) normal normal 400 normal>) = 3.6863636363636365
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Myanmar Text' (mmrtext.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Malgun Gothic' (malgunsl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,488 - findfont: score(<Font 'Segoe UI Symbol' (seguisym.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Tahoma' (tahomabd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Myanmar Text' (mmrtextb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Impact' (impact.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Corbel' (corbel.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'MS Gothic' (msgothic.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Segoe UI' (segoeuil.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Comic Sans MS' (comicbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Segoe Print' (segoepr.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Arial' (arialbi.ttf) italic normal 700 normal>) = 7.698636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'MV Boli' (mvboli.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Segoe UI' (seguibli.ttf) italic normal black normal>) = 11.525
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Courier New' (courbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,489 - findfont: score(<Font 'Constantia' (constani.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Nirmala UI' (NirmalaB.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Verdana' (verdanaz.ttf) italic normal 700 normal>) = 4.971363636363637
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Consolas' (consolai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Nirmala UI' (NirmalaS.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Leelawadee UI' (LeelaUIb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Mongolian Baiti' (monbaiti.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Segoe UI Historic' (seguihis.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Cambria' (cambriaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Sitka Small' (SitkaB.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Segoe UI' (seguisb.ttf) normal normal semibold normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Candara' (Candarab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Ebrima' (ebrima.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,490 - findfont: score(<Font 'Segoe Print' (segoepr.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Segoe UI' (segoeuisl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Microsoft YaHei' (msyhl.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'SimSun' (simsun.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Segoe UI' (seguili.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Corbel' (corbelz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Constantia' (constan.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Courier New' (courbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Arial' (ariali.ttf) italic normal 400 normal>) = 7.413636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Microsoft JhengHei' (msjhl.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Nirmala UI' (Nirmala.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Sitka Small' (Sitka.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,491 - findfont: score(<Font 'Verdana' (verdanai.ttf) italic normal 400 normal>) = 4.6863636363636365
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Microsoft Yi Baiti' (msyi.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Comic Sans MS' (comicbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'MingLiU-ExtB' (mingliub.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Yu Gothic' (YuGothL.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Corbel' (corbeli.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Segoe UI' (segoeuii.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Gadugi' (gadugib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Candara' (Candarali.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Consolas' (consolab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Microsoft JhengHei' (msjh.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Microsoft Himalaya' (himalaya.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Franklin Gothic Medium' (framdit.ttf) italic normal medium normal>) = 11.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,492 - findfont: score(<Font 'Calibri' (calibriz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Calibri' (calibrili.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Microsoft New Tai Lue' (ntailu.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Tahoma' (tahomabd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Courier New' (couri.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Sitka Small' (SitkaI.ttc) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Times New Roman' (timesbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Georgia' (georgiaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Calibri' (calibrili.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Verdana' (verdanab.ttf) normal normal 700 normal>) = 3.9713636363636367
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Times New Roman' (timesi.ttf) italic normal roman normal>) = 11.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'SimSun' (simsun.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Yu Gothic' (YuGothM.ttc) normal normal medium normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,493 - findfont: score(<Font 'Calibri' (calibriz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Webdings' (webdings.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Segoe Script' (segoescb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Segoe Script' (segoescb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Verdana' (verdanai.ttf) italic normal 400 normal>) = 4.6863636363636365
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'HoloLens MDL2 Assets' (holomdl2.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Palatino Linotype' (pala.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Microsoft New Tai Lue' (ntailu.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Candara' (Candara.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Segoe UI' (seguisbi.ttf) italic normal semibold normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Candara' (Candaraz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Consolas' (consolaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,494 - findfont: score(<Font 'Georgia' (georgiai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Cambria' (cambriai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Franklin Gothic Medium' (framdit.ttf) italic normal medium normal>) = 11.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Segoe UI' (segoeui.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Arial' (arialbd.ttf) normal normal 700 normal>) = 6.698636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Segoe UI' (seguisb.ttf) normal normal semibold normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Trebuchet MS' (trebucbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Leelawadee UI' (LeelUIsl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Microsoft Tai Le' (taile.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Verdana' (verdanaz.ttf) italic normal 700 normal>) = 4.971363636363637
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Segoe UI' (seguisbi.ttf) italic normal semibold normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Palatino Linotype' (palab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Segoe UI' (seguibli.ttf) italic normal black normal>) = 11.525
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,495 - findfont: score(<Font 'Comic Sans MS' (comicz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Trebuchet MS' (trebucit.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Nirmala UI' (NirmalaS.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Georgia' (georgia.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Arial' (arial.ttf) normal normal 400 normal>) = 6.413636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Ebrima' (ebrimabd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Microsoft JhengHei' (msjh.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Consolas' (consola.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Courier New' (cour.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Ebrima' (ebrimabd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Tahoma' (tahoma.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Microsoft Tai Le' (taile.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Franklin Gothic Medium' (framd.ttf) normal normal medium normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,496 - findfont: score(<Font 'Segoe UI' (segoeuib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Javanese Text' (javatext.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Segoe UI Symbol' (seguisym.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Constantia' (constani.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Times New Roman' (timesbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Gabriola' (Gabriola.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Calibri' (calibril.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Calibri' (calibrib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Candara' (Candara.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Segoe UI Emoji' (seguiemj.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Symbol' (symbol.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,497 - findfont: score(<Font 'Comic Sans MS' (comici.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Leelawadee UI' (LeelawUI.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Gabriola' (Gabriola.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Arial' (ariblk.ttf) normal normal black normal>) = 6.888636363636364
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Consolas' (consolai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Calibri' (calibrib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Sylfaen' (sylfaen.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Trebuchet MS' (trebucbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Microsoft New Tai Lue' (ntailub.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Palatino Linotype' (palabi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Segoe UI' (segoeuiz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Yu Gothic' (YuGothR.ttc) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,498 - findfont: score(<Font 'Microsoft JhengHei' (msjhbd.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Microsoft Yi Baiti' (msyi.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Corbel' (corbelb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Malgun Gothic' (malgun.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Consolas' (consola.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Comic Sans MS' (comic.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'MingLiU-ExtB' (mingliub.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Lucida Sans Unicode' (l_10646.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Segoe UI' (segoeui.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Palatino Linotype' (palai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Calibri' (calibri.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'SimSun-ExtB' (simsunb.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Georgia' (georgiab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,499 - findfont: score(<Font 'Bahnschrift' (bahnschrift.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Trebuchet MS' (trebucbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Yu Gothic' (YuGothL.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Comic Sans MS' (comici.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Segoe MDL2 Assets' (segmdl2.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Gadugi' (gadugib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Yu Gothic' (YuGothM.ttc) normal normal medium normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Candara' (Candarai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Corbel' (corbel.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Verdana' (verdanab.ttf) normal normal 700 normal>) = 3.9713636363636367
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Segoe UI' (seguili.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Franklin Gothic Medium' (framd.ttf) normal normal medium normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,500 - findfont: score(<Font 'Times New Roman' (times.ttf) normal normal roman normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Cambria' (cambriab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Microsoft YaHei' (msyhl.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Arial' (ariblk.ttf) normal normal black normal>) = 6.888636363636364
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Segoe UI' (segoeuii.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Calibri' (calibrii.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Webdings' (webdings.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Impact' (impact.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Segoe Print' (segoeprb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Candara' (Candarali.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Lucida Sans Unicode' (l_10646.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Calibri' (calibrii.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Georgia' (georgiaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,501 - findfont: score(<Font 'Marlett' (marlett.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,502 - findfont: score(<Font 'Palatino Linotype' (palai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,502 - findfont: score(<Font 'Constantia' (constanb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,502 - findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=12.0 to DejaVu Sans ('c:\\python 3.8.2\\lib\\site-packages\\matplotlib\\mpl-data\\fonts\\ttf\\DejaVuSans.ttf') with score of 0.050000.
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,516 - findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0.
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,516 - findfont: score(<Font 'cmmi10' (cmmi10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,516 - findfont: score(<Font 'STIXSizeFiveSym' (STIXSizFiveSymReg.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'STIXSizeFourSym' (STIXSizFourSymBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'cmsy10' (cmsy10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'DejaVu Serif' (DejaVuSerif-Bold.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'DejaVu Serif' (DejaVuSerif-Italic.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'STIXNonUnicode' (STIXNonUniBolIta.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'DejaVu Serif' (DejaVuSerif-BoldItalic.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'cmss10' (cmss10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'cmex10' (cmex10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'DejaVu Serif Display' (DejaVuSerifDisplay.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'STIXNonUnicode' (STIXNonUni.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'STIXGeneral' (STIXGeneralItalic.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,517 - findfont: score(<Font 'STIXNonUnicode' (STIXNonUniIta.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'STIXGeneral' (STIXGeneralBolIta.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'cmtt10' (cmtt10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'cmb10' (cmb10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'STIXGeneral' (STIXGeneral.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'DejaVu Sans Mono' (DejaVuSansMono-Bold.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'STIXSizeTwoSym' (STIXSizTwoSymReg.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'cmr10' (cmr10.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'STIXGeneral' (STIXGeneralBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'STIXSizeThreeSym' (STIXSizThreeSymBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'DejaVu Sans' (DejaVuSans-BoldOblique.ttf) oblique normal 700 normal>) = 1.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'DejaVu Sans Mono' (DejaVuSansMono.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,518 - findfont: score(<Font 'STIXNonUnicode' (STIXNonUniBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'STIXSizeThreeSym' (STIXSizThreeSymReg.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'DejaVu Sans Mono' (DejaVuSansMono-Oblique.ttf) oblique normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'STIXSizeOneSym' (STIXSizOneSymReg.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'DejaVu Sans' (DejaVuSans-Bold.ttf) normal normal 700 normal>) = 0.33499999999999996
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'DejaVu Sans Display' (DejaVuSansDisplay.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'DejaVu Sans Mono' (DejaVuSansMono-BoldOblique.ttf) oblique normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'STIXSizeOneSym' (STIXSizOneSymBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'DejaVu Serif' (DejaVuSerif.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'STIXSizeTwoSym' (STIXSizTwoSymBol.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'DejaVu Sans' (DejaVuSans-Oblique.ttf) oblique normal 400 normal>) = 1.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,519 - findfont: score(<Font 'DejaVu Sans' (DejaVuSans.ttf) normal normal 400 normal>) = 0.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'STIXSizeFourSym' (STIXSizFourSymReg.ttf) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Nirmala UI' (NirmalaB.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Courier New' (courbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Cambria' (cambriaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Sitka Small' (SitkaI.ttc) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Comic Sans MS' (comicz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Bahnschrift' (bahnschrift.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Segoe UI' (segoeuisl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Times New Roman' (times.ttf) normal normal roman normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Leelawadee UI' (LeelawUI.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Corbel' (corbelli.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Segoe UI' (segoeuil.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,520 - findfont: score(<Font 'Myanmar Text' (mmrtext.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Georgia' (georgiai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Trebuchet MS' (trebucbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Candara' (Candarab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Microsoft YaHei' (msyhbd.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Javanese Text' (javatext.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Comic Sans MS' (comic.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Gadugi' (gadugi.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Georgia' (georgiab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Yu Gothic' (YuGothR.ttc) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Leelawadee UI' (LeelUIsl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Corbel' (corbell.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,521 - findfont: score(<Font 'Segoe MDL2 Assets' (segmdl2.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Microsoft PhagsPa' (phagspa.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Arial' (arialbd.ttf) normal normal 700 normal>) = 6.698636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Calibri' (calibri.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Malgun Gothic' (malgunbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Tahoma' (tahoma.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Yu Gothic' (YuGothB.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Microsoft JhengHei' (msjhl.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Palatino Linotype' (palabi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Segoe UI Emoji' (seguiemj.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Segoe Script' (segoesc.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Constantia' (constan.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Segoe UI' (seguibl.ttf) normal normal black normal>) = 10.525
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,522 - findfont: score(<Font 'Constantia' (constanb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Lucida Console' (lucon.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Arial' (ariali.ttf) italic normal 400 normal>) = 7.413636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Constantia' (constanz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'HoloLens MDL2 Assets' (holomdl2.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Palatino Linotype' (palab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Ebrima' (ebrima.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Nirmala UI' (Nirmala.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Segoe UI Historic' (seguihis.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Sitka Small' (SitkaZ.ttc) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Wingdings' (wingding.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Lucida Console' (lucon.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Microsoft JhengHei' (msjhbd.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,523 - findfont: score(<Font 'Palatino Linotype' (pala.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Trebuchet MS' (trebuc.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Leelawadee UI' (LeelaUIb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Segoe UI' (seguisli.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Consolas' (consolab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Constantia' (constanz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Courier New' (courbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Microsoft YaHei' (msyh.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Corbel' (corbell.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Sitka Small' (Sitka.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Gadugi' (gadugi.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Segoe UI' (seguisli.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Corbel' (corbeli.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,524 - findfont: score(<Font 'Arial' (arialbi.ttf) italic normal 700 normal>) = 7.698636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Georgia' (georgia.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Microsoft Himalaya' (himalaya.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Segoe UI' (seguibl.ttf) normal normal black normal>) = 10.525
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'MV Boli' (mvboli.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Segoe Script' (segoesc.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Times New Roman' (timesbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Candara' (Candaraz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Courier New' (couri.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Microsoft PhagsPa' (phagspab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Microsoft New Tai Lue' (ntailub.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Microsoft Sans Serif' (micross.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'Arial' (arial.ttf) normal normal 400 normal>) = 6.413636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,525 - findfont: score(<Font 'SimSun-ExtB' (simsunb.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Cambria' (cambriai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Microsoft Sans Serif' (micross.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Corbel' (corbelli.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Malgun Gothic' (malgunsl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Microsoft YaHei' (msyhbd.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Yu Gothic' (YuGothB.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Mongolian Baiti' (monbaiti.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Corbel' (corbelz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Candara' (Candaral.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Microsoft YaHei' (msyh.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Symbol' (symbol.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Malgun Gothic' (malgun.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,526 - findfont: score(<Font 'Corbel' (corbelb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Courier New' (cour.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Verdana' (verdana.ttf) normal normal 400 normal>) = 3.6863636363636365
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Trebuchet MS' (trebucit.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Candara' (Candarai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Microsoft PhagsPa' (phagspa.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Candara' (Candaral.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Times New Roman' (timesbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Myanmar Text' (mmrtextb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Malgun Gothic' (malgunbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Segoe UI' (segoeuib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Calibri' (calibril.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,527 - findfont: score(<Font 'Microsoft Tai Le' (taileb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Cambria' (cambria.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Consolas' (consolaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Segoe UI' (segoeuiz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Sitka Small' (SitkaB.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Sitka Small' (SitkaZ.ttc) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Microsoft PhagsPa' (phagspab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Cambria' (cambriab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Segoe Print' (segoeprb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Times New Roman' (timesi.ttf) italic normal roman normal>) = 11.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Sylfaen' (sylfaen.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Microsoft Tai Le' (taileb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Cambria' (cambria.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,528 - findfont: score(<Font 'Wingdings' (wingding.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Ink Free' (Inkfree.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Trebuchet MS' (trebuc.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'MS Gothic' (msgothic.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Ink Free' (Inkfree.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Verdana' (verdana.ttf) normal normal 400 normal>) = 3.6863636363636365
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Myanmar Text' (mmrtext.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Malgun Gothic' (malgunsl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Segoe UI Symbol' (seguisym.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Tahoma' (tahomabd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Myanmar Text' (mmrtextb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Impact' (impact.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,529 - findfont: score(<Font 'Corbel' (corbel.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'MS Gothic' (msgothic.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'Segoe UI' (segoeuil.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'Comic Sans MS' (comicbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'Segoe Print' (segoepr.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'Arial' (arialbi.ttf) italic normal 700 normal>) = 7.698636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'MV Boli' (mvboli.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'Segoe UI' (seguibli.ttf) italic normal black normal>) = 11.525
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'Courier New' (courbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'Constantia' (constani.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'Nirmala UI' (NirmalaB.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'Verdana' (verdanaz.ttf) italic normal 700 normal>) = 4.971363636363637
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,530 - findfont: score(<Font 'Consolas' (consolai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Nirmala UI' (NirmalaS.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Leelawadee UI' (LeelaUIb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Mongolian Baiti' (monbaiti.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Segoe UI Historic' (seguihis.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Cambria' (cambriaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Sitka Small' (SitkaB.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Segoe UI' (seguisb.ttf) normal normal semibold normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Candara' (Candarab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Ebrima' (ebrima.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Segoe Print' (segoepr.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Segoe UI' (segoeuisl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,531 - findfont: score(<Font 'Microsoft YaHei' (msyhl.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'SimSun' (simsun.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'Segoe UI' (seguili.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'Corbel' (corbelz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'Constantia' (constan.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'Courier New' (courbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'Arial' (ariali.ttf) italic normal 400 normal>) = 7.413636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'Microsoft JhengHei' (msjhl.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'Nirmala UI' (Nirmala.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'Sitka Small' (Sitka.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'Verdana' (verdanai.ttf) italic normal 400 normal>) = 4.6863636363636365
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,532 - findfont: score(<Font 'Microsoft Yi Baiti' (msyi.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Comic Sans MS' (comicbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'MingLiU-ExtB' (mingliub.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Yu Gothic' (YuGothL.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Corbel' (corbeli.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Segoe UI' (segoeuii.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Gadugi' (gadugib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Candara' (Candarali.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Consolas' (consolab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Microsoft JhengHei' (msjh.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Microsoft Himalaya' (himalaya.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Franklin Gothic Medium' (framdit.ttf) italic normal medium normal>) = 11.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,533 - findfont: score(<Font 'Calibri' (calibriz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Calibri' (calibrili.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Microsoft New Tai Lue' (ntailu.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Tahoma' (tahomabd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Courier New' (couri.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Sitka Small' (SitkaI.ttc) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Times New Roman' (timesbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Georgia' (georgiaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Calibri' (calibrili.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Verdana' (verdanab.ttf) normal normal 700 normal>) = 3.9713636363636367
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Times New Roman' (timesi.ttf) italic normal roman normal>) = 11.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'SimSun' (simsun.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Yu Gothic' (YuGothM.ttc) normal normal medium normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,534 - findfont: score(<Font 'Calibri' (calibriz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Webdings' (webdings.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Segoe Script' (segoescb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Segoe Script' (segoescb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Verdana' (verdanai.ttf) italic normal 400 normal>) = 4.6863636363636365
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'HoloLens MDL2 Assets' (holomdl2.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Palatino Linotype' (pala.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Microsoft New Tai Lue' (ntailu.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Candara' (Candara.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Segoe UI' (seguisbi.ttf) italic normal semibold normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Candara' (Candaraz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Consolas' (consolaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Georgia' (georgiai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,535 - findfont: score(<Font 'Cambria' (cambriai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Franklin Gothic Medium' (framdit.ttf) italic normal medium normal>) = 11.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Segoe UI' (segoeui.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Arial' (arialbd.ttf) normal normal 700 normal>) = 6.698636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Segoe UI' (seguisb.ttf) normal normal semibold normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Trebuchet MS' (trebucbi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Leelawadee UI' (LeelUIsl.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Microsoft Tai Le' (taile.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Verdana' (verdanaz.ttf) italic normal 700 normal>) = 4.971363636363637
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Segoe UI' (seguisbi.ttf) italic normal semibold normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Palatino Linotype' (palab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Segoe UI' (seguibli.ttf) italic normal black normal>) = 11.525
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Comic Sans MS' (comicz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,536 - findfont: score(<Font 'Trebuchet MS' (trebucit.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Nirmala UI' (NirmalaS.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Georgia' (georgia.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Arial' (arial.ttf) normal normal 400 normal>) = 6.413636363636363
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Ebrima' (ebrimabd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Microsoft JhengHei' (msjh.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Consolas' (consola.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Courier New' (cour.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Ebrima' (ebrimabd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Tahoma' (tahoma.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Microsoft Tai Le' (taile.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Franklin Gothic Medium' (framd.ttf) normal normal medium normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,537 - findfont: score(<Font 'Segoe UI' (segoeuib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Javanese Text' (javatext.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Segoe UI Symbol' (seguisym.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Constantia' (constani.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Times New Roman' (timesbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Gabriola' (Gabriola.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Calibri' (calibril.ttf) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Calibri' (calibrib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Candara' (Candara.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Segoe UI Emoji' (seguiemj.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Symbol' (symbol.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Comic Sans MS' (comici.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,538 - findfont: score(<Font 'Leelawadee UI' (LeelawUI.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Gabriola' (Gabriola.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Arial' (ariblk.ttf) normal normal black normal>) = 6.888636363636364
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Consolas' (consolai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Calibri' (calibrib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Sylfaen' (sylfaen.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Trebuchet MS' (trebucbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Microsoft New Tai Lue' (ntailub.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Palatino Linotype' (palabi.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Segoe UI' (segoeuiz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Yu Gothic' (YuGothR.ttc) normal normal regular normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Microsoft JhengHei' (msjhbd.ttc) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Microsoft Yi Baiti' (msyi.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,539 - findfont: score(<Font 'Corbel' (corbelb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'Malgun Gothic' (malgun.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'Consolas' (consola.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'Comic Sans MS' (comic.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'MingLiU-ExtB' (mingliub.ttc) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'Lucida Sans Unicode' (l_10646.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'Segoe UI' (segoeui.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'Palatino Linotype' (palai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'Calibri' (calibri.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'SimSun-ExtB' (simsunb.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'Georgia' (georgiab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'Bahnschrift' (bahnschrift.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,540 - findfont: score(<Font 'Trebuchet MS' (trebucbd.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Yu Gothic' (YuGothL.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Comic Sans MS' (comici.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Segoe MDL2 Assets' (segmdl2.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Gadugi' (gadugib.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Yu Gothic' (YuGothM.ttc) normal normal medium normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Candara' (Candarai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Corbel' (corbel.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Verdana' (verdanab.ttf) normal normal 700 normal>) = 3.9713636363636367
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Segoe UI' (seguili.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Franklin Gothic Medium' (framd.ttf) normal normal medium normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Times New Roman' (times.ttf) normal normal roman normal>) = 10.145
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,541 - findfont: score(<Font 'Cambria' (cambriab.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Microsoft YaHei' (msyhl.ttc) normal normal light normal>) = 10.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Arial' (ariblk.ttf) normal normal black normal>) = 6.888636363636364
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Segoe UI' (segoeuii.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Calibri' (calibrii.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Webdings' (webdings.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Impact' (impact.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Segoe Print' (segoeprb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Candara' (Candarali.ttf) italic normal light normal>) = 11.24
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Lucida Sans Unicode' (l_10646.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Calibri' (calibrii.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Georgia' (georgiaz.ttf) italic normal 700 normal>) = 11.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Marlett' (marlett.ttf) normal normal 400 normal>) = 10.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,542 - findfont: score(<Font 'Palatino Linotype' (palai.ttf) italic normal 400 normal>) = 11.05
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,543 - findfont: score(<Font 'Constantia' (constanb.ttf) normal normal 700 normal>) = 10.335
+DEBUG matplotlib.font_manager 2020-07-10 11:19:03,543 - findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('c:\\python 3.8.2\\lib\\site-packages\\matplotlib\\mpl-data\\fonts\\ttf\\DejaVuSans.ttf') with score of 0.050000.
+INFO ash4317 2020-07-10 11:19:03,583 - Performed clustering successfully
+INFO werkzeug 2020-07-10 11:19:03,584 - 127.0.0.1 - - [10/Jul/2020 11:19:03] "[37mPOST /clustering/kmeans?k=4&format=csv&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:06,779 - Requested to get clustering details.
+DEBUG ash4317 2020-07-10 11:19:06,779 - Reading datafile for clustered data
+INFO ash4317 2020-07-10 11:19:06,779 - Get request for clustered data served successfully
+INFO werkzeug 2020-07-10 11:19:06,780 - 127.0.0.1 - - [10/Jul/2020 11:19:06] "[37mGET /clustering/kmeans?uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:06,790 - Requested to get clustering summary.
+DEBUG ash4317 2020-07-10 11:19:06,791 - Reading datafile for clustering summary
+INFO ash4317 2020-07-10 11:19:06,791 - Get request for clustering summary served successfully
+INFO werkzeug 2020-07-10 11:19:06,792 - 127.0.0.1 - - [10/Jul/2020 11:19:06] "[37mGET /clustering/summary?uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:06,802 - Requested to cluster documents.
+DEBUG ash4317 2020-07-10 11:19:06,802 - Reading datafile..
+DEBUG ash4317 2020-07-10 11:19:06,803 - Calculating tf-idf
+DEBUG ash4317 2020-07-10 11:19:06,829 - Calculating variance threshold
+DEBUG ash4317 2020-07-10 11:19:06,834 - Applying PCA
+DEBUG ash4317 2020-07-10 11:19:06,848 - Applying DBSCAN algorithm
+DEBUG ash4317 2020-07-10 11:19:06,854 - Sorting clusters
+DEBUG ash4317 2020-07-10 11:19:06,855 - Converting to JSON format
+DEBUG ash4317 2020-07-10 11:19:06,856 - Exporting clustering results
+DEBUG ash4317 2020-07-10 11:19:06,857 - Writting summary
+DEBUG ash4317 2020-07-10 11:19:06,858 - Writting clustering information to datafile
+DEBUG ash4317 2020-07-10 11:19:06,859 - Getting scatter plot for clustered data
+INFO ash4317 2020-07-10 11:19:06,919 - Performed clustering successfully
+INFO werkzeug 2020-07-10 11:19:06,920 - 127.0.0.1 - - [10/Jul/2020 11:19:06] "[37mPOST /clustering/dbscan?eps=0.3&min=1&format=csv&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:08,314 - Requested to get clustering details.
+DEBUG ash4317 2020-07-10 11:19:08,315 - Reading datafile for clustered data
+INFO ash4317 2020-07-10 11:19:08,315 - Get request for clustered data served successfully
+INFO werkzeug 2020-07-10 11:19:08,316 - 127.0.0.1 - - [10/Jul/2020 11:19:08] "[37mGET /clustering/dbscan?uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:08,327 - Requested to get clustering summary.
+DEBUG ash4317 2020-07-10 11:19:08,327 - Reading datafile for clustering summary
+INFO ash4317 2020-07-10 11:19:08,327 - Get request for clustering summary served successfully
+INFO werkzeug 2020-07-10 11:19:08,328 - 127.0.0.1 - - [10/Jul/2020 11:19:08] "[37mGET /clustering/summary?uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:08,339 - Requested to cluster documents.
+DEBUG ash4317 2020-07-10 11:19:08,339 - Reading datafile..
+DEBUG ash4317 2020-07-10 11:19:08,340 - Calculating tf-idf
+DEBUG ash4317 2020-07-10 11:19:08,374 - Calculating variance threshold
+DEBUG ash4317 2020-07-10 11:19:08,379 - Applying PCA
+DEBUG ash4317 2020-07-10 11:19:08,392 - Applying Agglomerative algorithm
+DEBUG ash4317 2020-07-10 11:19:08,409 - Sorting clusters
+DEBUG ash4317 2020-07-10 11:19:08,409 - Converting to JSON format
+DEBUG ash4317 2020-07-10 11:19:08,410 - Exporting clustering results
+DEBUG ash4317 2020-07-10 11:19:08,411 - Writting summary
+DEBUG ash4317 2020-07-10 11:19:08,413 - Writting clustering information to datafile
+DEBUG ash4317 2020-07-10 11:19:08,414 - Getting scatter plot for clustered data
+INFO ash4317 2020-07-10 11:19:08,490 - Performed clustering successfully
+INFO werkzeug 2020-07-10 11:19:08,491 - 127.0.0.1 - - [10/Jul/2020 11:19:08] "[37mPOST /clustering/agglomerative?k=5&format=csv&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:09,882 - Requested to get clustering details.
+DEBUG ash4317 2020-07-10 11:19:09,882 - Reading datafile for clustered data
+INFO ash4317 2020-07-10 11:19:09,883 - Get request for clustered data served successfully
+INFO werkzeug 2020-07-10 11:19:09,885 - 127.0.0.1 - - [10/Jul/2020 11:19:09] "[37mGET /clustering/agglomerative?uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:09,908 - Requested to get clustering summary.
+DEBUG ash4317 2020-07-10 11:19:09,908 - Reading datafile for clustering summary
+INFO ash4317 2020-07-10 11:19:09,909 - Get request for clustering summary served successfully
+INFO werkzeug 2020-07-10 11:19:09,911 - 127.0.0.1 - - [10/Jul/2020 11:19:09] "[37mGET /clustering/summary?uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:09,933 - Requested to cluster documents.
+DEBUG ash4317 2020-07-10 11:19:09,933 - Reading datafile..
+DEBUG ash4317 2020-07-10 11:19:09,935 - Calculating tf-idf
+DEBUG ash4317 2020-07-10 11:19:10,042 - Calculating variance threshold
+DEBUG ash4317 2020-07-10 11:19:10,053 - Applying PCA
+DEBUG ash4317 2020-07-10 11:19:10,083 - Applying Birch algorithm
+DEBUG ash4317 2020-07-10 11:19:10,095 - Sorting clusters
+DEBUG ash4317 2020-07-10 11:19:10,097 - Converting to JSON format
+DEBUG ash4317 2020-07-10 11:19:10,099 - Exporting clustering results
+DEBUG ash4317 2020-07-10 11:19:10,102 - Writting summary
+DEBUG ash4317 2020-07-10 11:19:10,103 - Writting clustering information to datafile
+DEBUG ash4317 2020-07-10 11:19:10,105 - Getting scatter plot for clustered data
+INFO ash4317 2020-07-10 11:19:10,244 - Performed clustering successfully
+INFO werkzeug 2020-07-10 11:19:10,245 - 127.0.0.1 - - [10/Jul/2020 11:19:10] "[37mPOST /clustering/birch?k=5&format=csv&uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:12,617 - Requested to get clustering details.
+DEBUG ash4317 2020-07-10 11:19:12,618 - Reading datafile for clustered data
+INFO ash4317 2020-07-10 11:19:12,618 - Get request for clustered data served successfully
+INFO werkzeug 2020-07-10 11:19:12,619 - 127.0.0.1 - - [10/Jul/2020 11:19:12] "[37mGET /clustering/birch?uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
+INFO ash4317 2020-07-10 11:19:12,632 - Requested to get clustering summary.
+DEBUG ash4317 2020-07-10 11:19:12,632 - Reading datafile for clustering summary
+INFO ash4317 2020-07-10 11:19:12,632 - Get request for clustering summary served successfully
+INFO werkzeug 2020-07-10 11:19:12,633 - 127.0.0.1 - - [10/Jul/2020 11:19:12] "[37mGET /clustering/summary?uname=ash4317&fname=ISINS_v3.xlsx HTTP/1.1[0m" 200 -
