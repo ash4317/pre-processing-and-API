@@ -3,9 +3,6 @@ Performs DBSCAN clustering
 '''
 
 # Modules imported
-from sklearn.cluster import KMeans
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn import metrics
@@ -34,7 +31,7 @@ def dbscan_clustering(db_eps, min_points, tfidf, isin_list, urllist):
     print(f"Davies Bouldin score: {db}")
     print("\n")
     '''
-    return frame, scores
+    return frame, scores, clusters
 
 
 def visualize_scatter(db_eps, min_points, tfidf):

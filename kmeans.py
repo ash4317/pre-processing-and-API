@@ -33,7 +33,7 @@ def kmeans_clustering(k,tfidf,isin_list, urllist): #isin_list is the list of ISI
     print(f"Davies Bouldin score: {db}")
     print("\n")
     '''
-    return frame, scores
+    return frame, scores, clusters
 
 
 def visualize_scatter(k, tfidf):

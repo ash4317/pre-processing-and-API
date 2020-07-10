@@ -34,7 +34,7 @@ def agglomerative_clustering(k, tfidf, isin_list, urllist):
     print(f"Davies Bouldin score: {db}")
     print("\n")
     '''
-    return frame, scores
+    return frame, scores, clusters
 
 
 def visualize_scatter(k, tfidf):
