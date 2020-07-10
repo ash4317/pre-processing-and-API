@@ -832,3 +832,179 @@ ValueError: not enough values to unpack (expected 3, got 2)
 2020-07-10 15:03:58,424 ash4317 INFO Requested to get clustering summary.
 2020-07-10 15:03:58,425 ash4317 DEBUG Reading datafile for clustering summary
 2020-07-10 15:03:58,426 ash4317 INFO Get request for clustering summary served successfully
+2020-07-10 15:23:08,796 ash4317 INFO Requested to extract data.
+2020-07-10 15:23:08,796 ash4317 DEBUG Extracted links and ISINs from JSON object.
+2020-07-10 15:23:28,944 ash4317 INFO Made entry for extracted data in datafile successfully.
+2020-07-10 15:23:28,952 ash4317 INFO Requested to export extracted data.
+2020-07-10 15:23:29,077 ash4317 INFO Exported successfully
+2020-07-10 15:23:29,087 ash4317 INFO Requested to pre-process data.
+2020-07-10 15:23:43,440 ash4317 DEBUG Pre-processed data
+2020-07-10 15:23:43,441 ash4317 DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-10 15:23:43,451 ash4317 INFO Requested to export pre-processed data.
+2020-07-10 15:23:43,452 ash4317 DEBUG Reading pre-processed datafile.
+2020-07-10 15:23:43,453 ash4317 DEBUG Exporting pre-processed data to excel file.
+2020-07-10 15:23:43,484 ash4317 INFO Exported pre-processed data successfully.
+2020-07-10 15:23:43,493 ash4317 INFO Requested to cluster documents.
+2020-07-10 15:23:43,493 ash4317 DEBUG Reading datafile..
+2020-07-10 15:23:43,494 ash4317 DEBUG Calculating tf-idf
+2020-07-10 15:23:43,526 ash4317 DEBUG Calculating variance threshold
+2020-07-10 15:23:43,531 ash4317 DEBUG Applying PCA
+2020-07-10 15:23:43,545 ash4317 DEBUG Applying K-Means algorithm
+2020-07-10 15:23:43,567 ash4317 DEBUG Sorting clusters
+2020-07-10 15:23:43,568 ash4317 DEBUG Converting to JSON format
+2020-07-10 15:23:43,569 ash4317 DEBUG Exporting clustering results
+2020-07-10 15:23:43,570 ash4317 DEBUG Writting summary
+2020-07-10 15:23:43,571 ash4317 DEBUG Writting clustering information to datafile
+2020-07-10 15:23:43,572 ash4317 DEBUG Getting scatter plot for clustered data
+2020-07-10 15:23:43,716 ash4317 INFO Performed clustering successfully
+2020-07-10 15:23:45,683 ash4317 INFO Requested to get clustering details.
+2020-07-10 15:23:45,683 ash4317 DEBUG Reading datafile for clustered data
+2020-07-10 15:23:45,684 ash4317 INFO Get request for clustered data served successfully
+2020-07-10 15:23:45,706 ash4317 INFO Requested to get clustering summary.
+2020-07-10 15:23:45,706 ash4317 DEBUG Reading datafile for clustering summary
+2020-07-10 15:23:45,707 ash4317 INFO Get request for clustering summary served successfully
+2020-07-10 15:23:45,721 ash4317 INFO Requested to cluster documents.
+2020-07-10 15:23:45,721 ash4317 DEBUG Reading datafile..
+2020-07-10 15:23:45,723 ash4317 DEBUG Calculating tf-idf
+2020-07-10 15:23:45,786 ash4317 DEBUG Calculating variance threshold
+2020-07-10 15:23:45,795 ash4317 DEBUG Applying PCA
+2020-07-10 15:23:45,823 ash4317 DEBUG Applying DBSCAN algorithm
+2020-07-10 15:23:45,835 ash4317 DEBUG Sorting clusters
+2020-07-10 15:23:45,837 ash4317 DEBUG Converting to JSON format
+2020-07-10 15:23:45,839 ash4317 DEBUG Exporting clustering results
+2020-07-10 15:23:45,841 ash4317 DEBUG Writting summary
+2020-07-10 15:23:45,843 ash4317 DEBUG Writting clustering information to datafile
+2020-07-10 15:23:45,844 ash4317 DEBUG Getting scatter plot for clustered data
+2020-07-10 15:23:45,969 ash4317 INFO Performed clustering successfully
+2020-07-10 15:23:47,492 ash4317 INFO Requested to get clustering details.
+2020-07-10 15:23:47,493 ash4317 DEBUG Reading datafile for clustered data
+2020-07-10 15:23:47,493 ash4317 INFO Get request for clustered data served successfully
+2020-07-10 15:23:47,520 ash4317 INFO Requested to get clustering summary.
+2020-07-10 15:23:47,521 ash4317 DEBUG Reading datafile for clustering summary
+2020-07-10 15:23:47,522 ash4317 INFO Get request for clustering summary served successfully
+2020-07-10 15:23:47,539 ash4317 INFO Requested to cluster documents.
+2020-07-10 15:23:47,540 ash4317 DEBUG Reading datafile..
+2020-07-10 15:23:47,542 ash4317 DEBUG Calculating tf-idf
+2020-07-10 15:23:47,612 ash4317 DEBUG Calculating variance threshold
+2020-07-10 15:23:47,622 ash4317 DEBUG Applying PCA
+2020-07-10 15:23:47,651 ash4317 DEBUG Applying Agglomerative algorithm
+2020-07-10 15:23:47,677 ash4317 DEBUG Sorting clusters
+2020-07-10 15:23:47,677 ash4317 DEBUG Converting to JSON format
+2020-07-10 15:23:47,678 ash4317 DEBUG Exporting clustering results
+2020-07-10 15:23:47,680 ash4317 DEBUG Writting summary
+2020-07-10 15:23:47,680 ash4317 DEBUG Writting clustering information to datafile
+2020-07-10 15:23:47,681 ash4317 DEBUG Getting scatter plot for clustered data
+2020-07-10 15:23:47,743 ash4317 INFO Performed clustering successfully
+2020-07-10 15:23:49,020 ash4317 INFO Requested to get clustering details.
+2020-07-10 15:23:49,020 ash4317 DEBUG Reading datafile for clustered data
+2020-07-10 15:23:49,021 ash4317 INFO Get request for clustered data served successfully
+2020-07-10 15:23:49,033 ash4317 INFO Requested to get clustering summary.
+2020-07-10 15:23:49,033 ash4317 DEBUG Reading datafile for clustering summary
+2020-07-10 15:23:49,033 ash4317 INFO Get request for clustering summary served successfully
+2020-07-10 15:23:49,039 ash4317 INFO Requested to cluster documents.
+2020-07-10 15:23:49,040 ash4317 DEBUG Reading datafile..
+2020-07-10 15:23:49,040 ash4317 DEBUG Calculating tf-idf
+2020-07-10 15:23:49,068 ash4317 DEBUG Calculating variance threshold
+2020-07-10 15:23:49,073 ash4317 DEBUG Applying PCA
+2020-07-10 15:23:49,087 ash4317 DEBUG Applying Birch algorithm
+2020-07-10 15:23:49,092 ash4317 DEBUG Sorting clusters
+2020-07-10 15:23:49,093 ash4317 DEBUG Converting to JSON format
+2020-07-10 15:23:49,094 ash4317 DEBUG Exporting clustering results
+2020-07-10 15:23:49,095 ash4317 DEBUG Writting summary
+2020-07-10 15:23:49,096 ash4317 DEBUG Writting clustering information to datafile
+2020-07-10 15:23:49,097 ash4317 DEBUG Getting scatter plot for clustered data
+2020-07-10 15:23:49,156 ash4317 INFO Performed clustering successfully
+2020-07-10 15:23:50,437 ash4317 INFO Requested to get clustering details.
+2020-07-10 15:23:50,438 ash4317 DEBUG Reading datafile for clustered data
+2020-07-10 15:23:50,438 ash4317 INFO Get request for clustered data served successfully
+2020-07-10 15:23:50,450 ash4317 INFO Requested to get clustering summary.
+2020-07-10 15:23:50,450 ash4317 DEBUG Reading datafile for clustering summary
+2020-07-10 15:23:50,450 ash4317 INFO Get request for clustering summary served successfully
+2020-07-10 15:31:01,169 ash4317 INFO Requested to extract data.
+2020-07-10 15:31:01,169 ash4317 DEBUG Extracted links and ISINs from JSON object.
+2020-07-10 15:31:19,405 ash4317 INFO Made entry for extracted data in datafile successfully.
+2020-07-10 15:31:19,415 ash4317 INFO Requested to export extracted data.
+2020-07-10 15:31:19,626 ash4317 INFO Exported successfully
+2020-07-10 15:31:19,636 ash4317 INFO Requested to pre-process data.
+2020-07-10 15:31:31,823 ash4317 DEBUG Pre-processed data
+2020-07-10 15:31:31,824 ash4317 DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-10 15:31:31,834 ash4317 INFO Requested to export pre-processed data.
+2020-07-10 15:31:31,834 ash4317 DEBUG Reading pre-processed datafile.
+2020-07-10 15:31:31,835 ash4317 DEBUG Exporting pre-processed data to excel file.
+2020-07-10 15:31:31,872 ash4317 INFO Exported pre-processed data successfully.
+2020-07-10 15:31:31,882 ash4317 INFO Requested to cluster documents.
+2020-07-10 15:31:31,882 ash4317 DEBUG Reading datafile..
+2020-07-10 15:31:31,882 ash4317 DEBUG Calculating tf-idf
+2020-07-10 15:31:31,909 ash4317 DEBUG Calculating variance threshold
+2020-07-10 15:31:31,914 ash4317 DEBUG Applying PCA
+2020-07-10 15:31:31,928 ash4317 DEBUG Applying K-Means algorithm
+2020-07-10 15:31:31,952 ash4317 DEBUG Sorting clusters
+2020-07-10 15:31:31,952 ash4317 DEBUG Converting to JSON format
+2020-07-10 15:31:31,953 ash4317 DEBUG Exporting clustering results
+2020-07-10 15:31:31,955 ash4317 DEBUG Writting summary
+2020-07-10 15:31:31,956 ash4317 DEBUG Writting clustering information to datafile
+2020-07-10 15:31:31,956 ash4317 DEBUG Getting scatter plot for clustered data
+2020-07-10 15:31:32,037 ash4317 INFO Performed clustering successfully
+2020-07-10 15:31:33,689 ash4317 INFO Requested to get clustering details.
+2020-07-10 15:31:33,689 ash4317 DEBUG Reading datafile for clustered data
+2020-07-10 15:31:33,690 ash4317 INFO Get request for clustered data served successfully
+2020-07-10 15:31:33,716 ash4317 INFO Requested to get clustering summary.
+2020-07-10 15:31:33,717 ash4317 DEBUG Reading datafile for clustering summary
+2020-07-10 15:31:33,717 ash4317 INFO Get request for clustering summary served successfully
+2020-07-10 15:31:33,734 ash4317 INFO Requested to cluster documents.
+2020-07-10 15:31:33,734 ash4317 DEBUG Reading datafile..
+2020-07-10 15:31:33,736 ash4317 DEBUG Calculating tf-idf
+2020-07-10 15:31:33,795 ash4317 DEBUG Calculating variance threshold
+2020-07-10 15:31:33,811 ash4317 DEBUG Applying PCA
+2020-07-10 15:31:33,843 ash4317 DEBUG Applying DBSCAN algorithm
+2020-07-10 15:31:33,856 ash4317 DEBUG Sorting clusters
+2020-07-10 15:31:33,857 ash4317 DEBUG Converting to JSON format
+2020-07-10 15:31:33,859 ash4317 DEBUG Exporting clustering results
+2020-07-10 15:31:33,863 ash4317 DEBUG Writting summary
+2020-07-10 15:31:33,865 ash4317 DEBUG Writting clustering information to datafile
+2020-07-10 15:31:33,867 ash4317 DEBUG Getting scatter plot for clustered data
+2020-07-10 15:31:34,007 ash4317 INFO Performed clustering successfully
+2020-07-10 15:31:35,588 ash4317 INFO Requested to get clustering details.
+2020-07-10 15:31:35,588 ash4317 DEBUG Reading datafile for clustered data
+2020-07-10 15:31:35,589 ash4317 INFO Get request for clustered data served successfully
+2020-07-10 15:31:35,622 ash4317 INFO Requested to get clustering summary.
+2020-07-10 15:31:35,622 ash4317 DEBUG Reading datafile for clustering summary
+2020-07-10 15:31:35,623 ash4317 INFO Get request for clustering summary served successfully
+2020-07-10 15:31:35,639 ash4317 INFO Requested to cluster documents.
+2020-07-10 15:31:35,639 ash4317 DEBUG Reading datafile..
+2020-07-10 15:31:35,641 ash4317 DEBUG Calculating tf-idf
+2020-07-10 15:31:35,734 ash4317 DEBUG Calculating variance threshold
+2020-07-10 15:31:35,743 ash4317 DEBUG Applying PCA
+2020-07-10 15:31:35,755 ash4317 DEBUG Applying Agglomerative algorithm
+2020-07-10 15:31:35,760 ash4317 DEBUG Sorting clusters
+2020-07-10 15:31:35,760 ash4317 DEBUG Converting to JSON format
+2020-07-10 15:31:35,762 ash4317 DEBUG Exporting clustering results
+2020-07-10 15:31:35,763 ash4317 DEBUG Writting summary
+2020-07-10 15:31:35,764 ash4317 DEBUG Writting clustering information to datafile
+2020-07-10 15:31:35,765 ash4317 DEBUG Getting scatter plot for clustered data
+2020-07-10 15:31:35,944 ash4317 INFO Performed clustering successfully
+2020-07-10 15:31:37,251 ash4317 INFO Requested to get clustering details.
+2020-07-10 15:31:37,252 ash4317 DEBUG Reading datafile for clustered data
+2020-07-10 15:31:37,252 ash4317 INFO Get request for clustered data served successfully
+2020-07-10 15:31:37,264 ash4317 INFO Requested to get clustering summary.
+2020-07-10 15:31:37,264 ash4317 DEBUG Reading datafile for clustering summary
+2020-07-10 15:31:37,264 ash4317 INFO Get request for clustering summary served successfully
+2020-07-10 15:31:37,270 ash4317 INFO Requested to cluster documents.
+2020-07-10 15:31:37,270 ash4317 DEBUG Reading datafile..
+2020-07-10 15:31:37,271 ash4317 DEBUG Calculating tf-idf
+2020-07-10 15:31:37,299 ash4317 DEBUG Calculating variance threshold
+2020-07-10 15:31:37,305 ash4317 DEBUG Applying PCA
+2020-07-10 15:31:37,319 ash4317 DEBUG Applying Birch algorithm
+2020-07-10 15:31:37,326 ash4317 DEBUG Sorting clusters
+2020-07-10 15:31:37,326 ash4317 DEBUG Converting to JSON format
+2020-07-10 15:31:37,327 ash4317 DEBUG Exporting clustering results
+2020-07-10 15:31:37,328 ash4317 DEBUG Writting summary
+2020-07-10 15:31:37,329 ash4317 DEBUG Writting clustering information to datafile
+2020-07-10 15:31:37,330 ash4317 DEBUG Getting scatter plot for clustered data
+2020-07-10 15:31:37,395 ash4317 INFO Performed clustering successfully
+2020-07-10 15:31:38,795 ash4317 INFO Requested to get clustering details.
+2020-07-10 15:31:38,795 ash4317 DEBUG Reading datafile for clustered data
+2020-07-10 15:31:38,796 ash4317 INFO Get request for clustered data served successfully
+2020-07-10 15:31:38,809 ash4317 INFO Requested to get clustering summary.
+2020-07-10 15:31:38,809 ash4317 DEBUG Reading datafile for clustering summary
+2020-07-10 15:31:38,809 ash4317 INFO Get request for clustering summary served successfully
