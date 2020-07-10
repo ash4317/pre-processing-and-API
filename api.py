@@ -67,7 +67,7 @@ class ExtractData(Resource):
                 args['no_of_docs'] = 'all'
             ISINs, URLs, text = ex.extract(ISINs, URLs, args['no_of_docs'])
             jsondata = ex.tojson(ISINs, URLs, text)
-            ex.write_json(jsondata, ex.give_filename(args['uname'] + '_' + fname + '_' + 'extract', '.json'))
+            ex.write_json(jsondata, ex.give_filename('extract_' + args['uname'] + '_' + fname, '.json'))
             return {
                     'data':'',
                     'message':'Data extracted',
@@ -107,7 +107,7 @@ class ExtractData(Resource):
             except:
                 fname = args['fname']
             try:
-                data = ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'extract')
+                data = ex.get_recent_file('extract_' + args['uname'] + '_' + fname)
             except:
                 return {
                         'data':'', 
@@ -158,7 +158,7 @@ class ExportExtractedData(Resource):
             except:
                 fname = args['fname']
             try:
-                jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'extract'))
+                jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
                 ISINs, URLs, text = ex.jsontolists(jsondata)
             except:
                 return {
@@ -171,9 +171,9 @@ class ExportExtractedData(Resource):
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             if ex.check(args['filepath'], '.xlsx'):
-                ex.exportexcel(filename = args['filepath'], datalist = [ISINs, URLs, text])
+                ex.exportexcel(args['uname'], args['fname'], filename = args['filepath'], datalist = [ISINs, URLs, text])
             elif ex.check(args['filepath'], '.csv'):
-                ex.exportcsv(filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
+                ex.exportcsv(args['uname'], args['fname'], filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
             else:
                 return {
                         'data':'',
@@ -233,7 +233,7 @@ class PreProcess(Resource):
             # if external filepath for extracted data is not given, then this means that extraction is done using this API itself and is stored in the file "extract.json"
             if not args['filepath']:
                 try:
-                    jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'extract'))
+                    jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     return {
@@ -249,7 +249,7 @@ class PreProcess(Resource):
             jsondata = ex.tojson(ISINs, URLs, data)
 
             # writes the pre-processed text into the file "preprocess.json"
-            ex.write_json(jsondata, ex.give_filename(args['uname'] + '_' + fname + '_' + 'preprocess', '.json'))
+            ex.write_json(jsondata, ex.give_filename('preprocess_' + args['uname'] + '_' + fname, '.json'))
             return {
                     'data':'',
                     'message':'Pre-processed!',
@@ -289,7 +289,7 @@ class PreProcess(Resource):
             except:
                 fname = args['fname']
             try:
-                data = ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess')
+                data = ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname)
             except:
                 return {
                         'data':'', 
@@ -342,7 +342,7 @@ class ExportPrepData(Resource):
             except:
                 fname = args['fname']
             try:
-                jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess'))
+                jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
                 ISINs, URLs, text = ex.jsontolists(jsondata)
             except:
                 return {
@@ -355,9 +355,9 @@ class ExportPrepData(Resource):
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             if ex.check(args['filepath'], '.xlsx'):
-                ex.exportexcel(filename = args['filepath'], datalist = [ISINs, URLs, text])
+                ex.exportexcel(args['uname'], args['fname'], filename = args['filepath'], datalist = [ISINs, URLs, text])
             elif ex.check(args['filepath'], '.csv'):
-                ex.exportcsv(filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
+                ex.exportcsv(args['uname'], args['fname'], filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
             else:
                 return {
                         'data':'',
@@ -422,7 +422,7 @@ class Kmeans(Resource):
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
             if not args['filepath']:
                 try:
-                    jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess'))
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     return {
@@ -460,11 +460,11 @@ class Kmeans(Resource):
                 clusters[c] = len(clusters[c])
             
             # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename(args['uname'] + '_' + fname + '_' + 'kmeans results', ''))
+            ex.export(datajson, args['format'], ex.give_filename('kmeans results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
-            ex.write_json(clusters, ex.give_filename(args['uname'] + '_' + 'summary', '.json'))
-            ex.write_json(datajson, ex.give_filename(args['uname'] + '_' + 'cluster', '.json'))
+            ex.write_json(clusters, ex.give_filename('summary_' + args['uname'], '.json'))
+            ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
             # plots scatter plot and returns it
             fig = kmeans.visualize_scatter(args['k'], ratio)
@@ -497,7 +497,7 @@ class Kmeans(Resource):
                         }, 400
             
             try:
-                data = ex.get_recent_file(args['uname'] + '_' + 'cluster')
+                data = ex.get_recent_file('cluster_' + args['uname'])
             except:
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
             return {
@@ -557,7 +557,7 @@ class DBSCAN(Resource):
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
             if not args['filepath']:
                 try:
-                    jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess'))
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     return {
@@ -595,11 +595,11 @@ class DBSCAN(Resource):
                 clusters[c] = len(clusters[c])
             
             # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename('dbscan results', ''))
+            ex.export(datajson, args['format'], ex.give_filename('dbscan results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
-            ex.write_json(clusters, ex.give_filename(args['uname'] + '_' + 'summary', '.json'))
-            ex.write_json(datajson, ex.give_filename(args['uname'] + '_' + 'cluster', '.json'))
+            ex.write_json(clusters, ex.give_filename('summary_' + args['uname'], '.json'))
+            ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
             # plots scatter plot and returns it
             fig = dbscan.visualize_scatter(args['eps'], args['min'], ratio)
@@ -632,7 +632,7 @@ class DBSCAN(Resource):
                         }, 400
             
             try:
-                data = ex.get_recent_file(args['uname'] + '_' + 'cluster')
+                data = ex.get_recent_file('cluster_' + args['uname'])
             except:
                 return {
                         'data':'', 
@@ -693,7 +693,7 @@ class Agglomerative(Resource):
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
             if not args['filepath']:
                 try:
-                    jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess'))
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     return {
@@ -731,11 +731,11 @@ class Agglomerative(Resource):
                 clusters[c] = len(clusters[c])
             
             # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename(args['uname'] + '_' + fname + '_' + 'agglomerative results', ''))
+            ex.export(datajson, args['format'], ex.give_filename('agglomerative results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
-            ex.write_json(clusters, ex.give_filename(args['uname'] + '_' + 'summary', '.json'))
-            ex.write_json(datajson, ex.give_filename(args['uname'] + '_' + 'cluster', '.json'))
+            ex.write_json(clusters, ex.give_filename('summary_' + args['uname'], '.json'))
+            ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
             # plots scatter plot and returns it
             fig = ag.visualize_scatter(args['k'], ratio)
@@ -768,7 +768,7 @@ class Agglomerative(Resource):
                         }, 400
             
             try:
-                data = ex.get_recent_file(args['uname'] + '_' + 'cluster')
+                data = ex.get_recent_file('cluster_' + args['uname'])
             except:
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
             return {
@@ -825,7 +825,7 @@ class Birch(Resource):
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
             if not args['filepath']:
                 try:
-                    jsondata = ex.read_json(ex.get_recent_file(args['uname'] + '_' + fname + '_' + 'preprocess'))
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     return {
@@ -863,11 +863,11 @@ class Birch(Resource):
                 clusters[c] = len(clusters[c])
             
             # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename(args['uname'] + '_' + fname + '_' + 'birch results', ''))
+            ex.export(datajson, args['format'], ex.give_filename('birch results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
-            ex.write_json(clusters, ex.give_filename(args['uname'] + '_' + 'summary', '.json'))
-            ex.write_json(datajson, ex.give_filename(args['uname'] + '_' + 'cluster', '.json'))
+            ex.write_json(clusters, ex.give_filename('summary_' + args['uname'], '.json'))
+            ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
             # plots scatter plot and returns it
             fig = birch.visualize_scatter(args['k'], ratio)
@@ -900,7 +900,7 @@ class Birch(Resource):
                         }, 400
             
             try:
-                data = ex.get_recent_file(args['uname'] + '_' + 'cluster')
+                data = ex.get_recent_file('cluster_' + args['uname'])
             except:
                 return {
                         'data':'', 
@@ -938,7 +938,7 @@ class ClusterSummary(Resource):
                         }, 400
             
             try:
-                data = ex.get_recent_file(args['uname'] + '_' + 'summary')
+                data = ex.get_recent_file('summary_' + args['uname'])
             except:
                 return {
                         'data':'', 
