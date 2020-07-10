@@ -1189,6 +1189,280 @@ class ClusterSummary(Resource):
                     }, 400
 
 
+
+class Elbow(Resource):
+    '''
+    Plots elbow curve and return optimal k value
+    '''
+    def post(self):
+        '''
+        POST request will return a elbow curve of different k values for Kmeans clustering
+        '''
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
+            parser.add_argument('thresh', type=float)
+            parser.add_argument('pca_comp', type=float)
+            parser.add_argument('uname', type=str)
+            parser.add_argument('fname', type=str)
+            args = parser.parse_args()
+            # exception handling and adding entry into the log file
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+            if not args['fname']:
+                return {
+                        'data':'',
+                        'message':'Give file name',
+                        'status':'error'
+                        }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to plot elbow curve.')
+            try:
+                strrep = args['fname'].split('.', 1)[1]
+                fname = args['fname'].replace('.' + strrep, '')
+            except:
+                fname = args['fname']
+
+            # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
+            if not args['filepath']:
+                try:
+                    logger.debug('Reading datafile..')
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                    ISINs, URLs, text = ex.jsontolists(jsondata)
+                except:
+                    logger.exception('Failed to read datafile')
+                    return {
+                            'data':'',
+                            'message':'Failed to read data!',
+                            'status':'error'
+                            }, 400
+            else:
+                logger.debug('Reading dataset')
+                ISINs, URLs, text = ex.readdataset(args['filepath'])
+
+            # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
+            if not args['thresh']:
+                args['thresh'] = 0.0001
+            if not args['pca_comp']:
+                args['pca_comp'] = 0.8
+
+            # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
+            logger.debug('Calculating tf-idf')
+            df = cf.tfidf(text)
+            logger.debug('Calculating variance threshold')
+            tfidf = cf.varThresh_tfidf(df, args['thresh'])
+            logger.debug('Applying PCA')
+            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+
+            # plots elbow curve ad returns it
+            logger.debug('Plotting elbow curve')
+            fig, K = kmeans.visualize_elbow(len(ISINs),ratio)
+            canvas = FigureCanvas(fig)
+            output = io.BytesIO()
+            canvas.print_png(output)
+            response = make_response(output.getvalue())
+            response.mimetype = 'image/png'
+            logger.info('Plotted elbow curve successfully')
+            logger.info('Optimal value of k is: ',K)
+
+            # writes optimal k value into "optK.json" 
+            logger.debug('Writing optimal k value')
+            ex.write_json(int(K), ex.give_filename('elbow_k_' + args['uname'], '.json'))
+
+            return response
+                        
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+    def get(self):
+        '''
+        GET request returns the optimal k value
+        '''
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('uname', type=str)
+            args = parser.parse_args()
+            # exception handling and adding entry into the log file
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get optimal k value')
+            
+            try:
+                logger.debug('Reading datafile for optimal k value after elbow method')
+                data = ex.get_recent_file('elbow_k_' + args['uname'])
+            except:
+                logger.exception('Error in reading datafile')
+                return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
+            logger.info('Get request for optimal k value served successfully')
+            return {
+                    'data':ex.read_json(data), 
+                    'status':'success'
+                    }, 200
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+
+class Silhouette(Resource):
+    '''
+    Performs k means clustering to group all the documents into various clusters.
+    '''
+    def post(self):
+        '''
+        POST request will perform clustering and return a scatter plot providing a visual comprehension of how clustering is done
+        '''
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
+            parser.add_argument('thresh', type=float)
+            parser.add_argument('pca_comp', type=float)
+            parser.add_argument('uname', type=str)
+            parser.add_argument('fname', type=str)
+            args = parser.parse_args()
+            # exception handling and adding entry into the log file
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+            if not args['fname']:
+                return {
+                        'data':'',
+                        'message':'Give file name',
+                        'status':'error'
+                        }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested for optimal value of K using Silhouette.')
+            try:
+                strrep = args['fname'].split('.', 1)[1]
+                fname = args['fname'].replace('.' + strrep, '')
+            except:
+                fname = args['fname']
+
+            # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
+            if not args['filepath']:
+                try:
+                    logger.debug('Reading datafile..')
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                    ISINs, URLs, text = ex.jsontolists(jsondata)
+                except:
+                    logger.exception('Failed to read datafile')
+                    return {
+                            'data':'',
+                            'message':'Failed to read data!',
+                            'status':'error'
+                            }, 400
+            else:
+                logger.debug('Reading dataset')
+                ISINs, URLs, text = ex.readdataset(args['filepath'])
+
+            # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
+            if not args['thresh']:
+                args['thresh'] = 0.0001
+            if not args['pca_comp']:
+                args['pca_comp'] = 0.8
+
+            # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
+            logger.debug('Calculating tf-idf')
+            df = cf.tfidf(text)
+            logger.debug('Calculating variance threshold')
+            tfidf = cf.varThresh_tfidf(df, args['thresh'])
+            logger.debug('Applying PCA')
+            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            jsonk = ex.read_json(ex.get_recent_file('elbow_k_' + args['uname']))
+            kn_knee = int(jsonk)
+            logger.debug('Applying silhouette coefficient')
+            # plots elbow curve ad returns it
+            logger.debug('Plotting silhouette score')
+            fig, optimal_k = kmeans.silhouetteScore(len(ISINs), ratio, kn_knee)
+            canvas = FigureCanvas(fig)
+            output = io.BytesIO()
+            canvas.print_png(output)
+            response = make_response(output.getvalue())
+            response.mimetype = 'image/png'
+            logger.info('Plotted silhouette score successfully')
+            logger.info('Optimal value of k is: ',optimal_k)
+
+            # writes optimal k value into "optK.json" 
+            logger.debug('Writting optimal k')
+            ex.write_json(int(optimal_k), ex.give_filename('optimal_k_' + args['uname'], '.json'))
+
+            return response
+                        
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+    
+    def get(self):
+        '''
+        GET request returns the optimal k value
+        '''
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('uname', type=str)
+            args = parser.parse_args()
+            # exception handling and adding entry into the log file
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get optimal k value')
+            
+            try:
+                logger.debug('Reading datafile for optimal k value after silhouette')
+                data = ex.get_recent_file('optimal_k_' + args['uname'])
+            except:
+                logger.exception('Error in reading datafile')
+                return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
+            logger.info('Get request for optimal k value served successfully')
+            return {
+                    'data':ex.read_json(data), 
+                    'status':'success'
+                    }, 200
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+
 # Adding all URL paths
 api.add_resource(ExtractData, '/extract')
 api.add_resource(ExportExtractedData, '/extract/export')
@@ -1199,6 +1473,8 @@ api.add_resource(DBSCAN, '/clustering/dbscan')
 api.add_resource(Agglomerative, '/clustering/agglomerative')
 api.add_resource(Birch, '/clustering/birch')
 api.add_resource(ClusterSummary, '/clustering/summary')
+api.add_resource(Elbow, '/clustering/elbow')
+api.add_resource(Silhouette, '/clustering/silhouette')
 
 
 # main function
