@@ -1143,6 +1143,7 @@ class ClusterSummary(Resource):
         try:
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
+            parser.add_argument('content_type', type=str)
             args = parser.parse_args()
             # exception handling and adding entry into the log file
             if not args['uname']:
@@ -1151,6 +1152,8 @@ class ClusterSummary(Resource):
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+            if not args['content_type']:
+                args['content_type'] = 'summary'
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering summary.')            
             
@@ -1161,8 +1164,18 @@ class ClusterSummary(Resource):
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
             logger.info('Get request for clustering summary served successfully')
+
+            # returns summary of clustering
+            if args['content_type'] == 'summary':
             return {
                     'data':ex.read_json(data)['summary'], 
+                    'status':'success'
+                    }, 200
+            
+            # returns cluster number of every document
+            else args['content_type'] == 'clust':
+            return {
+                    'data':ex.read_json(data)['clust'], 
                     'status':'success'
                     }, 200
         
