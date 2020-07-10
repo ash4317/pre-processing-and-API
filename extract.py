@@ -43,11 +43,11 @@ def append_list_as_row(file_name, list_of_elem):
         csv_writer.writerow(list_of_elem)
     
 
-def exportcsv(filename='export.csv', field1 = [], field2 = [], field3 = [], fields=['ISIN', 'Termsheet Link', 'Text']):
+def exportcsv(uname, fname, filename='export.csv', field1 = [], field2 = [], field3 = [], fields=['ISIN', 'Termsheet Link', 'Text']):
     '''
     Export all the data in the fields into a csv file (by default, "export.csv")
     '''
-    filename = give_filename(filename.split('.')[0], '.' + filename.split('.')[1])
+    filename = give_filename(filename.split('.')[0] + '_' + uname + '_' + fname, '.' + filename.split('.')[1])
     if os.path.isfile(filename):
         os.remove(filename)
     append_list_as_row(filename, fields)
@@ -57,11 +57,11 @@ def exportcsv(filename='export.csv', field1 = [], field2 = [], field3 = [], fiel
         i += 1
 
 
-def exportexcel(filename='export.xlsx', datalist=[], fields=['ISIN', 'Termsheet Link', 'Text']):
+def exportexcel(uname, fname, filename='export.xlsx', datalist=[], fields=['ISIN', 'Termsheet Link', 'Text']):
     '''
     Exports data in the form of excel file, datalist is a list of lists, fields is a list of fields
     '''
-    filename = give_filename(filename.split('.')[0], '.' + filename.split('.')[1])
+    filename = give_filename(filename.split('.')[0] + '_' + uname + '_' + fname, '.' + filename.split('.')[1])
     workbook = Workbook(filename)
     worksheet = workbook.add_worksheet()
     cell_format = workbook.add_format({'bold': True})
