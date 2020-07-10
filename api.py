@@ -537,7 +537,7 @@ class Kmeans(Resource):
             logger.debug('Applying PCA')
             score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying K-Means algorithm')
-            frame, scores = kmeans.kmeans_clustering(args['k'],ratio,ISINs, URLs)
+            frame, scores, clust = kmeans.kmeans_clustering(args['k'],ratio,ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -555,13 +555,17 @@ class Kmeans(Resource):
             for c in clusters:
                 clusters[c] = len(clusters[c])
             
+            
+            clusterData = dict()
+            clusterData['clust'] = clust
+            clusterData['summary'] = clusters
             logger.debug('Exporting clustering results')
             # export the clustered output to csv/excel file according to the user's requirement
             ex.export(datajson, args['format'], ex.give_filename('kmeans results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
-            ex.write_json(clusters, ex.give_filename('summary_' + args['uname'], '.json'))
+            ex.write_json(clusterData, ex.give_filename('summary_' + args['uname'], '.json'))
             logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
@@ -704,7 +708,7 @@ class DBSCAN(Resource):
             logger.debug('Applying PCA')
             score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying DBSCAN algorithm')
-            frame, scores = dbscan.dbscan_clustering(args['eps'], args['min'], ratio, ISINs, URLs)
+            frame, scores, clust = dbscan.dbscan_clustering(args['eps'], args['min'], ratio, ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -722,13 +726,16 @@ class DBSCAN(Resource):
             for c in clusters:
                 clusters[c] = len(clusters[c])
             
+            clusterData = dict()
+            clusterData['clust'] = clust
+            clusterData['summary'] = clusters
             logger.debug('Exporting clustering results')
             # export the clustered output to csv/excel file according to the user's requirement
             ex.export(datajson, args['format'], ex.give_filename('dbscan results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
-            ex.write_json(clusters, ex.give_filename('summary_' + args['uname'], '.json'))
+            ex.write_json(clusterData, ex.give_filename('summary_' + args['uname'], '.json'))
             logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
@@ -868,7 +875,7 @@ class Agglomerative(Resource):
             logger.debug('Applying PCA')
             score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying Agglomerative algorithm')
-            frame, scores = ag.agglomerative_clustering(args['k'],ratio,ISINs, URLs)
+            frame, scores, clust = ag.agglomerative_clustering(args['k'],ratio,ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -886,13 +893,16 @@ class Agglomerative(Resource):
             for c in clusters:
                 clusters[c] = len(clusters[c])
             
+            clusterData = dict()
+            clusterData['clust'] = clust
+            clusterData['summary'] = clusters
             logger.debug('Exporting clustering results')
             # export the clustered output to csv/excel file according to the user's requirement
             ex.export(datajson, args['format'], ex.give_filename('agglomerative results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
-            ex.write_json(clusters, ex.give_filename('summary_' + args['uname'], '.json'))
+            ex.write_json(clusterData, ex.give_filename('summary_' + args['uname'], '.json'))
             logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
@@ -1031,7 +1041,7 @@ class Birch(Resource):
             logger.debug('Applying PCA')
             score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying Birch algorithm')
-            frame, scores = birch.birch_clustering(args['k'],ratio,ISINs, URLs)
+            frame, scores, clust = birch.birch_clustering(args['k'],ratio,ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -1049,13 +1059,16 @@ class Birch(Resource):
             for c in clusters:
                 clusters[c] = len(clusters[c])
             
+            clusterData = dict()
+            clusterData['clust'] = clust
+            clusterData['summary'] = clusters
             logger.debug('Exporting clustering results')
             # export the clustered output to csv/excel file according to the user's requirement
             ex.export(datajson, args['format'], ex.give_filename('birch results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
-            ex.write_json(clusters, ex.give_filename('summary_' + args['uname'], '.json'))
+            ex.write_json(clusterData, ex.give_filename('summary_' + args['uname'], '.json'))
             logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
@@ -1143,13 +1156,13 @@ class ClusterSummary(Resource):
             
             try:
                 logger.debug('Reading datafile for clustering summary')
-                data = ex.get_recent_file('cluster_' + args['uname'])
+                data = ex.get_recent_file('summary_' + args['uname'])
             except:
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
             logger.info('Get request for clustering summary served successfully')
             return {
-                    'data':ex.read_json(data), 
+                    'data':ex.read_json(data)['summary'], 
                     'status':'success'
                     }, 200
         
