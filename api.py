@@ -1173,7 +1173,7 @@ class ClusterSummary(Resource):
                         }, 200
             
             # returns cluster number of every document
-            else args['content_type'] == 'clust':
+            else:
                 return {
                         'data':ex.read_json(data)['clust'], 
                         'status':'success'
