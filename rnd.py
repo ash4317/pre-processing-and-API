@@ -106,7 +106,7 @@ plt.ylabel("WCSS")
 plt.title("K-means with PCA clustering")
 plt.vlines(kn.knee, plt.ylim()[0], plt.ylim()[1], linestyles='dashed')
 plt.show()
-print(kn.knee)
+print(f"Optimal value of k from elbow curve: {kn.knee}")
 
 
 #using silhoette coef scores in the neighbourhood points
@@ -143,4 +143,4 @@ plt.xlabel("No.of Clusters")
 plt.ylabel("Silhouette Scores")
 plt.title("Silhouette score variation")
 plt.show()
-print(optimal_k)
+print(f"Optimal value of k from silhouette scores: {optimal_k}")
