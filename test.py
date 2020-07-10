@@ -66,11 +66,9 @@ r = requests.get(url=url)
 print(r.text)
 
 # Get clustered data
-url = "http://127.0.0.1:5000/clustering/summary?uname=ash4317&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/summary?uname=ash4317"
 r = requests.get(url=url)
 print(r.text)
-
-
 
 #Perform DBSCAN clustering
 url = "http://127.0.0.1:5000/clustering/dbscan?eps=0.3&min=1&format=csv&uname=ash4317&fname=ISINS_v3.xlsx"
