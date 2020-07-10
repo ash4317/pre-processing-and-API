@@ -829,3 +829,6 @@ ValueError: not enough values to unpack (expected 3, got 2)
 2020-07-10 15:03:58,393 ash4317 INFO Requested to get clustering details.
 2020-07-10 15:03:58,394 ash4317 DEBUG Reading datafile for clustered data
 2020-07-10 15:03:58,395 ash4317 INFO Get request for clustered data served successfully
+2020-07-10 15:03:58,424 ash4317 INFO Requested to get clustering summary.
+2020-07-10 15:03:58,425 ash4317 DEBUG Reading datafile for clustering summary
+2020-07-10 15:03:58,426 ash4317 INFO Get request for clustering summary served successfully
