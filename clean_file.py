@@ -18,7 +18,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.decomposition import PCA
 
-nltk.download('words')
 
 
 # some lists defined which are referred to later for text cleaning
