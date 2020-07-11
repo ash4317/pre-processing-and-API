@@ -1299,7 +1299,6 @@ class Elbow(Resource):
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Plotted elbow curve successfully')
-            logger.info('Optimal value of k is: ',K)
 
             # writes optimal k value into "optK.json" 
             logger.debug('Writing optimal k value')
@@ -1440,7 +1439,6 @@ class Silhouette(Resource):
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Plotted silhouette score successfully')
-            logger.info('Optimal value of k is: ',optimal_k)
 
             # writes optimal k value into "optK.json" 
             logger.debug('Writting optimal k')

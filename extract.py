@@ -99,7 +99,8 @@ def extract(isinList, urlList, no_of_docs):
 
         # only extract data from ".htm" files
         r = check(url, ".htm")
-        if r == 1:
+        s = check(url, ".html")
+        if r == 1 or s == 1:
 
             # check if url is valid
             try:
