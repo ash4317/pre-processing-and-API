@@ -3,38 +3,52 @@ The main flask REST API which uses all the other created modules and performs cl
 '''
 
 # Modules imported
-from flask import Flask, request, make_response, send_file
+from flask import Flask, request, make_response, send_file, jsonify
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from flask_restful import Api, Resource, reqparse
-import extract as ex
-import clean_file as cf
-import kmeans
-import dbscan
-import birch
-import agglomerative as ag
+from urllib.request import urlopen
 import json
 import io
 import os
 import datetime
-import userlogs as ul
-import logging
 import concurrent.futures
 import matplotlib as plt
-plt.rcParams.update({'figure.max_open_warning': 0})
+plt.rcParams.update({'figure.max_open_warning': 0}) # To suppress Matplotlib warning for multiple figures
+
+# The below two imports are for the
+# programs for brute-force and non
+# brute force methods
+import BruteForceReportGen
+import NonBruteForceReportGen
+import extract as ex        # Module for web scrapping and file operations
+import clean_file as cf     # Module for pre-processing
+# Modules for clustering algorithms
+import kmeans
+import dbscan
+import birch
+import agglomerative as ag
+import userlogs as ul       # Module for creating user-specific log files
+import logging
 
 # defining program as a flask api
 app = Flask(__name__)
 api = Api(app)
 
 
-# to find the log file
+# Set directory for all log files
 cwd = os.getcwd()
 LOG_FOLDER = os.path.join(cwd,'LOGS')
+# Set parameters for root log file
 LOG_FORMAT = "%(levelname)s %(name)s %(asctime)s - %(message)s"
 logging.basicConfig(filename=os.path.join(LOG_FOLDER, 'rootlog.log'), level=logging.DEBUG, format= LOG_FORMAT)
 logger = logging.getLogger()
 
-  
+
+# Defining the Global Parameters for ReportGeneration here
+tempLoc = "./Templates"
+keyListLoc = "./keys.txt"
+JSON_file_Location = "./JSONdumps/"
+
 
 class ExtractData(Resource):
     '''
@@ -50,7 +64,7 @@ class ExtractData(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -63,6 +77,8 @@ class ExtractData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to extract data.')
             try:
@@ -117,7 +133,7 @@ class ExtractData(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -130,6 +146,8 @@ class ExtractData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get extracted data.')
             try:
@@ -138,6 +156,7 @@ class ExtractData(Resource):
             except:
                 fname = args['fname']
             try:
+                logger.debug('Searching for requested datafile')
                 data = ex.get_recent_file('extract_' + args['uname'] + '_' + fname)
             
             # error message if traceback occurs
@@ -151,7 +170,8 @@ class ExtractData(Resource):
             
             logger.info('Get request served successfully')
             return {
-                    'data':ex.read_json(data), 
+                    'data':ex.read_json(data),  
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -179,7 +199,7 @@ class ExportExtractedData(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -193,6 +213,7 @@ class ExportExtractedData(Resource):
                         'status':'error'
                         }, 400
             
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to export extracted data.')
 
@@ -213,13 +234,18 @@ class ExportExtractedData(Resource):
                         'message':'Could not fetch data to export',
                         'status':'error'
                         }, 400
+            logger.debug('Checking if filepath already exists')
             if os.path.exists(args['filepath']):
+                logger.warning('Filepath already exists. File will be overridden.')
                 os.remove(args['filepath'])
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
+            logger.debug('Checking if filepath has valid format')
             if ex.check(args['filepath'], '.xlsx'):
+                logger.debug('Exporting data to excel file')
                 ex.exportexcel(args['uname'], args['fname'], filename = args['filepath'], datalist = [ISINs, URLs, text])
             elif ex.check(args['filepath'], '.csv'):
+                logger.debug('Exporting data to csv file')
                 ex.exportcsv(args['uname'], args['fname'], filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
             else:
                 logger.error('Invalid format for export file')
@@ -228,6 +254,7 @@ class ExportExtractedData(Resource):
                         'message':'Invalid format. Valid formats are .csv and .xlsx',
                         'status':'error'
                         }, 400
+            # Return success message
             logger.info('Exported successfully')
             return {
                     'data':'',
@@ -263,7 +290,7 @@ class PreProcess(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -276,6 +303,8 @@ class PreProcess(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to pre-process data.')
             try:
@@ -287,6 +316,7 @@ class PreProcess(Resource):
             # if external filepath for extracted data is not given, then this means that extraction is done using this API itself and is stored in the file "extract_username_filename_date_time.json"
             if not args['filepath']:
                 try:
+                    logger.debug('Reading data from datafile')
                     jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
@@ -301,11 +331,13 @@ class PreProcess(Resource):
                 ISINs, URLs, text = ex.readdataset(args['filepath'])
             
             # text pre-processing function call
+            logger.debug('Pre-processing text data')
             data = cf.preprocessing(text, args['steps'])
             jsondata = ex.tojson(ISINs, URLs, data)
             logger.debug('Pre-processed data')
             
             # writes the pre-processed text into the file "preprocess.json"
+            logger.debug('Writting pre-processed data to datafile')
             ex.write_json(jsondata, ex.give_filename('preprocess_' + args['uname'] + '_' + fname, '.json'))
             logger.debug('Made entry of pre-processed data in datafile successfully')
 
@@ -333,7 +365,7 @@ class PreProcess(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -346,6 +378,8 @@ class PreProcess(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get pre-processed data.')
             try:
@@ -353,11 +387,12 @@ class PreProcess(Resource):
                 fname = args['fname'].replace('.' + strrep, '')
             except:
                 fname = args['fname']
+            # Read json file to get pre-processed data
             try:
                 logger.debug('Reading pre-processed datafile')
                 data = ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname)
-            except:
-                logger.error('Error in reading pre-processed data file')
+            except Exception as e:
+                logger.error('Error in reading pre-processed data file'+repr(e))
                 return {
                         'data':'', 
                         'message':'Error in reading file', 
@@ -365,7 +400,8 @@ class PreProcess(Resource):
                         }, 400
             logger.info('Get request for pre-processed data served successfully')
             return {
-                    'data':ex.read_json(data), 
+                    'data':ex.read_json(data),  
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -395,7 +431,7 @@ class ExportPrepData(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -408,6 +444,8 @@ class ExportPrepData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to export pre-processed data.')
             try:
@@ -415,6 +453,7 @@ class ExportPrepData(Resource):
                 fname = args['fname'].replace('.' + strrep, '')
             except:
                 fname = args['fname']
+            # Read json file to get pre-processed data
             try:
                 logger.debug('Reading pre-processed datafile.')
                 jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
@@ -426,7 +465,9 @@ class ExportPrepData(Resource):
                         'message':'Could not fetch data to export',
                         'status':'error'
                         }, 400
+            logger.debug('Checking if filepath already exists')
             if os.path.exists(args['filepath']):
+                logger.warning('Filepath already exists. Existing file will be overridden')
                 os.remove(args['filepath'])
                 
 
@@ -481,7 +522,8 @@ class Kmeans(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
+            # Check for username and filename in the URL
             if not args['uname']:
                 return {
                         'data':'',
@@ -494,6 +536,8 @@ class Kmeans(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to cluster documents.')
             try:
@@ -512,8 +556,8 @@ class Kmeans(Resource):
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
-                except:
-                    logger.exception('Failed to read datafile')
+                except Exception as e:
+                    logger.exception('Failed to read datafile'+repr(e))
                     return {
                             'data':'',
                             'message':'Failed to read data!',
@@ -525,8 +569,10 @@ class Kmeans(Resource):
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
@@ -559,9 +605,6 @@ class Kmeans(Resource):
             clusterData = dict()
             clusterData['clust'] = clust
             clusterData['summary'] = clusters
-            logger.debug('Exporting clustering results')
-            # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename('kmeans results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
@@ -572,12 +615,17 @@ class Kmeans(Resource):
             # plots scatter plot and returns it
             logger.debug('Getting scatter plot for clustered data')
             #fig = kmeans.visualize_scatter(args['k'], ratio)
+
+            # To avoid Matplotlib warning
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 future = executor.submit(kmeans.visualize_scatter, args['k'], ratio)
                 fig = future.result()
             canvas = FigureCanvas(fig)
+            # Converting image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
+            # Packing returned image as a stream of bytes in Response object
+            logger.debug('Packing returned image as a stream of bytes in Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Performed clustering successfully')
@@ -600,16 +648,19 @@ class Kmeans(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering details.')
             
+            # Read JSON file to get clustered data
             try:
                 logger.debug('Reading datafile for clustered data')
                 data = ex.get_recent_file('cluster_' + args['uname'])
@@ -618,7 +669,8 @@ class Kmeans(Resource):
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
             logger.info('Get request for clustered data served successfully')
             return {
-                    'data':ex.read_json(data), 
+                    'data':ex.read_json(data),  
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -652,7 +704,8 @@ class DBSCAN(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
+            # Check for username and filename in the URL
             if not args['uname']:
                 return {
                         'data':'',
@@ -665,6 +718,8 @@ class DBSCAN(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to cluster documents.')
             try:
@@ -696,8 +751,10 @@ class DBSCAN(Resource):
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
@@ -729,9 +786,6 @@ class DBSCAN(Resource):
             clusterData = dict()
             clusterData['clust'] = clust
             clusterData['summary'] = clusters
-            logger.debug('Exporting clustering results')
-            # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename('dbscan results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
@@ -743,8 +797,11 @@ class DBSCAN(Resource):
             logger.debug('Getting scatter plot for clustered data')
             fig = dbscan.visualize_scatter(args['eps'], args['min'], ratio)
             canvas = FigureCanvas(fig)
+            # Convert returned image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
+            logger.debug('Packing returned image as a stream of bytes to the Response object')
+            # Packing returned image as a stream of bytes in Response object
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Performed clustering successfully')
@@ -768,13 +825,15 @@ class DBSCAN(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering details.')
             
@@ -786,7 +845,8 @@ class DBSCAN(Resource):
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
             logger.info('Get request for clustered data served successfully')
             return {
-                    'data':ex.read_json(data), 
+                    'data':ex.read_json(data),  
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -819,7 +879,7 @@ class Agglomerative(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -832,6 +892,8 @@ class Agglomerative(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to cluster documents.')
             try:
@@ -863,8 +925,10 @@ class Agglomerative(Resource):
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
@@ -896,9 +960,6 @@ class Agglomerative(Resource):
             clusterData = dict()
             clusterData['clust'] = clust
             clusterData['summary'] = clusters
-            logger.debug('Exporting clustering results')
-            # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename('agglomerative results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
@@ -910,8 +971,11 @@ class Agglomerative(Resource):
             logger.debug('Getting scatter plot for clustered data')
             fig = ag.visualize_scatter(args['k'], ratio)
             canvas = FigureCanvas(fig)
+            # Converting returned image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
+            # Packing returned image as a stream of bytes in Response object
+            logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Performed clustering successfully')
@@ -934,13 +998,15 @@ class Agglomerative(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering details.')
             
@@ -953,6 +1019,7 @@ class Agglomerative(Resource):
             logger.info('Get request for clustered data served successfully')
             return {
                     'data':ex.read_json(data), 
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -985,7 +1052,7 @@ class Birch(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -998,6 +1065,8 @@ class Birch(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to cluster documents.')
             try:
@@ -1029,8 +1098,10 @@ class Birch(Resource):
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
@@ -1062,9 +1133,6 @@ class Birch(Resource):
             clusterData = dict()
             clusterData['clust'] = clust
             clusterData['summary'] = clusters
-            logger.debug('Exporting clustering results')
-            # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename('birch results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
@@ -1076,8 +1144,11 @@ class Birch(Resource):
             logger.debug('Getting scatter plot for clustered data')
             fig = birch.visualize_scatter(args['k'], ratio)
             canvas = FigureCanvas(fig)
+            # converting returned image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
+            # Packing returned image as a stream of bytes in Response object
+            logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Performed clustering successfully')
@@ -1100,13 +1171,15 @@ class Birch(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering details.')
             
@@ -1119,6 +1192,7 @@ class Birch(Resource):
             logger.info('Get request for clustered data served successfully')
             return {
                     'data':ex.read_json(data), 
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -1145,7 +1219,7 @@ class ClusterSummary(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('content_type', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -1154,6 +1228,8 @@ class ClusterSummary(Resource):
                         }, 400
             if not args['content_type']:
                 args['content_type'] = 'summary'
+                
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering summary.')            
             
@@ -1167,6 +1243,7 @@ class ClusterSummary(Resource):
 
             # returns summary of clustering
             if args['content_type'] == 'summary':
+                logger.debug('Returning summary')
                 return {
                         'data':ex.read_json(data)['summary'], 
                         'status':'success'
@@ -1174,8 +1251,10 @@ class ClusterSummary(Resource):
             
             # returns cluster number of every document
             else:
+                logger.debug('Returning clustering details')
                 return {
                         'data':ex.read_json(data)['clust'], 
+                        'message':'',
                         'status':'success'
                         }, 200
         
@@ -1189,13 +1268,485 @@ class ClusterSummary(Resource):
                     }, 400
 
 
-class Test(Resource):
+
+class Elbow(Resource):
+    '''
+    Plots elbow curve and return optimal k value
+    '''
+    def post(self):
+        '''
+        POST request will return a elbow curve of different k values for Kmeans clustering
+        '''
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
+            parser.add_argument('thresh', type=float)
+            parser.add_argument('pca_comp', type=float)
+            parser.add_argument('uname', type=str)
+            parser.add_argument('fname', type=str)
+            args = parser.parse_args()
+
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+            if not args['fname']:
+                return {
+                        'data':'',
+                        'message':'Give file name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to plot elbow curve.')
+            try:
+                strrep = args['fname'].split('.', 1)[1]
+                fname = args['fname'].replace('.' + strrep, '')
+            except:
+                fname = args['fname']
+
+            # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
+            if not args['filepath']:
+                try:
+                    logger.debug('Reading datafile..')
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                    ISINs, URLs, text = ex.jsontolists(jsondata)
+                except:
+                    logger.exception('Failed to read datafile')
+                    return {
+                            'data':'',
+                            'message':'Failed to read data!',
+                            'status':'error'
+                            }, 400
+            else:
+                logger.debug('Reading dataset')
+                ISINs, URLs, text = ex.readdataset(args['filepath'])
+
+            # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
+            if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
+                args['thresh'] = 0.0001
+            if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
+                args['pca_comp'] = 0.8
+
+            # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
+            logger.debug('Calculating tf-idf')
+            df = cf.tfidf(text)
+            logger.debug('Calculating variance threshold')
+            tfidf = cf.varThresh_tfidf(df, args['thresh'])
+            logger.debug('Applying PCA')
+            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+
+            # plots elbow curve ad returns it
+            logger.debug('Plotting elbow curve')
+            fig, K = kmeans.visualize_elbow(len(ISINs),ratio)
+            canvas = FigureCanvas(fig)
+            # Convert returned image to stream of bytes
+            output = io.BytesIO()
+            canvas.print_png(output)
+            # Packing returned image as a stream of bytes in Response object
+            logger.debug('Packing returned image as a stream of bytes to the Response object')
+            response = make_response(output.getvalue())
+            response.mimetype = 'image/png'
+            logger.info('Plotted elbow curve successfully')
+
+            # writes optimal k value into "optK.json" 
+            logger.debug('Writing optimal k value')
+            ex.write_json(int(K), ex.give_filename('elbow_k_' + args['uname'], '.json'))
+            logger.info('Obtained optimal value of K using Elbow curve successfully')
+
+            return response
+                        
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
     def get(self):
-        return {
-            'message': 'Working'
-        }, 200
+        '''
+        GET request returns the optimal k value
+        '''
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('uname', type=str)
+            args = parser.parse_args()
+
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get optimal k value')
+            
+            try:
+                logger.debug('Reading datafile for optimal k value after elbow method')
+                data = ex.get_recent_file('elbow_k_' + args['uname'])
+            except:
+                logger.exception('Error in reading datafile')
+                return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
+            logger.info('Get request for optimal k value served successfully')
+            return {
+                    'data':ex.read_json(data), 
+                    'message':'',
+                    'status':'success'
+                    }, 200
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+
+class Silhouette(Resource):
+    '''
+    Performs k means clustering to group all the documents into various clusters.
+    '''
+    def post(self):
+        '''
+        POST request will perform clustering and return a scatter plot providing a visual comprehension of how clustering is done
+        '''
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
+            parser.add_argument('thresh', type=float)
+            parser.add_argument('pca_comp', type=float)
+            parser.add_argument('uname', type=str)
+            parser.add_argument('fname', type=str)
+            args = parser.parse_args()
+
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+            if not args['fname']:
+                return {
+                        'data':'',
+                        'message':'Give file name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested for optimal value of K using Silhouette.')
+            try:
+                strrep = args['fname'].split('.', 1)[1]
+                fname = args['fname'].replace('.' + strrep, '')
+            except:
+                fname = args['fname']
+
+            # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
+            if not args['filepath']:
+                try:
+                    logger.debug('Reading datafile..')
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                    ISINs, URLs, text = ex.jsontolists(jsondata)
+                except:
+                    logger.exception('Failed to read datafile')
+                    return {
+                            'data':'',
+                            'message':'Failed to read data!',
+                            'status':'error'
+                            }, 400
+            else:
+                logger.debug('Reading dataset')
+                ISINs, URLs, text = ex.readdataset(args['filepath'])
+
+            # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
+            if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
+                args['thresh'] = 0.0001
+            if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
+                args['pca_comp'] = 0.8
+
+            # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
+            logger.debug('Calculating tf-idf')
+            df = cf.tfidf(text)
+            logger.debug('Calculating variance threshold')
+            tfidf = cf.varThresh_tfidf(df, args['thresh'])
+            logger.debug('Applying PCA')
+            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            jsonk = ex.read_json(ex.get_recent_file('elbow_k_' + args['uname']))
+            kn_knee = int(jsonk)
+            logger.debug('Applying silhouette coefficient')
+            # plots elbow curve ad returns it
+            logger.debug('Plotting silhouette score')
+            fig, optimal_k = kmeans.silhouetteScore(len(ISINs), ratio, kn_knee)
+            canvas = FigureCanvas(fig)
+            # Convert returned image to stream of bytes
+            output = io.BytesIO()
+            canvas.print_png(output)
+            # Packing returned image as a stream of bytes in Response object
+            logger.debug('Packing returned image as a stream of bytes to the Response object')
+            response = make_response(output.getvalue())
+            response.mimetype = 'image/png'
+            logger.info('Plotted silhouette score successfully')
+
+            # writes optimal k value into "optK.json" 
+            logger.debug('Writting optimal k')
+            ex.write_json(int(optimal_k), ex.give_filename('optimal_k_' + args['uname'], '.json'))
+            logger.info('Obtained optimal value of k using Silhouette score successfully')
+
+            return response
+                        
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+    
+    def get(self):
+        '''
+        GET request returns the optimal k value
+        '''
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('uname', type=str)
+            args = parser.parse_args()
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get optimal k value')
+            
+            try:
+                logger.debug('Reading datafile for optimal k value after silhouette')
+                data = ex.get_recent_file('optimal_k_' + args['uname'])
+            except:
+                logger.exception('Error in reading datafile')
+                return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
+            logger.info('Get request for optimal k value served successfully')
+            return {
+                    'data':ex.read_json(data), 
+                    'message':'',
+                    'status':'success'
+                    }, 200
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+
+class Clear(Resource):
+    def delete(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('uname', type=str)
+            args = parser.parse_args()
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Logging off...deleting all cached files')
+            
+            names = [x for x in os.listdir() if args['uname'] in x and '.json' in x and 'extract_' not in x and 'preprocess_' not in x]
+
+            for fname in names:
+                os.remove(fname)
+
+            logger.info('Cleared cache')
+            return {
+                    'data': '', 
+                    'status':'success'
+                    }, 200
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+class ReportGeneration(Resource):
+    '''
+    This the component of the API that is
+    used to handle what the report generation
+    for the template - termsheet matching
+    '''
+
+    def post(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('username', type=str,
+                                help="Enter the name of the user",
+                                required=True)
+            parser.add_argument('kind', type=int,
+                                help="Specify the kind of method",
+                                required=True)
+            args = parser.parse_args()
+            user = args['username']
+            report_method = args['kind']
+            
+            if not args['username']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+            if not args['kind']:
+                return {
+                        'data':'',
+                        'message':'Enter kind',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['username'], os.path.join(LOG_FOLDER ,args['username']+'.log'), level= logging.DEBUG)
+            logger.info('Requested for report generation.')
+
+            try:
+                logger.debug('Checking for json input')
+                content = request.json
+            except Exception as e:
+                logger.debug('Could not extract URLs' +repr(e))
+                return {
+                    "data": "",
+                    "message": "Could not extract URLs",
+                    "status": "error"
+                }, 400
+
+            sheetLocs = {}
+            logger.debug('Fetching URLs')
+            for url in content.values():
+                try:
+                    logger.debug(f"Fetching {url} URL")
+                    html = urlopen(url).read()
+                    x = url.split('/')[-1]
+                    sheetLocs[x] = html
+                except Exception:
+                    logger.exception(f"The url: {url} could not be fetched")
+                    print(f"The url: {url} could not be fetched")
+                    continue
+
+            tempLocs = []
+            for root, _, tempNames in os.walk(tempLoc):
+                for tempName in tempNames:
+                    tempLocs.append(os.path.join(root, tempName))
+
+            if report_method == 1:
+                logger.debug("Using bruteforce method for report generation")
+                data = BruteForceReportGen.main(sheetLocs, tempLocs, keyListLoc)
+            elif report_method == 2:
+                logger.debug("Using non-bruteforce method for report generation")
+                data = NonBruteForceReportGen.main(sheetLocs, tempLocs, keyListLoc)
+
+            user_excel = open(f"{JSON_file_Location}{user}.json", "w")
+            json.dump(data, user_excel)
+            logger.info("Report generated successfully")
+            
+            # success message
+            return {
+                    'data':'',
+                    'message':'Template generated',
+                    'status':'success'
+                    }, 200
+
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred:' + repr(e))
+            return {
+                    'data':'',
+                    'message': e,
+                    'status':'error'
+                    }, 400
+
+
+    def get(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('username', type=str,
+                                help="Enter the name of the user",
+                                required=True)
+            args = parser.parse_args()
+            user = args['username']
+            
+            if not args['username']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['username'], os.path.join(LOG_FOLDER ,args['username']+'.log'), level= logging.DEBUG)
+            logger.info('Requested for report generation.')
+
+            flag = 0
+            logger.debug('Searching for JSON Dump')
+            for root, _, jsonDumps in os.walk(JSON_file_Location):
+                for jsonDump in jsonDumps:
+                    if jsonDump == user + ".json":
+                        flag = 1
+                        logger.debug('Found JSON Dump')
+                        reqJSON = os.path.join(root, jsonDump)
+                        break
+
+            if flag == 0:
+                logger.error('Could not find the JSON Dump, the file is not prepared yet')
+                return {
+                    "data": "",
+                    "message": "Could not find the JSON Dump, the file is not prepared yet",
+                    "status": "error"
+                }, 400
+
+            fileContents = open(reqJSON, "r").readline()
+            logger.debug('Get request served successfully')
+            return jsonify(fileContents)
+            
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred:' + repr(e))
+            return {
+                    'data':'',
+                    'message': repr(e),
+                    'status':'error'
+                    }, 400
+
+
 
 # Adding all URL paths
+api.add_resource(ReportGeneration, "/report")
 api.add_resource(ExtractData, '/extract')
 api.add_resource(ExportExtractedData, '/extract/export')
 api.add_resource(PreProcess, '/preprocess')
@@ -1205,7 +1756,9 @@ api.add_resource(DBSCAN, '/clustering/dbscan')
 api.add_resource(Agglomerative, '/clustering/agglomerative')
 api.add_resource(Birch, '/clustering/birch')
 api.add_resource(ClusterSummary, '/clustering/summary')
-api.add_resource(Test, '/test')
+api.add_resource(Elbow, '/clustering/elbow')
+api.add_resource(Silhouette, '/clustering/silhouette')
+api.add_resource(Clear, '/clear')
 
 
 # main function

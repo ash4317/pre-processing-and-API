@@ -1,0 +1,277 @@
+2020-07-10 18:14:04,646 admin INFO Requested to extract data.
+2020-07-10 18:14:04,647 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-10 18:14:05,340 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-10 18:14:05,352 admin INFO Requested to export extracted data.
+2020-07-10 18:14:05,484 admin INFO Exported successfully
+2020-07-10 18:14:05,498 admin INFO Requested to pre-process data.
+2020-07-10 18:14:05,499 admin DEBUG Pre-processed data
+2020-07-10 18:14:05,501 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-10 18:14:05,512 admin INFO Requested to export pre-processed data.
+2020-07-10 18:14:05,512 admin DEBUG Reading pre-processed datafile.
+2020-07-10 18:14:05,514 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-10 18:14:05,567 admin INFO Exported pre-processed data successfully.
+2020-07-10 18:14:05,578 admin INFO Requested to plot elbow curve.
+2020-07-10 18:14:05,578 admin DEBUG Reading datafile..
+2020-07-10 18:14:05,579 admin DEBUG Calculating tf-idf
+2020-07-10 18:14:05,580 admin ERROR Exception occurred: ValueError('empty vocabulary; perhaps the documents only contain stop words')
+Traceback (most recent call last):
+  File "C:\Users\Personnal\Documents\FinIQ\NLP_Project\Try\pre-processing-and-API\api.py", line 1255, in post
+    df = cf.tfidf(text)
+  File "C:\Users\Personnal\Documents\FinIQ\NLP_Project\Try\pre-processing-and-API\clean_file.py", line 167, in tfidf
+    vectors = vectorizer.fit_transform(text)
+  File "C:\Users\Personnal\AppData\Local\Programs\Python\Python38\lib\site-packages\sklearn\feature_extraction\text.py", line 1840, in fit_transform
+    X = super().fit_transform(raw_documents)
+  File "C:\Users\Personnal\AppData\Local\Programs\Python\Python38\lib\site-packages\sklearn\feature_extraction\text.py", line 1198, in fit_transform
+    vocabulary, X = self._count_vocab(raw_documents,
+  File "C:\Users\Personnal\AppData\Local\Programs\Python\Python38\lib\site-packages\sklearn\feature_extraction\text.py", line 1129, in _count_vocab
+    raise ValueError("empty vocabulary; perhaps the documents only"
+ValueError: empty vocabulary; perhaps the documents only contain stop words
+2020-07-10 18:14:13,111 admin INFO Requested to extract data.
+2020-07-10 18:14:13,111 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-10 18:14:28,787 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-10 18:14:28,799 admin INFO Requested to export extracted data.
+2020-07-10 18:14:29,094 admin INFO Exported successfully
+2020-07-10 18:14:29,107 admin INFO Requested to pre-process data.
+2020-07-10 18:14:55,717 admin DEBUG Pre-processed data
+2020-07-10 18:14:55,719 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-10 18:14:55,732 admin INFO Requested to export pre-processed data.
+2020-07-10 18:14:55,733 admin DEBUG Reading pre-processed datafile.
+2020-07-10 18:14:55,746 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-10 18:14:55,829 admin INFO Exported pre-processed data successfully.
+2020-07-10 18:14:55,840 admin INFO Requested to plot elbow curve.
+2020-07-10 18:14:55,840 admin DEBUG Reading datafile..
+2020-07-10 18:14:55,841 admin DEBUG Calculating tf-idf
+2020-07-10 18:14:55,901 admin DEBUG Calculating variance threshold
+2020-07-10 18:14:55,911 admin DEBUG Applying PCA
+2020-07-10 18:14:55,985 admin DEBUG Plotting elbow curve
+2020-07-10 18:15:00,828 admin INFO Plotted elbow curve successfully
+2020-07-10 18:15:00,906 admin DEBUG Writing optimal k value
+2020-07-10 18:15:03,224 admin INFO Requested to get optimal k value
+2020-07-10 18:15:03,224 admin DEBUG Reading datafile for optimal k value after elbow method
+2020-07-10 18:15:03,225 admin INFO Get request for optimal k value served successfully
+2020-07-10 18:15:03,235 admin INFO Requested for optimal value of K using Silhouette.
+2020-07-10 18:15:03,235 admin DEBUG Reading datafile..
+2020-07-10 18:15:03,236 admin DEBUG Calculating tf-idf
+2020-07-10 18:15:03,310 admin DEBUG Calculating variance threshold
+2020-07-10 18:15:03,320 admin DEBUG Applying PCA
+2020-07-10 18:15:03,341 admin DEBUG Applying silhouette coefficient
+2020-07-10 18:15:03,342 admin DEBUG Plotting silhouette score
+2020-07-10 18:15:05,115 admin INFO Plotted silhouette score successfully
+2020-07-10 18:15:05,202 admin DEBUG Writting optimal k
+2020-07-10 18:15:06,936 admin INFO Requested to get optimal k value
+2020-07-10 18:15:06,937 admin DEBUG Reading datafile for optimal k value after silhouette
+2020-07-10 18:15:06,938 admin INFO Get request for optimal k value served successfully
+2020-07-10 18:15:06,962 admin INFO Requested to cluster documents.
+2020-07-10 18:15:06,963 admin DEBUG Reading datafile..
+2020-07-10 18:15:06,964 admin DEBUG Calculating tf-idf
+2020-07-10 18:15:07,082 admin DEBUG Calculating variance threshold
+2020-07-10 18:15:07,103 admin DEBUG Applying PCA
+2020-07-10 18:15:07,146 admin DEBUG Applying K-Means algorithm
+2020-07-10 18:15:07,238 admin ERROR Exception occurred: ValueError('not enough values to unpack (expected 3, got 2)')
+Traceback (most recent call last):
+  File "C:\Users\Personnal\Documents\FinIQ\NLP_Project\Try\pre-processing-and-API\api.py", line 540, in post
+    frame, scores, clust = kmeans.kmeans_clustering(args['k'],ratio,ISINs, URLs)
+ValueError: not enough values to unpack (expected 3, got 2)
+2020-07-10 18:17:56,052 admin INFO Requested to extract data.
+2020-07-10 18:17:56,053 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-10 18:18:11,713 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-10 18:18:11,728 admin INFO Requested to export extracted data.
+2020-07-10 18:18:12,026 admin INFO Exported successfully
+2020-07-10 18:18:12,039 admin INFO Requested to pre-process data.
+2020-07-10 18:18:38,617 admin DEBUG Pre-processed data
+2020-07-10 18:18:38,620 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-10 18:18:38,634 admin INFO Requested to export pre-processed data.
+2020-07-10 18:18:38,635 admin DEBUG Reading pre-processed datafile.
+2020-07-10 18:18:38,653 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-10 18:18:38,750 admin INFO Exported pre-processed data successfully.
+2020-07-10 18:18:38,762 admin INFO Requested to plot elbow curve.
+2020-07-10 18:18:38,763 admin DEBUG Reading datafile..
+2020-07-10 18:18:38,764 admin DEBUG Calculating tf-idf
+2020-07-10 18:18:38,825 admin DEBUG Calculating variance threshold
+2020-07-10 18:18:38,835 admin DEBUG Applying PCA
+2020-07-10 18:18:38,860 admin DEBUG Plotting elbow curve
+2020-07-10 18:18:43,512 admin INFO Plotted elbow curve successfully
+2020-07-10 18:18:43,588 admin DEBUG Writing optimal k value
+2020-07-10 18:18:46,361 admin INFO Requested to get optimal k value
+2020-07-10 18:18:46,361 admin DEBUG Reading datafile for optimal k value after elbow method
+2020-07-10 18:18:46,361 admin INFO Get request for optimal k value served successfully
+2020-07-10 18:18:46,374 admin INFO Requested for optimal value of K using Silhouette.
+2020-07-10 18:18:46,375 admin DEBUG Reading datafile..
+2020-07-10 18:18:46,376 admin DEBUG Calculating tf-idf
+2020-07-10 18:18:46,446 admin DEBUG Calculating variance threshold
+2020-07-10 18:18:46,460 admin DEBUG Applying PCA
+2020-07-10 18:18:46,487 admin DEBUG Applying silhouette coefficient
+2020-07-10 18:18:46,487 admin DEBUG Plotting silhouette score
+2020-07-10 18:18:48,615 admin INFO Plotted silhouette score successfully
+2020-07-10 18:18:48,695 admin DEBUG Writting optimal k
+2020-07-10 18:18:51,167 admin INFO Requested to get optimal k value
+2020-07-10 18:18:51,167 admin DEBUG Reading datafile for optimal k value after silhouette
+2020-07-10 18:18:51,168 admin INFO Get request for optimal k value served successfully
+2020-07-10 18:18:51,185 admin INFO Requested to cluster documents.
+2020-07-10 18:18:51,186 admin DEBUG Reading datafile..
+2020-07-10 18:18:51,188 admin DEBUG Calculating tf-idf
+2020-07-10 18:18:51,283 admin DEBUG Calculating variance threshold
+2020-07-10 18:18:51,299 admin DEBUG Applying PCA
+2020-07-10 18:18:51,329 admin DEBUG Applying K-Means algorithm
+2020-07-10 18:18:51,387 admin ERROR Exception occurred: ValueError('not enough values to unpack (expected 3, got 2)')
+Traceback (most recent call last):
+  File "C:\Users\Personnal\Documents\FinIQ\NLP_Project\Try\pre-processing-and-API\api.py", line 540, in post
+    frame, scores, clust = kmeans.kmeans_clustering(args['k'],ratio,ISINs, URLs)
+ValueError: not enough values to unpack (expected 3, got 2)
+2020-07-10 18:21:42,351 admin INFO Requested to extract data.
+2020-07-10 18:21:42,351 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-10 18:21:57,477 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-10 18:21:57,490 admin INFO Requested to export extracted data.
+2020-07-10 18:21:57,774 admin INFO Exported successfully
+2020-07-10 18:21:57,785 admin INFO Requested to pre-process data.
+2020-07-10 18:22:38,536 admin DEBUG Pre-processed data
+2020-07-10 18:22:38,539 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-10 18:22:38,553 admin INFO Requested to export pre-processed data.
+2020-07-10 18:22:38,553 admin DEBUG Reading pre-processed datafile.
+2020-07-10 18:22:38,571 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-10 18:22:38,746 admin INFO Exported pre-processed data successfully.
+2020-07-10 18:22:38,759 admin INFO Requested to plot elbow curve.
+2020-07-10 18:22:38,759 admin DEBUG Reading datafile..
+2020-07-10 18:22:38,761 admin DEBUG Calculating tf-idf
+2020-07-10 18:22:38,836 admin DEBUG Calculating variance threshold
+2020-07-10 18:22:38,852 admin DEBUG Applying PCA
+2020-07-10 18:22:38,875 admin DEBUG Plotting elbow curve
+2020-07-10 18:22:43,632 admin INFO Plotted elbow curve successfully
+2020-07-10 18:22:43,718 admin DEBUG Writing optimal k value
+2020-07-10 18:22:46,383 admin INFO Requested to get optimal k value
+2020-07-10 18:22:46,384 admin DEBUG Reading datafile for optimal k value after elbow method
+2020-07-10 18:22:46,384 admin INFO Get request for optimal k value served successfully
+2020-07-10 18:22:46,396 admin INFO Requested for optimal value of K using Silhouette.
+2020-07-10 18:22:46,396 admin DEBUG Reading datafile..
+2020-07-10 18:22:46,398 admin DEBUG Calculating tf-idf
+2020-07-10 18:22:46,461 admin DEBUG Calculating variance threshold
+2020-07-10 18:22:46,472 admin DEBUG Applying PCA
+2020-07-10 18:22:46,498 admin DEBUG Applying silhouette coefficient
+2020-07-10 18:22:46,498 admin DEBUG Plotting silhouette score
+2020-07-10 18:22:48,491 admin INFO Plotted silhouette score successfully
+2020-07-10 18:22:48,566 admin DEBUG Writting optimal k
+2020-07-10 18:22:50,800 admin INFO Requested to get optimal k value
+2020-07-10 18:22:50,801 admin DEBUG Reading datafile for optimal k value after silhouette
+2020-07-10 18:22:50,802 admin INFO Get request for optimal k value served successfully
+2020-07-10 18:22:50,818 admin INFO Requested to cluster documents.
+2020-07-10 18:22:50,819 admin DEBUG Reading datafile..
+2020-07-10 18:22:50,821 admin DEBUG Calculating tf-idf
+2020-07-10 18:22:50,903 admin DEBUG Calculating variance threshold
+2020-07-10 18:22:50,914 admin DEBUG Applying PCA
+2020-07-10 18:22:50,942 admin DEBUG Applying K-Means algorithm
+2020-07-10 18:22:51,001 admin ERROR Exception occurred: ValueError('not enough values to unpack (expected 3, got 2)')
+Traceback (most recent call last):
+  File "C:\Users\Personnal\Documents\FinIQ\NLP_Project\Try\pre-processing-and-API\api.py", line 540, in post
+    frame, scores, clust = kmeans.kmeans_clustering(args['k'],ratio,ISINs, URLs)
+ValueError: not enough values to unpack (expected 3, got 2)
+2020-07-10 18:23:38,485 admin INFO Requested to extract data.
+2020-07-10 18:23:38,485 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-10 18:23:53,570 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-10 18:23:53,584 admin INFO Requested to export extracted data.
+2020-07-10 18:23:53,899 admin INFO Exported successfully
+2020-07-10 18:23:53,913 admin INFO Requested to pre-process data.
+2020-07-10 18:24:25,265 admin DEBUG Pre-processed data
+2020-07-10 18:24:25,283 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-10 18:24:25,296 admin INFO Requested to export pre-processed data.
+2020-07-10 18:24:25,296 admin DEBUG Reading pre-processed datafile.
+2020-07-10 18:24:25,312 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-10 18:24:25,422 admin INFO Exported pre-processed data successfully.
+2020-07-10 18:24:25,434 admin INFO Requested to plot elbow curve.
+2020-07-10 18:24:25,434 admin DEBUG Reading datafile..
+2020-07-10 18:24:25,436 admin DEBUG Calculating tf-idf
+2020-07-10 18:24:25,503 admin DEBUG Calculating variance threshold
+2020-07-10 18:24:25,520 admin DEBUG Applying PCA
+2020-07-10 18:24:25,557 admin DEBUG Plotting elbow curve
+2020-07-10 18:24:30,264 admin INFO Plotted elbow curve successfully
+2020-07-10 18:24:30,351 admin DEBUG Writing optimal k value
+2020-07-10 18:24:32,939 admin INFO Requested to get optimal k value
+2020-07-10 18:24:32,939 admin DEBUG Reading datafile for optimal k value after elbow method
+2020-07-10 18:24:32,940 admin INFO Get request for optimal k value served successfully
+2020-07-10 18:24:32,956 admin INFO Requested for optimal value of K using Silhouette.
+2020-07-10 18:24:32,957 admin DEBUG Reading datafile..
+2020-07-10 18:24:32,959 admin DEBUG Calculating tf-idf
+2020-07-10 18:24:33,063 admin DEBUG Calculating variance threshold
+2020-07-10 18:24:33,081 admin DEBUG Applying PCA
+2020-07-10 18:24:33,105 admin DEBUG Applying silhouette coefficient
+2020-07-10 18:24:33,105 admin DEBUG Plotting silhouette score
+2020-07-10 18:24:35,110 admin INFO Plotted silhouette score successfully
+2020-07-10 18:24:35,194 admin DEBUG Writting optimal k
+2020-07-10 18:24:37,468 admin INFO Requested to get optimal k value
+2020-07-10 18:24:37,468 admin DEBUG Reading datafile for optimal k value after silhouette
+2020-07-10 18:24:37,469 admin INFO Get request for optimal k value served successfully
+2020-07-10 18:24:37,486 admin INFO Requested to cluster documents.
+2020-07-10 18:24:37,486 admin DEBUG Reading datafile..
+2020-07-10 18:24:37,488 admin DEBUG Calculating tf-idf
+2020-07-10 18:24:37,585 admin DEBUG Calculating variance threshold
+2020-07-10 18:24:37,595 admin DEBUG Applying PCA
+2020-07-10 18:24:37,620 admin DEBUG Applying K-Means algorithm
+2020-07-10 18:24:37,680 admin DEBUG Sorting clusters
+2020-07-10 18:24:37,682 admin DEBUG Converting to JSON format
+2020-07-10 18:24:37,686 admin DEBUG Exporting clustering results
+2020-07-10 18:24:37,687 admin DEBUG Writting summary
+2020-07-10 18:24:37,689 admin DEBUG Writting clustering information to datafile
+2020-07-10 18:24:37,691 admin DEBUG Getting scatter plot for clustered data
+2020-07-10 18:24:37,960 admin INFO Performed clustering successfully
+2020-07-10 18:24:40,763 admin INFO Requested to get clustering details.
+2020-07-10 18:24:40,763 admin DEBUG Reading datafile for clustered data
+2020-07-10 18:24:40,764 admin INFO Get request for clustered data served successfully
+2020-07-10 18:24:40,805 admin INFO Requested to get clustering summary.
+2020-07-10 18:24:40,805 admin DEBUG Reading datafile for clustering summary
+2020-07-10 18:24:40,806 admin INFO Get request for clustering summary served successfully
+2020-07-10 18:24:40,837 admin INFO Requested to cluster documents.
+2020-07-10 18:24:40,837 admin DEBUG Reading datafile..
+2020-07-10 18:24:40,838 admin DEBUG Calculating tf-idf
+2020-07-10 18:24:40,904 admin DEBUG Calculating variance threshold
+2020-07-10 18:24:40,913 admin DEBUG Applying PCA
+2020-07-10 18:24:40,942 admin DEBUG Applying DBSCAN algorithm
+2020-07-10 18:24:40,981 admin DEBUG Sorting clusters
+2020-07-10 18:24:40,982 admin DEBUG Converting to JSON format
+2020-07-10 18:24:40,985 admin DEBUG Exporting clustering results
+2020-07-10 18:24:40,987 admin DEBUG Writting summary
+2020-07-10 18:24:40,989 admin DEBUG Writting clustering information to datafile
+2020-07-10 18:24:40,991 admin DEBUG Getting scatter plot for clustered data
+2020-07-10 18:24:41,146 admin INFO Performed clustering successfully
+2020-07-10 18:24:43,861 admin INFO Requested to get clustering details.
+2020-07-10 18:24:43,861 admin DEBUG Reading datafile for clustered data
+2020-07-10 18:24:43,862 admin INFO Get request for clustered data served successfully
+2020-07-10 18:24:43,893 admin INFO Requested to get clustering summary.
+2020-07-10 18:24:43,894 admin DEBUG Reading datafile for clustering summary
+2020-07-10 18:24:43,894 admin INFO Get request for clustering summary served successfully
+2020-07-10 18:24:43,916 admin INFO Requested to cluster documents.
+2020-07-10 18:24:43,916 admin DEBUG Reading datafile..
+2020-07-10 18:24:43,918 admin DEBUG Calculating tf-idf
+2020-07-10 18:24:43,990 admin DEBUG Calculating variance threshold
+2020-07-10 18:24:44,004 admin DEBUG Applying PCA
+2020-07-10 18:24:44,027 admin DEBUG Applying Agglomerative algorithm
+2020-07-10 18:24:44,117 admin DEBUG Sorting clusters
+2020-07-10 18:24:44,118 admin DEBUG Converting to JSON format
+2020-07-10 18:24:44,120 admin DEBUG Exporting clustering results
+2020-07-10 18:24:44,122 admin DEBUG Writting summary
+2020-07-10 18:24:44,124 admin DEBUG Writting clustering information to datafile
+2020-07-10 18:24:44,125 admin DEBUG Getting scatter plot for clustered data
+2020-07-10 18:24:44,341 admin INFO Performed clustering successfully
+2020-07-10 18:24:46,822 admin INFO Requested to get clustering details.
+2020-07-10 18:24:46,823 admin DEBUG Reading datafile for clustered data
+2020-07-10 18:24:46,824 admin INFO Get request for clustered data served successfully
+2020-07-10 18:24:46,863 admin INFO Requested to get clustering summary.
+2020-07-10 18:24:46,863 admin DEBUG Reading datafile for clustering summary
+2020-07-10 18:24:46,864 admin INFO Get request for clustering summary served successfully
+2020-07-10 18:24:46,893 admin INFO Requested to cluster documents.
+2020-07-10 18:24:46,894 admin DEBUG Reading datafile..
+2020-07-10 18:24:46,896 admin DEBUG Calculating tf-idf
+2020-07-10 18:24:46,966 admin DEBUG Calculating variance threshold
+2020-07-10 18:24:46,977 admin DEBUG Applying PCA
+2020-07-10 18:24:47,008 admin DEBUG Applying Birch algorithm
+2020-07-10 18:24:47,085 admin DEBUG Sorting clusters
+2020-07-10 18:24:47,086 admin DEBUG Converting to JSON format
+2020-07-10 18:24:47,088 admin DEBUG Exporting clustering results
+2020-07-10 18:24:47,091 admin DEBUG Writting summary
+2020-07-10 18:24:47,093 admin DEBUG Writting clustering information to datafile
+2020-07-10 18:24:47,095 admin DEBUG Getting scatter plot for clustered data
+2020-07-10 18:24:47,365 admin INFO Performed clustering successfully
+2020-07-10 18:24:49,846 admin INFO Requested to get clustering details.
+2020-07-10 18:24:49,846 admin DEBUG Reading datafile for clustered data
+2020-07-10 18:24:49,847 admin INFO Get request for clustered data served successfully
+2020-07-10 18:24:49,876 admin INFO Requested to get clustering summary.
+2020-07-10 18:24:49,876 admin DEBUG Reading datafile for clustering summary
+2020-07-10 18:24:49,877 admin INFO Get request for clustering summary served successfully
