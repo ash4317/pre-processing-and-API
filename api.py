@@ -138,6 +138,7 @@ class ExtractData(Resource):
             except:
                 fname = args['fname']
             try:
+                logger.debug('Searching for requested datafile')
                 data = ex.get_recent_file('extract_' + args['uname'] + '_' + fname)
             
             # error message if traceback occurs
@@ -213,13 +214,18 @@ class ExportExtractedData(Resource):
                         'message':'Could not fetch data to export',
                         'status':'error'
                         }, 400
+            logger.debug('Checking if filepath already exists')
             if os.path.exists(args['filepath']):
+                logger.warning('Filepath already exists. File will be overridden.')
                 os.remove(args['filepath'])
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
+            logger.debug('Checking if filepath has valid format')
             if ex.check(args['filepath'], '.xlsx'):
+                logger.debug('Exporting data to excel file')
                 ex.exportexcel(args['uname'], args['fname'], filename = args['filepath'], datalist = [ISINs, URLs, text])
             elif ex.check(args['filepath'], '.csv'):
+                logger.debug('Exporting data to csv file')
                 ex.exportcsv(args['uname'], args['fname'], filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
             else:
                 logger.error('Invalid format for export file')
@@ -287,6 +293,7 @@ class PreProcess(Resource):
             # if external filepath for extracted data is not given, then this means that extraction is done using this API itself and is stored in the file "extract_username_filename_date_time.json"
             if not args['filepath']:
                 try:
+                    logger.debug('Reading data from datafile')
                     jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
@@ -301,11 +308,13 @@ class PreProcess(Resource):
                 ISINs, URLs, text = ex.readdataset(args['filepath'])
             
             # text pre-processing function call
+            logger.debug('Pre-processing text data')
             data = cf.preprocessing(text, args['steps'])
             jsondata = ex.tojson(ISINs, URLs, data)
             logger.debug('Pre-processed data')
             
             # writes the pre-processed text into the file "preprocess.json"
+            logger.debug('Writting pre-processed data to datafile')
             ex.write_json(jsondata, ex.give_filename('preprocess_' + args['uname'] + '_' + fname, '.json'))
             logger.debug('Made entry of pre-processed data in datafile successfully')
 
@@ -356,8 +365,8 @@ class PreProcess(Resource):
             try:
                 logger.debug('Reading pre-processed datafile')
                 data = ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname)
-            except:
-                logger.error('Error in reading pre-processed data file')
+            except Exception as e:
+                logger.error('Error in reading pre-processed data file'+repr(e))
                 return {
                         'data':'', 
                         'message':'Error in reading file', 
@@ -426,7 +435,9 @@ class ExportPrepData(Resource):
                         'message':'Could not fetch data to export',
                         'status':'error'
                         }, 400
+            logger.debug('Checking if filepath already exists')
             if os.path.exists(args['filepath']):
+                logger.warning('Filepath already exists. Existing file will be overridden')
                 os.remove(args['filepath'])
                 
 
@@ -512,8 +523,8 @@ class Kmeans(Resource):
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
-                except:
-                    logger.exception('Failed to read datafile')
+                except Exception as e:
+                    logger.exception('Failed to read datafile'+repr(e))
                     return {
                             'data':'',
                             'message':'Failed to read data!',
@@ -525,8 +536,10 @@ class Kmeans(Resource):
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
@@ -572,12 +585,17 @@ class Kmeans(Resource):
             # plots scatter plot and returns it
             logger.debug('Getting scatter plot for clustered data')
             #fig = kmeans.visualize_scatter(args['k'], ratio)
+
+            #To avoid Matplotlib warning
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 future = executor.submit(kmeans.visualize_scatter, args['k'], ratio)
                 fig = future.result()
             canvas = FigureCanvas(fig)
+            #Converting image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
+            #Packing returned image as a stream of bytes in Response object
+            logger.debug('Packing returned image as a stream of bytes in Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Performed clustering successfully')
@@ -696,8 +714,10 @@ class DBSCAN(Resource):
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
@@ -745,6 +765,7 @@ class DBSCAN(Resource):
             canvas = FigureCanvas(fig)
             output = io.BytesIO()
             canvas.print_png(output)
+            logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Performed clustering successfully')
@@ -863,8 +884,10 @@ class Agglomerative(Resource):
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
@@ -912,6 +935,7 @@ class Agglomerative(Resource):
             canvas = FigureCanvas(fig)
             output = io.BytesIO()
             canvas.print_png(output)
+            logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Performed clustering successfully')
@@ -1029,8 +1053,10 @@ class Birch(Resource):
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
@@ -1078,6 +1104,7 @@ class Birch(Resource):
             canvas = FigureCanvas(fig)
             output = io.BytesIO()
             canvas.print_png(output)
+            logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Performed clustering successfully')
@@ -1167,6 +1194,7 @@ class ClusterSummary(Resource):
 
             # returns summary of clustering
             if args['content_type'] == 'summary':
+                logger.debug('Returning summary')
                 return {
                         'data':ex.read_json(data)['summary'], 
                         'status':'success'
@@ -1174,6 +1202,7 @@ class ClusterSummary(Resource):
             
             # returns cluster number of every document
             else:
+                logger.debug('Returning clustering details')
                 return {
                         'data':ex.read_json(data)['clust'], 
                         'status':'success'
@@ -1246,8 +1275,10 @@ class Elbow(Resource):
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
@@ -1264,6 +1295,7 @@ class Elbow(Resource):
             canvas = FigureCanvas(fig)
             output = io.BytesIO()
             canvas.print_png(output)
+            logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Plotted elbow curve successfully')
@@ -1272,6 +1304,7 @@ class Elbow(Resource):
             # writes optimal k value into "optK.json" 
             logger.debug('Writing optimal k value')
             ex.write_json(int(K), ex.give_filename('elbow_k_' + args['uname'], '.json'))
+            logger.info('Obtained optimal value of K using Elbow curve successfully')
 
             return response
                         
@@ -1381,8 +1414,10 @@ class Silhouette(Resource):
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
+                logger.debug('Setting default value of threshold for Variance Threshold to 0.0001')
                 args['thresh'] = 0.0001
             if not args['pca_comp']:
+                logger.debug('Setting default value of number of components for PCA to 0.8')
                 args['pca_comp'] = 0.8
 
             # calculates tfidf, applies PCA and Variance Threshold to reduce features and performs k means clustering
@@ -1401,6 +1436,7 @@ class Silhouette(Resource):
             canvas = FigureCanvas(fig)
             output = io.BytesIO()
             canvas.print_png(output)
+            logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Plotted silhouette score successfully')
@@ -1409,6 +1445,7 @@ class Silhouette(Resource):
             # writes optimal k value into "optK.json" 
             logger.debug('Writting optimal k')
             ex.write_json(int(optimal_k), ex.give_filename('optimal_k_' + args['uname'], '.json'))
+            logger.info('Obtained optimal value of k using Silhouette score successfully')
 
             return response
                         
