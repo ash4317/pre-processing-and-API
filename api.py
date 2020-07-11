@@ -321,7 +321,7 @@ class PreProcess(Resource):
             return {
                     'data':'',
                     'message':'Something went wrong!',
-                    'status':'error'
+                    'status':e
                     }, 400
 
     def get(self):
