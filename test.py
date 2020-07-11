@@ -143,3 +143,35 @@ print(r.text)
 url = "http://127.0.0.1:5000/clear?uname=admin"
 r = requests.delete(url=url)
 print(r.text)
+
+
+
+datajson = {
+    'US17326YZV19': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm',
+    'US17326YJJ64': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm',
+    'US17326YU388': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm',
+    'US17326YNL64': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm',
+    'US17326YUM64': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm',
+    'US17326YRV01': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm',
+    'US17326YPB64': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm',
+    'US17326Y4M50': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm',
+    'US17326YC873': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm',
+    'US17326YDX13': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm',
+    'US17326YFJ01': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm',
+    'US17326YTD84': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm',
+    'US17326YAH99': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm',
+    'US17326YMQ60': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm',
+    'US17326YBP07': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm',
+    'US17326Y2L95': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm',
+}
+print(len(datajson))
+
+# Extract data
+url = "http://127.0.0.1:5000/report?username=admin&kind=1"
+r = requests.post(url=url, json=datajson)
+print(r.text)
+
+
+url = "http://127.0.0.1:5000/report?username=admin"
+r = requests.get(url=url)
+print(r.text)

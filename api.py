@@ -3,24 +3,32 @@ The main flask REST API which uses all the other created modules and performs cl
 '''
 
 # Modules imported
-from flask import Flask, request, make_response, send_file
+from flask import Flask, request, make_response, send_file, jsonify
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from flask_restful import Api, Resource, reqparse
-import extract as ex
-import clean_file as cf
-import kmeans
-import dbscan
-import birch
-import agglomerative as ag
+from urllib.request import urlopen
 import json
 import io
 import os
 import datetime
-import userlogs as ul
-import logging
 import concurrent.futures
 import matplotlib as plt
-plt.rcParams.update({'figure.max_open_warning': 0})
+plt.rcParams.update({'figure.max_open_warning': 0}) # To suppress Matplotlib warning for multiple figures
+
+# The below two imports are for the
+# programs for brute-force and non
+# brute force methods
+import BruteForceReportGen
+import NonBruteForceReportGen
+import extract as ex        # Module for web scrapping and file operations
+import clean_file as cf     # Module for pre-processing
+# Modules for clustering algorithms
+import kmeans
+import dbscan
+import birch
+import agglomerative as ag
+import userlogs as ul       # Module for creating user-specific log files
+import logging
 
 # defining program as a flask api
 app = Flask(__name__)
@@ -35,7 +43,12 @@ LOG_FORMAT = "%(levelname)s %(name)s %(asctime)s - %(message)s"
 logging.basicConfig(filename=os.path.join(LOG_FOLDER, 'rootlog.log'), level=logging.DEBUG, format= LOG_FORMAT)
 logger = logging.getLogger()
 
-  
+
+# Defining the Global Parameters for ReportGeneration here
+tempLoc = "./Templates"
+keyListLoc = "./keys.txt"
+JSON_file_Location = "./JSONdumps/"
+
 
 class ExtractData(Resource):
     '''
@@ -157,7 +170,8 @@ class ExtractData(Resource):
             
             logger.info('Get request served successfully')
             return {
-                    'data':ex.read_json(data), 
+                    'data':ex.read_json(data),  
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -386,7 +400,8 @@ class PreProcess(Resource):
                         }, 400
             logger.info('Get request for pre-processed data served successfully')
             return {
-                    'data':ex.read_json(data), 
+                    'data':ex.read_json(data),  
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -654,7 +669,8 @@ class Kmeans(Resource):
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
             logger.info('Get request for clustered data served successfully')
             return {
-                    'data':ex.read_json(data), 
+                    'data':ex.read_json(data),  
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -829,7 +845,8 @@ class DBSCAN(Resource):
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
             logger.info('Get request for clustered data served successfully')
             return {
-                    'data':ex.read_json(data), 
+                    'data':ex.read_json(data),  
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -1002,6 +1019,7 @@ class Agglomerative(Resource):
             logger.info('Get request for clustered data served successfully')
             return {
                     'data':ex.read_json(data), 
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -1174,6 +1192,7 @@ class Birch(Resource):
             logger.info('Get request for clustered data served successfully')
             return {
                     'data':ex.read_json(data), 
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -1235,6 +1254,7 @@ class ClusterSummary(Resource):
                 logger.debug('Returning clustering details')
                 return {
                         'data':ex.read_json(data)['clust'], 
+                        'message':'',
                         'status':'success'
                         }, 200
         
@@ -1380,6 +1400,7 @@ class Elbow(Resource):
             logger.info('Get request for optimal k value served successfully')
             return {
                     'data':ex.read_json(data), 
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -1526,6 +1547,7 @@ class Silhouette(Resource):
             logger.info('Get request for optimal k value served successfully')
             return {
                     'data':ex.read_json(data), 
+                    'message':'',
                     'status':'success'
                     }, 200
         
@@ -1576,9 +1598,155 @@ class Clear(Resource):
                     'status':'error'
                     }, 400
 
+class ReportGeneration(Resource):
+    '''
+    This the component of the API that is
+    used to handle what the report generation
+    for the template - termsheet matching
+    '''
+
+    def post(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('username', type=str,
+                                help="Enter the name of the user",
+                                required=True)
+            parser.add_argument('kind', type=int,
+                                help="Specify the kind of method",
+                                required=True)
+            args = parser.parse_args()
+            user = args['username']
+            report_method = args['kind']
+            
+            if not args['username']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+            if not args['kind']:
+                return {
+                        'data':'',
+                        'message':'Enter kind',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['username'], os.path.join(LOG_FOLDER ,args['username']+'.log'), level= logging.DEBUG)
+            logger.info('Requested for report generation.')
+
+            try:
+                logger.debug('Checking for json input')
+                content = request.json
+            except Exception as e:
+                logger.debug('Could not extract URLs' +repr(e))
+                return {
+                    "data": "",
+                    "message": "Could not extract URLs",
+                    "status": "error"
+                }, 400
+
+            sheetLocs = {}
+            logger.debug('Fetching URLs')
+            for url in content.values():
+                try:
+                    logger.debug(f"Fetching {url} URL")
+                    html = urlopen(url).read()
+                    x = url.split('/')[-1]
+                    sheetLocs[x] = html
+                except Exception:
+                    logger.exception(f"The url: {url} could not be fetched")
+                    print(f"The url: {url} could not be fetched")
+                    continue
+
+            tempLocs = []
+            for root, _, tempNames in os.walk(tempLoc):
+                for tempName in tempNames:
+                    tempLocs.append(os.path.join(root, tempName))
+
+            if report_method == 1:
+                logger.debug("Using bruteforce method for report generation")
+                data = BruteForceReportGen.main(sheetLocs, tempLocs, keyListLoc)
+            elif report_method == 2:
+                logger.debug("Using non-bruteforce method for report generation")
+                data = NonBruteForceReportGen.main(sheetLocs, tempLocs, keyListLoc)
+
+            user_excel = open(f"{JSON_file_Location}{user}.json", "w")
+            json.dump(data, user_excel)
+            logger.info("Report generated successfully")
+            
+            # success message
+            return {
+                    'data':'',
+                    'message':'Template generated',
+                    'status':'success'
+                    }, 200
+
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred:' + repr(e))
+            return {
+                    'data':'',
+                    'message': e,
+                    'status':'error'
+                    }, 400
+
+
+    def get(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('username', type=str,
+                                help="Enter the name of the user",
+                                required=True)
+            args = parser.parse_args()
+            user = args['username']
+            
+            if not args['username']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['username'], os.path.join(LOG_FOLDER ,args['username']+'.log'), level= logging.DEBUG)
+            logger.info('Requested for report generation.')
+
+            flag = 0
+            logger.debug('Searching for JSON Dump')
+            for root, _, jsonDumps in os.walk(JSON_file_Location):
+                for jsonDump in jsonDumps:
+                    if jsonDump == user + ".json":
+                        flag = 1
+                        logger.debug('Found JSON Dump')
+                        reqJSON = os.path.join(root, jsonDump)
+                        break
+
+            if flag == 0:
+                logger.error('Could not find the JSON Dump, the file is not prepared yet')
+                return {
+                    "data": "",
+                    "message": "Could not find the JSON Dump, the file is not prepared yet",
+                    "status": "error"
+                }, 400
+
+            fileContents = open(reqJSON, "r").readline()
+            logger.debug('Get request served successfully')
+            return jsonify(fileContents)
+            
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred:' + repr(e))
+            return {
+                    'data':'',
+                    'message': repr(e),
+                    'status':'error'
+                    }, 400
+
 
 
 # Adding all URL paths
+api.add_resource(ReportGeneration, "/report")
 api.add_resource(ExtractData, '/extract')
 api.add_resource(ExportExtractedData, '/extract/export')
 api.add_resource(PreProcess, '/preprocess')
