@@ -10,6 +10,7 @@ from urllib.request import urlopen
 import json
 import io
 import os
+import shutil
 import datetime
 import concurrent.futures
 import matplotlib as plt
@@ -1253,8 +1254,7 @@ class ClusterSummary(Resource):
             else:
                 logger.debug('Returning clustering details')
                 return {
-                        'data':ex.read_json(data)['clust'], 
-                        'message':'',
+                        'data':ex.read_json(data)['clust'],
                         'status':'success'
                         }, 200
         
@@ -1562,6 +1562,9 @@ class Silhouette(Resource):
 
 
 class Clear(Resource):
+    '''
+    Removes all generated files when the user logs out
+    '''
     def delete(self):
         try:
             parser = reqparse.RequestParser()
@@ -1582,6 +1585,10 @@ class Clear(Resource):
 
             for fname in names:
                 os.remove(fname)
+            
+            # removing cache directory
+            path = os.path.join(os.getcwd(), '__pycache__')
+            shutil.rmtree(path)
 
             logger.info('Cleared cache')
             return {
