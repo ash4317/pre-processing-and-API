@@ -18,6 +18,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.decomposition import PCA
 
+nltk.download('words')
+
 
 # some lists defined which are referred to later for text cleaning
 MONTHS = ['january', 'february', 'march', 'april', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
