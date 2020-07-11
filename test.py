@@ -140,12 +140,14 @@ url = "http://127.0.0.1:5000/clustering/summary?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
+
+# Clear summary and cluster files at the time of log out
 url = "http://127.0.0.1:5000/clear?uname=admin"
 r = requests.delete(url=url)
 print(r.text)
 
 
-
+# Tests for Report Generation code
 datajson = {
     'US17326YZV19': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm',
     'US17326YJJ64': 'https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm',
