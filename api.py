@@ -1189,6 +1189,12 @@ class ClusterSummary(Resource):
                     }, 400
 
 
+class Test(Resource):
+    def get(self):
+        return {
+            'message': 'Working'
+        }, 200
+
 # Adding all URL paths
 api.add_resource(ExtractData, '/extract')
 api.add_resource(ExportExtractedData, '/extract/export')
@@ -1199,6 +1205,7 @@ api.add_resource(DBSCAN, '/clustering/dbscan')
 api.add_resource(Agglomerative, '/clustering/agglomerative')
 api.add_resource(Birch, '/clustering/birch')
 api.add_resource(ClusterSummary, '/clustering/summary')
+api.add_resource(Test, '/test')
 
 
 # main function
