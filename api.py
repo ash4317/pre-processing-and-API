@@ -1751,6 +1751,16 @@ class ReportGeneration(Resource):
                     }, 400
 
 
+class Test(Resource):
+    '''
+    Test class to check if API is responding
+    '''
+    def get(self):
+        return {
+            'message': 'API for preprocessing and clustering!'
+        }
+
+
 
 # Adding all URL paths
 api.add_resource(ReportGeneration, "/report")
@@ -1766,6 +1776,7 @@ api.add_resource(ClusterSummary, '/clustering/summary')
 api.add_resource(Elbow, '/clustering/elbow')
 api.add_resource(Silhouette, '/clustering/silhouette')
 api.add_resource(Clear, '/clear')
+api.add_resource(Test, '/')
 
 
 # main function
