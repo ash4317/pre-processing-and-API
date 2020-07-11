@@ -320,8 +320,8 @@ class PreProcess(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong!',
-                    'status':e
+                    'message':repr(e),
+                    'status':'error'
                     }, 400
 
     def get(self):
