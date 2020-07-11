@@ -27,9 +27,10 @@ app = Flask(__name__)
 api = Api(app)
 
 
-# to find the log file
+# Set directory for all log files
 cwd = os.getcwd()
 LOG_FOLDER = os.path.join(cwd,'LOGS')
+# Set parameters for root log file
 LOG_FORMAT = "%(levelname)s %(name)s %(asctime)s - %(message)s"
 logging.basicConfig(filename=os.path.join(LOG_FOLDER, 'rootlog.log'), level=logging.DEBUG, format= LOG_FORMAT)
 logger = logging.getLogger()
@@ -50,7 +51,7 @@ class ExtractData(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -63,6 +64,8 @@ class ExtractData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to extract data.')
             try:
@@ -117,7 +120,7 @@ class ExtractData(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -130,6 +133,8 @@ class ExtractData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get extracted data.')
             try:
@@ -180,7 +185,7 @@ class ExportExtractedData(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -194,6 +199,7 @@ class ExportExtractedData(Resource):
                         'status':'error'
                         }, 400
             
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to export extracted data.')
 
@@ -234,6 +240,7 @@ class ExportExtractedData(Resource):
                         'message':'Invalid format. Valid formats are .csv and .xlsx',
                         'status':'error'
                         }, 400
+            # Return success message
             logger.info('Exported successfully')
             return {
                     'data':'',
@@ -269,7 +276,7 @@ class PreProcess(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -282,6 +289,8 @@ class PreProcess(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to pre-process data.')
             try:
@@ -342,7 +351,7 @@ class PreProcess(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -355,6 +364,8 @@ class PreProcess(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get pre-processed data.')
             try:
@@ -362,6 +373,7 @@ class PreProcess(Resource):
                 fname = args['fname'].replace('.' + strrep, '')
             except:
                 fname = args['fname']
+            # Read json file to get pre-processed data
             try:
                 logger.debug('Reading pre-processed datafile')
                 data = ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname)
@@ -404,7 +416,7 @@ class ExportPrepData(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -417,6 +429,8 @@ class ExportPrepData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to export pre-processed data.')
             try:
@@ -424,6 +438,7 @@ class ExportPrepData(Resource):
                 fname = args['fname'].replace('.' + strrep, '')
             except:
                 fname = args['fname']
+            # Read json file to get pre-processed data
             try:
                 logger.debug('Reading pre-processed datafile.')
                 jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
@@ -492,7 +507,8 @@ class Kmeans(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
+            # Check for username and filename in the URL
             if not args['uname']:
                 return {
                         'data':'',
@@ -505,6 +521,8 @@ class Kmeans(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to cluster documents.')
             try:
@@ -586,15 +604,15 @@ class Kmeans(Resource):
             logger.debug('Getting scatter plot for clustered data')
             #fig = kmeans.visualize_scatter(args['k'], ratio)
 
-            #To avoid Matplotlib warning
+            # To avoid Matplotlib warning
             with concurrent.futures.ThreadPoolExecutor() as executor:
                 future = executor.submit(kmeans.visualize_scatter, args['k'], ratio)
                 fig = future.result()
             canvas = FigureCanvas(fig)
-            #Converting image to stream of bytes
+            # Converting image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
-            #Packing returned image as a stream of bytes in Response object
+            # Packing returned image as a stream of bytes in Response object
             logger.debug('Packing returned image as a stream of bytes in Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
@@ -618,16 +636,19 @@ class Kmeans(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering details.')
             
+            # Read JSON file to get clustered data
             try:
                 logger.debug('Reading datafile for clustered data')
                 data = ex.get_recent_file('cluster_' + args['uname'])
@@ -670,7 +691,8 @@ class DBSCAN(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
+            # Check for username and filename in the URL
             if not args['uname']:
                 return {
                         'data':'',
@@ -683,6 +705,8 @@ class DBSCAN(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to cluster documents.')
             try:
@@ -763,9 +787,11 @@ class DBSCAN(Resource):
             logger.debug('Getting scatter plot for clustered data')
             fig = dbscan.visualize_scatter(args['eps'], args['min'], ratio)
             canvas = FigureCanvas(fig)
+            # Convert returned image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
             logger.debug('Packing returned image as a stream of bytes to the Response object')
+            # Packing returned image as a stream of bytes in Response object
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
             logger.info('Performed clustering successfully')
@@ -789,13 +815,15 @@ class DBSCAN(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering details.')
             
@@ -840,7 +868,7 @@ class Agglomerative(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -853,6 +881,8 @@ class Agglomerative(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to cluster documents.')
             try:
@@ -933,8 +963,10 @@ class Agglomerative(Resource):
             logger.debug('Getting scatter plot for clustered data')
             fig = ag.visualize_scatter(args['k'], ratio)
             canvas = FigureCanvas(fig)
+            # Converting returned image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
+            # Packing returned image as a stream of bytes in Response object
             logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
@@ -958,13 +990,15 @@ class Agglomerative(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering details.')
             
@@ -1009,7 +1043,7 @@ class Birch(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -1022,6 +1056,8 @@ class Birch(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to cluster documents.')
             try:
@@ -1102,8 +1138,10 @@ class Birch(Resource):
             logger.debug('Getting scatter plot for clustered data')
             fig = birch.visualize_scatter(args['k'], ratio)
             canvas = FigureCanvas(fig)
+            # converting returned image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
+            # Packing returned image as a stream of bytes in Response object
             logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
@@ -1127,13 +1165,15 @@ class Birch(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering details.')
             
@@ -1172,7 +1212,7 @@ class ClusterSummary(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('content_type', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -1181,6 +1221,8 @@ class ClusterSummary(Resource):
                         }, 400
             if not args['content_type']:
                 args['content_type'] = 'summary'
+                
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get clustering summary.')            
             
@@ -1235,7 +1277,7 @@ class Elbow(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -1248,6 +1290,8 @@ class Elbow(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to plot elbow curve.')
             try:
@@ -1293,8 +1337,10 @@ class Elbow(Resource):
             logger.debug('Plotting elbow curve')
             fig, K = kmeans.visualize_elbow(len(ISINs),ratio)
             canvas = FigureCanvas(fig)
+            # Convert returned image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
+            # Packing returned image as a stream of bytes in Response object
             logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
@@ -1325,13 +1371,15 @@ class Elbow(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get optimal k value')
             
@@ -1373,7 +1421,7 @@ class Silhouette(Resource):
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
+
             if not args['uname']:
                 return {
                         'data':'',
@@ -1386,6 +1434,8 @@ class Silhouette(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested for optimal value of K using Silhouette.')
             try:
@@ -1433,8 +1483,10 @@ class Silhouette(Resource):
             logger.debug('Plotting silhouette score')
             fig, optimal_k = kmeans.silhouetteScore(len(ISINs), ratio, kn_knee)
             canvas = FigureCanvas(fig)
+            # Convert returned image to stream of bytes
             output = io.BytesIO()
             canvas.print_png(output)
+            # Packing returned image as a stream of bytes in Response object
             logger.debug('Packing returned image as a stream of bytes to the Response object')
             response = make_response(output.getvalue())
             response.mimetype = 'image/png'
@@ -1466,13 +1518,14 @@ class Silhouette(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str)
             args = parser.parse_args()
-            # exception handling and adding entry into the log file
             if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+                        
+            # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get optimal k value')
             
