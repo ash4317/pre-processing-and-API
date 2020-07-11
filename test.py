@@ -78,11 +78,7 @@ print(r.text)
 
 
 #Perform K-Means clustering 
-<<<<<<< HEAD
-url = "http://127.0.0.1:5000/clustering/kmeans?k=4&format=excel&uname=ash4317&fname=ISINS_v3.xlsx"
-=======
 url = "http://127.0.0.1:5000/clustering/kmeans?k=4&format=csv&uname=admin&fname=ISINS_v3.xlsx"
->>>>>>> d030f14565d6114169eb83b9d0c42d59aae7bd21
 r = requests.post(url=url)
 img = Image.open(io.BytesIO(r.content))
 img.show()
