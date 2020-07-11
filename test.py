@@ -15,7 +15,6 @@ def readlinks(path):
         df = pd.read_csv(path)
     elif ex.check(path, '.xlsx'):
         df = pd.read_excel(path)
-
     urlList = df['Termsheet Link'].tolist()
     isinList = df['ISIN'].tolist()
     return isinList, urlList
@@ -29,7 +28,6 @@ i = 0
 for ISIN in ISINs:
     datajson[ISIN] = URLs[i]    
     i += 1
-json_dumps = json.dumps(datajson)
 
 
 
