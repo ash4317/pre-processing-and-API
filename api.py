@@ -590,9 +590,6 @@ class Kmeans(Resource):
             clusterData = dict()
             clusterData['clust'] = clust
             clusterData['summary'] = clusters
-            logger.debug('Exporting clustering results')
-            # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename('kmeans results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
@@ -773,9 +770,6 @@ class DBSCAN(Resource):
             clusterData = dict()
             clusterData['clust'] = clust
             clusterData['summary'] = clusters
-            logger.debug('Exporting clustering results')
-            # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename('dbscan results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
@@ -949,9 +943,6 @@ class Agglomerative(Resource):
             clusterData = dict()
             clusterData['clust'] = clust
             clusterData['summary'] = clusters
-            logger.debug('Exporting clustering results')
-            # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename('agglomerative results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
@@ -1124,9 +1115,6 @@ class Birch(Resource):
             clusterData = dict()
             clusterData['clust'] = clust
             clusterData['summary'] = clusters
-            logger.debug('Exporting clustering results')
-            # export the clustered output to csv/excel file according to the user's requirement
-            ex.export(datajson, args['format'], ex.give_filename('birch results_' + args['uname'] + '_' + fname, ''))
 
             # writes a summary of clustering into "cluster.json" and docs in different clusters into "summary.json"
             logger.debug('Writting summary')
@@ -1551,6 +1539,45 @@ class Silhouette(Resource):
                     }, 400
 
 
+class Clear(Resource):
+    def delete(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('uname', type=str)
+            args = parser.parse_args()
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Logging off...deleting all cached files')
+            
+            names = [x for x in os.listdir() if args['uname'] in x and '.json' in x and 'extract_' not in x and 'preprocess_' not in x]
+
+            for fname in names:
+                os.remove(fname)
+
+            logger.info('Cleared cache')
+            return {
+                    'data': '', 
+                    'status':'success'
+                    }, 200
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+
+
 # Adding all URL paths
 api.add_resource(ExtractData, '/extract')
 api.add_resource(ExportExtractedData, '/extract/export')
@@ -1563,6 +1590,7 @@ api.add_resource(Birch, '/clustering/birch')
 api.add_resource(ClusterSummary, '/clustering/summary')
 api.add_resource(Elbow, '/clustering/elbow')
 api.add_resource(Silhouette, '/clustering/silhouette')
+api.add_resource(Clear, '/clear')
 
 
 # main function

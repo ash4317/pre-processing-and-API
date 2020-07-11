@@ -139,3 +139,7 @@ print(r.text)
 url = "http://127.0.0.1:5000/clustering/summary?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
+
+url = "http://127.0.0.1:5000/clear?uname=admin"
+r = requests.delete(url=url)
+print(r.text)
