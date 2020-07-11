@@ -5,6 +5,7 @@ This module contains ALL the text pre-processing functions
 # Modules imported
 import nltk
 nltk.download('words')
+nltk.download('stopwords')
 from nltk.corpus import stopwords, words
 from nltk.stem import PorterStemmer, WordNetLemmatizer
 from nltk.tokenize import word_tokenize
