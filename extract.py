@@ -13,6 +13,7 @@ from csv import writer
 import pandas as pd
 import os
 import nltk
+nltk.download('words')
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from string import digits
