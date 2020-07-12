@@ -612,27 +612,21 @@ class Kmeans(Resource):
             ex.write_json(clusterData, ex.give_filename('summary_' + args['uname'], '.json'))
             logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
+            
+            # getting coordinates of all points in scatter plot (every point represents a document)
+            x_coords = list(ratio[:, 0])
+            y_coords = list(ratio[:, 1])
+            data = list()
+            
+            # returning all coordinates as a list of dictionaries
+            for i in range(len(x_coords)):
+                data.append({'x':x_coords[i], 'y':y_coords[i]})
 
-            # plots scatter plot and returns it
-            logger.debug('Getting scatter plot for clustered data')
-            #fig = kmeans.visualize_scatter(args['k'], ratio)
-
-            # To avoid Matplotlib warning
-            with concurrent.futures.ThreadPoolExecutor() as executor:
-                future = executor.submit(kmeans.visualize_scatter, args['k'], ratio)
-                fig = future.result()
-            canvas = FigureCanvas(fig)
-            # Converting image to stream of bytes
-            output = io.BytesIO()
-            canvas.print_png(output)
-            # Packing returned image as a stream of bytes in Response object
-            logger.debug('Packing returned image as a stream of bytes in Response object')
-            response = make_response(output.getvalue())
-            response.mimetype = 'image/png'
-            logger.info('Performed clustering successfully')
-            return response
-        
-        # error message if traceback occurs
+            return {
+                'data':data,
+                'message':'',
+                'status':'success'
+            }, 200
         except Exception as e:
             logger.exception('Exception occurred: '+repr(e))
             return {
@@ -794,19 +788,20 @@ class DBSCAN(Resource):
             logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
-            # plots scatter plot and returns it
-            logger.debug('Getting scatter plot for clustered data')
-            fig = dbscan.visualize_scatter(args['eps'], args['min'], ratio)
-            canvas = FigureCanvas(fig)
-            # Convert returned image to stream of bytes
-            output = io.BytesIO()
-            canvas.print_png(output)
-            logger.debug('Packing returned image as a stream of bytes to the Response object')
-            # Packing returned image as a stream of bytes in Response object
-            response = make_response(output.getvalue())
-            response.mimetype = 'image/png'
-            logger.info('Performed clustering successfully')
-            return response
+            # getting coordinates of all points in scatter plot (every point represents a document)
+            x_coords = list(ratio[:, 0])
+            y_coords = list(ratio[:, 1])
+            data = list()
+            
+            # returning all coordinates as a list of dictionaries
+            for i in range(len(x_coords)):
+                data.append({'x':x_coords[i], 'y':y_coords[i]})
+
+            return {
+                'data':data,
+                'message':'',
+                'status':'success'
+            }, 200
         
         # error message if traceback occurs
         except Exception as e:
@@ -968,19 +963,20 @@ class Agglomerative(Resource):
             logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
-            # plots scatter plot and returns it
-            logger.debug('Getting scatter plot for clustered data')
-            fig = ag.visualize_scatter(args['k'], ratio)
-            canvas = FigureCanvas(fig)
-            # Converting returned image to stream of bytes
-            output = io.BytesIO()
-            canvas.print_png(output)
-            # Packing returned image as a stream of bytes in Response object
-            logger.debug('Packing returned image as a stream of bytes to the Response object')
-            response = make_response(output.getvalue())
-            response.mimetype = 'image/png'
-            logger.info('Performed clustering successfully')
-            return response
+            # getting coordinates of all points in scatter plot (every point represents a document)
+            x_coords = list(ratio[:, 0])
+            y_coords = list(ratio[:, 1])
+            data = list()
+            
+            # returning all coordinates as a list of dictionaries
+            for i in range(len(x_coords)):
+                data.append({'x':x_coords[i], 'y':y_coords[i]})
+
+            return {
+                'data':data,
+                'message':'',
+                'status':'success'
+            }, 200
         
         # error message if traceback occurs
         except Exception as e:
@@ -1141,19 +1137,20 @@ class Birch(Resource):
             logger.debug('Writting clustering information to datafile')
             ex.write_json(datajson, ex.give_filename('cluster_' + args['uname'], '.json'))
 
-            # plots scatter plot and returns it
-            logger.debug('Getting scatter plot for clustered data')
-            fig = birch.visualize_scatter(args['k'], ratio)
-            canvas = FigureCanvas(fig)
-            # converting returned image to stream of bytes
-            output = io.BytesIO()
-            canvas.print_png(output)
-            # Packing returned image as a stream of bytes in Response object
-            logger.debug('Packing returned image as a stream of bytes to the Response object')
-            response = make_response(output.getvalue())
-            response.mimetype = 'image/png'
-            logger.info('Performed clustering successfully')
-            return response
+            # getting coordinates of all points in scatter plot (every point represents a document)
+            x_coords = list(ratio[:, 0])
+            y_coords = list(ratio[:, 1])
+            data = list()
+            
+            # returning all coordinates as a list of dictionaries
+            for i in range(len(x_coords)):
+                data.append({'x':x_coords[i], 'y':y_coords[i]})
+
+            return {
+                'data':data,
+                'message':'',
+                'status':'success'
+            }, 200
         
         # error message if traceback occurs
         except Exception as e:
