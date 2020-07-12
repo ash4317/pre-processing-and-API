@@ -100,7 +100,7 @@ def extract(isinList, urlList, no_of_docs):
     i = 0
     for url in urlList:
 
-        # only extract data from ".htm" files
+        # only extract data from ".htm" or ".html" files
         r = check(url, ".htm")
         s = check(url, ".html")
         if r == 1 or s == 1:
