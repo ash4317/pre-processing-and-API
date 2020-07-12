@@ -32,7 +32,7 @@ for ISIN in ISINs:
 
 
 #Extract data
-url = "https://preprocess-and-cluster-api.herokuapp.com/extract?no_of_docs=30&uname=admin&fname=ISINS_v3.xlsx"
+url = "https://preprocess-and-cluster-api.herokuapp.com/extract?no_of_docs=20&uname=admin&fname=ISINS_v3.xlsx"
 r = requests.post(url=url, json=datajson)
 print(r.text)
 
