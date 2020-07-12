@@ -1691,7 +1691,7 @@ class ReportGeneration(Resource):
             logger.exception('Exception occurred:' + repr(e))
             return {
                     'data':'',
-                    'message': e,
+                    'message': repr(e),
                     'status':'error'
                     }, 400
 
@@ -1736,7 +1736,7 @@ class ReportGeneration(Resource):
 
             fileContents = open(reqJSON, "r").readline()
             logger.debug('Get request served successfully')
-            return jsonify(fileContents)
+            return fileContents
             
         # error message if traceback occurs
         except Exception as e:
