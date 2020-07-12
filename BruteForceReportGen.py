@@ -61,7 +61,7 @@ def generateDataFrames(scoreDfs, allUsefulSheetAttr, allTemplateAttr, allSheetAt
         frames.append(df)
     result1 = pd.concat(frames, sort=False)
     result1.index.name = "Termsheet Name"
-    allDfs["Match & Miss-match Matrix"] = result1.to_json(orient='split')
+    allDfs["Match & Miss-match Matrix"] = pd.DataFrame.to_dict(result1)
 
     index = []
     attrs = []
@@ -70,7 +70,7 @@ def generateDataFrames(scoreDfs, allUsefulSheetAttr, allTemplateAttr, allSheetAt
         attrs.append(attr)
 
     result2 = pd.DataFrame(data=attrs, index=index)
-    allDfs["Attributes from Sheet"] = result2.to_json(orient='split')
+    allDfs["Attributes from Sheet"] = pd.DataFrame.to_dict(result2)
 
     index = []
     attrs = []
@@ -79,7 +79,7 @@ def generateDataFrames(scoreDfs, allUsefulSheetAttr, allTemplateAttr, allSheetAt
         attrs.append(attr)
 
     result3 = pd.DataFrame(data=attrs, index=index)
-    allDfs["Attributes from Template"] = result3.to_json(orient='split')
+    allDfs["Attributes from Template"] = pd.DataFrame.to_dict(result3)
 
     index = []
     attrs = []
@@ -88,7 +88,7 @@ def generateDataFrames(scoreDfs, allUsefulSheetAttr, allTemplateAttr, allSheetAt
         attrs.append(attr)
 
     result4 = pd.DataFrame(data=attrs, index=index)
-    allDfs["All Attributes from Sheet"] = result4.to_json(orient='split')
+    allDfs["All Attributes from Sheet"] = pd.DataFrame.to_dict(result4)
 
     return allDfs
 
