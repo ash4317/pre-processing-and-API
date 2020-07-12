@@ -145,7 +145,6 @@ def main(sheetContents, tempLocs, keyListLoc, reportPath=""):
     folder containing the application and the location of the
     termsheet as input. It generates the locations of all the
     templates and matches them with the termsheet
-
     It accepts 4 arguments:
     sheetContents: A dictionary of ISINs and the URL
     tempLocs: A directory containing the templates

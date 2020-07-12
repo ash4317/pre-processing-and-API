@@ -1,0 +1,29 @@
+INFO admin 2020-07-12 18:55:41,293 - Requested for report generation.
+DEBUG admin 2020-07-12 18:55:41,293 - Checking for json input
+DEBUG admin 2020-07-12 18:55:41,293 - Fetching URLs
+DEBUG admin 2020-07-12 18:55:41,293 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+DEBUG admin 2020-07-12 18:55:41,949 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+DEBUG admin 2020-07-12 18:55:42,449 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+DEBUG admin 2020-07-12 18:55:43,026 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+DEBUG admin 2020-07-12 18:55:43,527 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+DEBUG admin 2020-07-12 18:55:44,058 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+DEBUG admin 2020-07-12 18:55:44,542 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+DEBUG admin 2020-07-12 18:55:45,042 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+DEBUG admin 2020-07-12 18:55:45,573 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+DEBUG admin 2020-07-12 18:55:45,886 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+DEBUG admin 2020-07-12 18:55:46,198 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+DEBUG admin 2020-07-12 18:55:46,730 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+DEBUG admin 2020-07-12 18:55:47,042 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+DEBUG admin 2020-07-12 18:55:47,651 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+DEBUG admin 2020-07-12 18:55:48,279 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+DEBUG admin 2020-07-12 18:55:48,810 - Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+DEBUG admin 2020-07-12 18:55:49,325 - Using bruteforce method for report generation
+INFO admin 2020-07-12 18:55:51,169 - Report generated successfully
+INFO werkzeug 2020-07-12 18:55:51,169 - 127.0.0.1 - - [12/Jul/2020 18:55:51] "[37mPOST /report?username=admin&kind=1 HTTP/1.1[0m" 200 -
+INFO admin 2020-07-12 18:56:52,342 - Requested for report generation.
+DEBUG admin 2020-07-12 18:56:52,342 - Searching for JSON Dump
+DEBUG admin 2020-07-12 18:56:52,342 - Found JSON Dump
+DEBUG admin 2020-07-12 18:56:52,342 - Get request served successfully
+INFO werkzeug 2020-07-12 18:56:52,342 - 127.0.0.1 - - [12/Jul/2020 18:56:52] "[37mGET /report?username=admin&kind=1 HTTP/1.1[0m" 200 -
+INFO werkzeug 2020-07-12 18:58:23,572 -  * Detected change in 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\BruteForceReportGen.py', reloading
+INFO werkzeug 2020-07-12 18:58:23,835 -  * Restarting with stat

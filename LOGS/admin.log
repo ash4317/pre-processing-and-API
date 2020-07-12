@@ -1,0 +1,25 @@
+2020-07-12 18:55:41,293 admin INFO Requested for report generation.
+2020-07-12 18:55:41,293 admin DEBUG Checking for json input
+2020-07-12 18:55:41,293 admin DEBUG Fetching URLs
+2020-07-12 18:55:41,293 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-07-12 18:55:41,949 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-07-12 18:55:42,449 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-07-12 18:55:43,026 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-07-12 18:55:43,527 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-07-12 18:55:44,058 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-07-12 18:55:44,542 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-07-12 18:55:45,042 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-07-12 18:55:45,573 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-07-12 18:55:45,886 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-07-12 18:55:46,198 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-07-12 18:55:46,730 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-07-12 18:55:47,042 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-07-12 18:55:47,651 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-07-12 18:55:48,279 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-07-12 18:55:48,810 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-07-12 18:55:49,325 admin DEBUG Using bruteforce method for report generation
+2020-07-12 18:55:51,169 admin INFO Report generated successfully
+2020-07-12 18:56:52,342 admin INFO Requested for report generation.
+2020-07-12 18:56:52,342 admin DEBUG Searching for JSON Dump
+2020-07-12 18:56:52,342 admin DEBUG Found JSON Dump
+2020-07-12 18:56:52,342 admin DEBUG Get request served successfully
