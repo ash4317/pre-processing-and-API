@@ -243,10 +243,10 @@ class ExportExtractedData(Resource):
             logger.debug('Checking if filepath has valid format')
             if ex.check(args['filepath'], '.xlsx'):
                 logger.debug('Exporting data to excel file')
-                ex.exportexcel(args['uname'], args['fname'], filename = args['filepath'], datalist = [ISINs, URLs, text])
+                ex.exportexcel(args['uname'], fname, filename = args['filepath'], datalist = [ISINs, URLs, text])
             elif ex.check(args['filepath'], '.csv'):
                 logger.debug('Exporting data to csv file')
-                ex.exportcsv(args['uname'], args['fname'], filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
+                ex.exportcsv(args['uname'], fname, filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
             else:
                 logger.error('Invalid format for export file')
                 return {
@@ -468,10 +468,10 @@ class ExportPrepData(Resource):
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             if ex.check(args['filepath'], '.xlsx'):
                 logger.debug('Exporting pre-processed data to excel file.')
-                ex.exportexcel(args['uname'], args['fname'], filename = args['filepath'], datalist = [ISINs, URLs, text])
+                ex.exportexcel(args['uname'], fname, filename = args['filepath'], datalist = [ISINs, URLs, text])
             elif ex.check(args['filepath'], '.csv'):
                 logger.debug('Exporting pre-processed data to csv file.')
-                ex.exportcsv(args['uname'], args['fname'], filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
+                ex.exportcsv(args['uname'], fname, filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
             else:
                 logger.error('Invalid file format.')
                 return {
