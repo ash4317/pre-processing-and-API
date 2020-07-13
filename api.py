@@ -236,8 +236,8 @@ class ExportExtractedData(Resource):
                         'status':'error'
                         }, 400
 
-            if os.path.exists(args['uname'] + '_' + args['fname'] + '_' + args['filepath']):
-                os.remove(args['uname'] + '_' + args['fname'] + '_' + args['filepath'])
+            if os.path.exists(args['uname'] + '_' + fname + '_' + args['filepath']):
+                os.remove(args['uname'] + '_' + fname + '_' + args['filepath'])
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             logger.debug('Checking if filepath has valid format')
@@ -256,7 +256,7 @@ class ExportExtractedData(Resource):
                         }, 400
             # Return success message
             logger.info('Exported successfully')
-            return send_file(args['uname'] + '_' + args['fname'] + '_' + args['filepath']) 
+            return send_file(args['uname'] + '_' + fname + '_' + args['filepath']) 
 
         # error message if traceback occurs
         except Exception as e:
@@ -310,32 +310,17 @@ class PreProcess(Resource):
             argset = set(args)
 
               
-            flag = 0
             try:
-                logger.debug('Reading binary extracted data')
-                data = request.data
-                logger.debug('Copying data to excel file')
-                open(args['uname'] + '_' + args['fname'] + '_' + 'extracted.xlsx', 'wb').write(data)
-                logger.debug('Reading copied excel data')
-                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'extracted.xlsx')
-                flag = 1
+                logger.debug('Reading data from datafile')
+                jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
+                ISINs, URLs, text = ex.jsontolists(jsondata)
             except:
-                logger.debug('Binary extracted data not found')
-                flag = 0
-
-            # if external filepath for extracted data is not given, then this means that extraction is done using this API itself and is stored in the file "extract_username_filename_date_time.json"
-            if flag == 0:
-                try:
-                    logger.debug('Reading data from datafile')
-                    jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
-                    ISINs, URLs, text = ex.jsontolists(jsondata)
-                except:
-                    logger.exception('Failed to read datafile')
-                    return {
-                            'data':'',
-                            'message':'Failed to read data!',
-                            'status':'error'
-                            }, 400
+                logger.exception('Failed to read datafile')
+                return {
+                        'data':'',
+                        'message':'Failed to read data!',
+                        'status':'error'
+                        }, 400
                 
             # text pre-processing function call
             logger.debug('Pre-processing text data')
@@ -473,8 +458,8 @@ class ExportPrepData(Resource):
                         'status':'error'
                         }, 400
                 
-            if os.path.exists(args['uname'] + '_' + args['fname'] + '_' + args['filepath']):
-                os.remove(args['uname'] + '_' + args['fname'] + '_' + args['filepath'])
+            if os.path.exists(args['uname'] + '_' + fname + '_' + args['filepath']):
+                os.remove(args['uname'] + '_' + fname + '_' + args['filepath'])
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             if ex.check(args['filepath'], '.xlsx'):
@@ -491,7 +476,7 @@ class ExportPrepData(Resource):
                         'status':'error'
                         }, 400
             logger.info('Exported pre-processed data successfully.')
-            return send_file(args['uname'] + '_' + args['fname'] + '_' + args['filepath']) 
+            return send_file(args['uname'] + '_' + fname + '_' + args['filepath']) 
 
         
         # error message if traceback occurs
@@ -554,7 +539,7 @@ class Kmeans(Resource):
                 logger.debug('Copying data to excel file')
                 open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
                 logger.debug('Reading copied excel data')
-                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
+                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + fname + '_' + 'prepped.xlsx')
                 flag = 1
             except:
                 logger.debug('Binary pre-processed data not found')

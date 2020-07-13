@@ -232,10 +232,12 @@ print(r.text)
 Arguments: uname (Username)*
 return: JSON response, status
 '''
+
 # Clear summary and cluster files at the time of log out
 url = "http://127.0.0.1:5000/clear?uname=admin"
 r = requests.delete(url=url)
 print(r.text)
+
 
 
 # Tests for Report Generation code
