@@ -1578,15 +1578,11 @@ class Clear(Resource):
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Logging off...deleting all cached files')
             
-            names = [x for x in os.listdir() if args['uname'] in x and '.json' in x and 'extract_' not in x and 'preprocess_' not in x]
+            names = [x for x in os.listdir() if args['uname'] in x and ('.json' in x or '.xlsx' in x or '.csv' in x) and 'extract_' not in x and 'preprocess_' not in x]
 
             for fname in names:
                 os.remove(fname)
             
-            # removing cache directory
-            path = os.path.join(os.getcwd(), '__pycache__')
-            shutil.rmtree(path)
-
             logger.info('Cleared cache')
             return {
                     'data': '', 
