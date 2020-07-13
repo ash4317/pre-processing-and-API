@@ -50,7 +50,7 @@ def exportcsv(uname, fname, filename='export.csv', field1 = [], field2 = [], fie
     '''
     Export all the data in the fields into a csv file (by default, "export.csv")
     '''
-    filename = give_filename(filename.split('.')[0] + '_' + uname + '_' + fname, '.' + filename.split('.')[1])
+    filename = uname + '_' + fname + '_' + filename
     if os.path.isfile(filename):
         os.remove(filename)
     append_list_as_row(filename, fields)
@@ -64,7 +64,7 @@ def exportexcel(uname, fname, filename='export.xlsx', datalist=[], fields=['ISIN
     '''
     Exports data in the form of excel file, datalist is a list of lists, fields is a list of fields
     '''
-    filename = give_filename(filename.split('.')[0] + '_' + uname + '_' + fname, '.' + filename.split('.')[1])
+    filename = uname + '_' + fname + '_' + filename
     workbook = Workbook(filename)
     worksheet = workbook.add_worksheet()
     cell_format = workbook.add_format({'bold': True})

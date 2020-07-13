@@ -235,10 +235,9 @@ class ExportExtractedData(Resource):
                         'message':'Could not fetch data to export',
                         'status':'error'
                         }, 400
-            logger.debug('Checking if filepath already exists')
-            if os.path.exists(args['filepath']):
-                logger.warning('Filepath already exists. File will be overridden.')
-                os.remove(args['filepath'])
+
+            if os.path.exists(args['uname'] + '_' + args['fname'] + '_' + args['filepath']):
+                os.remove(args['uname'] + '_' + args['fname'] + '_' + args['filepath'])
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             logger.debug('Checking if filepath has valid format')
@@ -257,12 +256,8 @@ class ExportExtractedData(Resource):
                         }, 400
             # Return success message
             logger.info('Exported successfully')
-            return {
-                    'data':'',
-                    'message':'Exported!',
-                    'status':'success'
-                    }, 200
-        
+            return send_file(args['uname'] + '_' + args['fname'] + '_' + args['filepath']) 
+
         # error message if traceback occurs
         except Exception as e:
             logger.exception('Exception occurred:' + repr(e))
@@ -466,11 +461,9 @@ class ExportPrepData(Resource):
                         'message':'Could not fetch data to export',
                         'status':'error'
                         }, 400
-            logger.debug('Checking if filepath already exists')
-            if os.path.exists(args['filepath']):
-                logger.warning('Filepath already exists. Existing file will be overridden')
-                os.remove(args['filepath'])
                 
+            if os.path.exists(args['uname'] + '_' + args['fname'] + '_' + args['filepath']):
+                os.remove(args['uname'] + '_' + args['fname'] + '_' + args['filepath'])
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             if ex.check(args['filepath'], '.xlsx'):
@@ -487,12 +480,8 @@ class ExportPrepData(Resource):
                         'status':'error'
                         }, 400
             logger.info('Exported pre-processed data successfully.')
+            return send_file(args['uname'] + '_' + args['fname'] + '_' + args['filepath']) 
 
-            return {
-                    'data':'',
-                    'message':'Exported!',
-                    'status':'success'
-                    }, 200
         
         # error message if traceback occurs
         except Exception as e:
@@ -515,11 +504,9 @@ class Kmeans(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('filepath', type=str)
             parser.add_argument('k', type=int)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
-            parser.add_argument('format', type=str)
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
@@ -547,12 +534,23 @@ class Kmeans(Resource):
             except:
                 fname = args['fname']
 
-            # by default, format is excel
-            if not args['format']:
-                args['format'] = 'excel'
+
+                
+            flag = 0
+            try:
+                logger.debug('Reading binary pre-processed data')
+                data = request.data
+                logger.debug('Copying data to excel file')
+                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
+                logger.debug('Reading copied excel data')
+                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
+                flag = 1
+            except:
+                logger.debug('Binary pre-processed data not found')
+                flag = 0
 
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if not args['filepath']:
+            if flag == 0:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
@@ -564,9 +562,7 @@ class Kmeans(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
-            else:
-                logger.debug('Reading dataset')
-                ISINs, URLs, text = ex.readdataset(args['filepath'])
+
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -690,12 +686,10 @@ class DBSCAN(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('filepath', type=str)
             parser.add_argument('eps', type=float)
             parser.add_argument('min', type=int)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
-            parser.add_argument('format', type=str)
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
@@ -723,12 +717,22 @@ class DBSCAN(Resource):
             except:
                 fname = args['fname']
 
-            # by default, format is excel
-            if not args['format']:
-                args['format'] = 'excel'
+                
+            flag = 0
+            try:
+                logger.debug('Reading binary pre-processed data')
+                data = request.data
+                logger.debug('Copying data to excel file')
+                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
+                logger.debug('Reading copied excel data')
+                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
+                flag = 1
+            except:
+                logger.debug('Binary pre-processed data not found')
+                flag = 0
 
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if not args['filepath']:
+            if flag == 0:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
@@ -740,9 +744,6 @@ class DBSCAN(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
-            else:
-                logger.debug('Reading dataset')
-                ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -867,11 +868,9 @@ class Agglomerative(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('filepath', type=str)
             parser.add_argument('k', type=int)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
-            parser.add_argument('format', type=str)
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
@@ -898,12 +897,22 @@ class Agglomerative(Resource):
             except:
                 fname = args['fname']
 
-            # by default, format is excel
-            if not args['format']:
-                args['format'] = 'excel'
+
+            flag = 0
+            try:
+                logger.debug('Reading binary pre-processed data')
+                data = request.data
+                logger.debug('Copying data to excel file')
+                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
+                logger.debug('Reading copied excel data')
+                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
+                flag = 1
+            except:
+                logger.debug('Binary pre-processed data not found')
+                flag = 0
 
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if not args['filepath']:
+            if flag == 0:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
@@ -915,9 +924,7 @@ class Agglomerative(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
-            else:
-                logger.debug('Reading dataset')
-                ISINs, URLs, text = ex.readdataset(args['filepath'])
+
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -1041,11 +1048,9 @@ class Birch(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('filepath', type=str)
             parser.add_argument('k', type=int)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
-            parser.add_argument('format', type=str)
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
@@ -1072,12 +1077,22 @@ class Birch(Resource):
             except:
                 fname = args['fname']
 
-            # by default, format is excel
-            if not args['format']:
-                args['format'] = 'excel'
+
+            flag = 0
+            try:
+                logger.debug('Reading binary pre-processed data')
+                data = request.data
+                logger.debug('Copying data to excel file')
+                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
+                logger.debug('Reading copied excel data')
+                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
+                flag = 1
+            except:
+                logger.debug('Binary pre-processed data not found')
+                flag = 0
 
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if not args['filepath']:
+            if flag == 0:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
@@ -1089,9 +1104,6 @@ class Birch(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
-            else:
-                logger.debug('Reading dataset')
-                ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -1276,7 +1288,6 @@ class Elbow(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('filepath', type=str)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
             parser.add_argument('uname', type=str)
@@ -1305,8 +1316,21 @@ class Elbow(Resource):
             except:
                 fname = args['fname']
 
+            flag = 0
+            try:
+                logger.debug('Reading binary pre-processed data')
+                data = request.data
+                logger.debug('Copying data to excel file')
+                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
+                logger.debug('Reading copied excel data')
+                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
+                flag = 1
+            except:
+                logger.debug('Binary pre-processed data not found')
+                flag = 0
+
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if not args['filepath']:
+            if flag == 0:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
@@ -1318,9 +1342,6 @@ class Elbow(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
-            else:
-                logger.debug('Reading dataset')
-                ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -1421,7 +1442,6 @@ class Silhouette(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('filepath', type=str)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
             parser.add_argument('uname', type=str)
@@ -1450,8 +1470,22 @@ class Silhouette(Resource):
             except:
                 fname = args['fname']
 
+                
+            flag = 0
+            try:
+                logger.debug('Reading binary pre-processed data')
+                data = request.data
+                logger.debug('Copying data to excel file')
+                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
+                logger.debug('Reading copied excel data')
+                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
+                flag = 1
+            except:
+                logger.debug('Binary pre-processed data not found')
+                flag = 0
+
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if not args['filepath']:
+            if flag == 0:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
@@ -1463,9 +1497,6 @@ class Silhouette(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
-            else:
-                logger.debug('Reading dataset')
-                ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
