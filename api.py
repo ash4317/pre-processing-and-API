@@ -281,7 +281,6 @@ class PreProcess(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('filepath', type=str)
             parser.add_argument('steps', action='append')
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
@@ -309,8 +308,23 @@ class PreProcess(Resource):
             except:
                 fname = args['fname']
             argset = set(args)
+
+              
+            flag = 0
+            try:
+                logger.debug('Reading binary extracted data')
+                data = request.data
+                logger.debug('Copying data to excel file')
+                open(args['uname'] + '_' + args['fname'] + '_' + 'extracted.xlsx', 'wb').write(data)
+                logger.debug('Reading copied excel data')
+                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'extracted.xlsx')
+                flag = 1
+            except:
+                logger.debug('Binary extracted data not found')
+                flag = 0
+
             # if external filepath for extracted data is not given, then this means that extraction is done using this API itself and is stored in the file "extract_username_filename_date_time.json"
-            if not args['filepath']:
+            if flag == 0:
                 try:
                     logger.debug('Reading data from datafile')
                     jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
@@ -322,10 +336,7 @@ class PreProcess(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
-            else:
-                logger.debug('Reading dataset file')
-                ISINs, URLs, text = ex.readdataset(args['filepath'])
-            
+                
             # text pre-processing function call
             logger.debug('Pre-processing text data')
             data = cf.preprocessing(text, args['steps'])

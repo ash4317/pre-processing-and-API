@@ -23,3 +23,192 @@
 2020-07-12 18:56:52,342 admin DEBUG Searching for JSON Dump
 2020-07-12 18:56:52,342 admin DEBUG Found JSON Dump
 2020-07-12 18:56:52,342 admin DEBUG Get request served successfully
+2020-07-13 16:53:13,382 admin INFO Requested to extract data.
+2020-07-13 16:53:13,382 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-13 16:53:27,445 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-13 16:53:27,458 admin INFO Requested to export extracted data.
+2020-07-13 16:53:27,524 admin DEBUG Checking if filepath has valid format
+2020-07-13 16:53:27,524 admin DEBUG Exporting data to excel file
+2020-07-13 16:53:27,717 admin INFO Exported successfully
+2020-07-13 16:53:27,717 admin ERROR Exception occurred:FileNotFoundError(2, 'No such file or directory')
+Traceback (most recent call last):
+  File "C:\Users\Personnal\Documents\FinIQ\NLP_Project\pre-processing-and-API\api.py", line 259, in post
+    return send_file(args['uname'] + '_' + args['fname'] + '_' + args['filepath'])
+  File "C:\Users\Personnal\AppData\Local\Programs\Python\Python38\lib\site-packages\flask\helpers.py", line 629, in send_file
+    file = open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Personnal\\Documents\\FinIQ\\NLP_Project\\pre-processing-and-API\\admin_ISINS_v3.xlsx_extract.xlsx'
+2020-07-13 16:53:27,739 admin INFO Requested to pre-process data.
+2020-07-13 16:53:27,739 admin DEBUG Reading binary extracted data
+2020-07-13 16:53:27,740 admin DEBUG Copying data to excel file
+2020-07-13 16:53:27,741 admin DEBUG Reading copied excel data
+2020-07-13 16:53:27,768 admin DEBUG Binary extracted data not found
+2020-07-13 16:53:27,768 admin DEBUG Reading data from datafile
+2020-07-13 16:53:27,773 admin DEBUG Pre-processing text data
+2020-07-13 16:53:44,987 admin DEBUG Pre-processed data
+2020-07-13 16:53:44,987 admin DEBUG Writting pre-processed data to datafile
+2020-07-13 16:53:44,989 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-13 16:53:45,004 admin INFO Requested to export pre-processed data.
+2020-07-13 16:53:45,004 admin DEBUG Reading pre-processed datafile.
+2020-07-13 16:53:45,045 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-13 16:53:45,235 admin INFO Exported pre-processed data successfully.
+2020-07-13 16:53:45,236 admin ERROR Exception occurred: FileNotFoundError(2, 'No such file or directory')
+Traceback (most recent call last):
+  File "C:\Users\Personnal\Documents\FinIQ\NLP_Project\pre-processing-and-API\api.py", line 494, in post
+    return send_file(args['uname'] + '_' + args['fname'] + '_' + args['filepath'])
+  File "C:\Users\Personnal\AppData\Local\Programs\Python\Python38\lib\site-packages\flask\helpers.py", line 629, in send_file
+    file = open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Personnal\\Documents\\FinIQ\\NLP_Project\\pre-processing-and-API\\admin_ISINS_v3.xlsx_prep.xlsx'
+2020-07-13 16:53:45,256 admin INFO Requested to plot elbow curve.
+2020-07-13 16:53:45,256 admin DEBUG Reading binary pre-processed data
+2020-07-13 16:53:45,257 admin DEBUG Copying data to excel file
+2020-07-13 16:53:45,258 admin DEBUG Reading copied excel data
+2020-07-13 16:53:45,261 admin DEBUG Binary pre-processed data not found
+2020-07-13 16:53:45,261 admin DEBUG Reading datafile..
+2020-07-13 16:53:45,262 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 16:53:45,262 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 16:53:45,263 admin DEBUG Calculating tf-idf
+2020-07-13 16:53:45,308 admin DEBUG Calculating variance threshold
+2020-07-13 16:53:45,320 admin DEBUG Applying PCA
+2020-07-13 16:53:45,337 admin DEBUG Plotting elbow curve
+2020-07-13 16:53:47,585 admin DEBUG Packing returned image as a stream of bytes to the Response object
+2020-07-13 16:53:47,586 admin INFO Plotted elbow curve successfully
+2020-07-13 16:53:47,586 admin DEBUG Writing optimal k value
+2020-07-13 16:53:47,588 admin INFO Obtained optimal value of K using Elbow curve successfully
+2020-07-13 16:53:50,667 admin INFO Requested to get optimal k value
+2020-07-13 16:53:50,667 admin DEBUG Reading datafile for optimal k value after elbow method
+2020-07-13 16:53:50,668 admin INFO Get request for optimal k value served successfully
+2020-07-13 16:53:50,681 admin INFO Requested for optimal value of K using Silhouette.
+2020-07-13 16:53:50,681 admin DEBUG Reading binary pre-processed data
+2020-07-13 16:53:50,682 admin DEBUG Copying data to excel file
+2020-07-13 16:53:50,683 admin DEBUG Reading copied excel data
+2020-07-13 16:53:50,684 admin DEBUG Binary pre-processed data not found
+2020-07-13 16:53:50,684 admin DEBUG Reading datafile..
+2020-07-13 16:53:50,685 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 16:53:50,686 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 16:53:50,686 admin DEBUG Calculating tf-idf
+2020-07-13 16:53:50,732 admin DEBUG Calculating variance threshold
+2020-07-13 16:53:50,742 admin DEBUG Applying PCA
+2020-07-13 16:53:50,760 admin DEBUG Applying silhouette coefficient
+2020-07-13 16:53:50,761 admin DEBUG Plotting silhouette score
+2020-07-13 16:53:51,713 admin DEBUG Packing returned image as a stream of bytes to the Response object
+2020-07-13 16:53:51,714 admin INFO Plotted silhouette score successfully
+2020-07-13 16:53:51,715 admin DEBUG Writting optimal k
+2020-07-13 16:53:51,739 admin INFO Obtained optimal value of k using Silhouette score successfully
+2020-07-13 16:53:55,973 admin INFO Requested to get optimal k value
+2020-07-13 16:53:55,973 admin DEBUG Reading datafile for optimal k value after silhouette
+2020-07-13 16:53:55,974 admin INFO Get request for optimal k value served successfully
+2020-07-13 16:53:56,001 admin INFO Requested to cluster documents.
+2020-07-13 16:53:56,002 admin DEBUG Reading binary pre-processed data
+2020-07-13 16:53:56,002 admin DEBUG Copying data to excel file
+2020-07-13 16:53:56,003 admin DEBUG Reading copied excel data
+2020-07-13 16:53:56,005 admin DEBUG Binary pre-processed data not found
+2020-07-13 16:53:56,006 admin DEBUG Reading datafile..
+2020-07-13 16:53:56,007 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 16:53:56,007 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 16:53:56,008 admin DEBUG Calculating tf-idf
+2020-07-13 16:53:56,069 admin DEBUG Calculating variance threshold
+2020-07-13 16:53:56,083 admin DEBUG Applying PCA
+2020-07-13 16:53:56,110 admin DEBUG Applying K-Means algorithm
+2020-07-13 16:53:56,190 admin DEBUG Sorting clusters
+2020-07-13 16:53:56,192 admin DEBUG Converting to JSON format
+2020-07-13 16:53:56,194 admin DEBUG Writting summary
+2020-07-13 16:53:56,196 admin DEBUG Writting clustering information to datafile
+2020-07-13 16:53:56,223 admin INFO Requested to get clustering details.
+2020-07-13 16:53:56,223 admin DEBUG Reading datafile for clustered data
+2020-07-13 16:53:56,224 admin INFO Get request for clustered data served successfully
+2020-07-13 16:53:56,275 admin INFO Requested to get clustering summary.
+2020-07-13 16:53:56,277 admin DEBUG Reading datafile for clustering summary
+2020-07-13 16:53:56,279 admin INFO Get request for clustering summary served successfully
+2020-07-13 16:53:56,280 admin DEBUG Returning summary
+2020-07-13 16:53:56,443 admin INFO Requested to cluster documents.
+2020-07-13 16:53:56,444 admin DEBUG Reading binary pre-processed data
+2020-07-13 16:53:56,444 admin DEBUG Copying data to excel file
+2020-07-13 16:53:56,445 admin DEBUG Reading copied excel data
+2020-07-13 16:53:56,446 admin DEBUG Binary pre-processed data not found
+2020-07-13 16:53:56,446 admin DEBUG Reading datafile..
+2020-07-13 16:53:56,447 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 16:53:56,448 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 16:53:56,448 admin DEBUG Calculating tf-idf
+2020-07-13 16:53:56,518 admin DEBUG Calculating variance threshold
+2020-07-13 16:53:56,534 admin DEBUG Applying PCA
+2020-07-13 16:53:56,569 admin DEBUG Applying DBSCAN algorithm
+2020-07-13 16:53:56,594 admin DEBUG Sorting clusters
+2020-07-13 16:53:56,595 admin DEBUG Converting to JSON format
+2020-07-13 16:53:56,597 admin DEBUG Writting summary
+2020-07-13 16:53:56,599 admin DEBUG Writting clustering information to datafile
+2020-07-13 16:53:56,614 admin INFO Requested to get clustering details.
+2020-07-13 16:53:56,614 admin DEBUG Reading datafile for clustered data
+2020-07-13 16:53:56,615 admin INFO Get request for clustered data served successfully
+2020-07-13 16:53:56,635 admin INFO Requested to get clustering summary.
+2020-07-13 16:53:56,636 admin DEBUG Reading datafile for clustering summary
+2020-07-13 16:53:56,636 admin INFO Get request for clustering summary served successfully
+2020-07-13 16:53:56,637 admin DEBUG Returning summary
+2020-07-13 16:53:56,652 admin INFO Requested to cluster documents.
+2020-07-13 16:53:56,652 admin DEBUG Reading binary pre-processed data
+2020-07-13 16:53:56,653 admin DEBUG Copying data to excel file
+2020-07-13 16:53:56,654 admin DEBUG Reading copied excel data
+2020-07-13 16:53:56,655 admin DEBUG Binary pre-processed data not found
+2020-07-13 16:53:56,656 admin DEBUG Reading datafile..
+2020-07-13 16:53:56,658 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 16:53:56,658 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 16:53:56,659 admin DEBUG Calculating tf-idf
+2020-07-13 16:53:56,715 admin DEBUG Calculating variance threshold
+2020-07-13 16:53:56,727 admin DEBUG Applying PCA
+2020-07-13 16:53:56,751 admin DEBUG Applying Agglomerative algorithm
+2020-07-13 16:53:56,765 admin DEBUG Sorting clusters
+2020-07-13 16:53:56,767 admin DEBUG Converting to JSON format
+2020-07-13 16:53:56,769 admin DEBUG Writting summary
+2020-07-13 16:53:56,771 admin DEBUG Writting clustering information to datafile
+2020-07-13 16:53:56,783 admin INFO Requested to get clustering details.
+2020-07-13 16:53:56,783 admin DEBUG Reading datafile for clustered data
+2020-07-13 16:53:56,784 admin INFO Get request for clustered data served successfully
+2020-07-13 16:53:56,803 admin INFO Requested to get clustering summary.
+2020-07-13 16:53:56,804 admin DEBUG Reading datafile for clustering summary
+2020-07-13 16:53:56,804 admin INFO Get request for clustering summary served successfully
+2020-07-13 16:53:56,805 admin DEBUG Returning summary
+2020-07-13 16:53:56,832 admin INFO Requested to cluster documents.
+2020-07-13 16:53:56,832 admin DEBUG Reading binary pre-processed data
+2020-07-13 16:53:56,833 admin DEBUG Copying data to excel file
+2020-07-13 16:53:56,834 admin DEBUG Reading copied excel data
+2020-07-13 16:53:56,835 admin DEBUG Binary pre-processed data not found
+2020-07-13 16:53:56,835 admin DEBUG Reading datafile..
+2020-07-13 16:53:56,836 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 16:53:56,836 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 16:53:56,836 admin DEBUG Calculating tf-idf
+2020-07-13 16:53:56,891 admin DEBUG Calculating variance threshold
+2020-07-13 16:53:56,903 admin DEBUG Applying PCA
+2020-07-13 16:53:56,926 admin DEBUG Applying Birch algorithm
+2020-07-13 16:53:56,942 admin DEBUG Sorting clusters
+2020-07-13 16:53:56,944 admin DEBUG Converting to JSON format
+2020-07-13 16:53:56,945 admin DEBUG Writting summary
+2020-07-13 16:53:56,947 admin DEBUG Writting clustering information to datafile
+2020-07-13 16:53:56,959 admin INFO Requested to get clustering details.
+2020-07-13 16:53:56,960 admin DEBUG Reading datafile for clustered data
+2020-07-13 16:53:56,960 admin INFO Get request for clustered data served successfully
+2020-07-13 16:53:56,979 admin INFO Requested to get clustering summary.
+2020-07-13 16:53:56,980 admin DEBUG Reading datafile for clustering summary
+2020-07-13 16:53:56,980 admin INFO Get request for clustering summary served successfully
+2020-07-13 16:53:56,980 admin DEBUG Returning summary
+2020-07-13 16:53:56,995 admin INFO Logging off...deleting all cached files
+2020-07-13 16:53:57,092 admin INFO Cleared cache
+2020-07-13 16:53:57,109 admin INFO Requested for report generation.
+2020-07-13 16:53:57,110 admin DEBUG Checking for json input
+2020-07-13 16:53:57,110 admin DEBUG Fetching URLs
+2020-07-13 16:53:57,110 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-07-13 16:54:01,620 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-07-13 16:54:03,909 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-07-13 16:54:04,968 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-07-13 16:54:06,022 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-07-13 16:54:07,242 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-07-13 16:54:08,591 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-07-13 16:54:09,910 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-07-13 16:54:11,376 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-07-13 16:54:11,671 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-07-13 16:54:11,982 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-07-13 16:54:13,248 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-07-13 16:54:13,851 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-07-13 16:54:15,726 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-07-13 16:54:18,453 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-07-13 16:54:20,223 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-07-13 16:54:21,438 admin DEBUG Using bruteforce method for report generation
+2020-07-13 16:54:27,525 admin INFO Report generated successfully
