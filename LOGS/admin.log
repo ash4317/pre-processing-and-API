@@ -212,3 +212,7 @@ FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Personnal\\D
 2020-07-13 16:54:20,223 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
 2020-07-13 16:54:21,438 admin DEBUG Using bruteforce method for report generation
 2020-07-13 16:54:27,525 admin INFO Report generated successfully
+2020-07-13 16:54:27,540 admin INFO Requested for report generation.
+2020-07-13 16:54:27,540 admin DEBUG Searching for JSON Dump
+2020-07-13 16:54:27,541 admin DEBUG Found JSON Dump
+2020-07-13 16:54:27,554 admin DEBUG Get request served successfully
