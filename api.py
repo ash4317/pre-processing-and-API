@@ -574,9 +574,9 @@ class Kmeans(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying K-Means algorithm')
-            frame, scores, clust = kmeans.kmeans_clustering(args['k'],ratio,ISINs, URLs)
+            frame, scores, clust = kmeans.kmeans_clustering(args['k'],score,ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -755,9 +755,9 @@ class DBSCAN(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying DBSCAN algorithm')
-            frame, scores, clust = dbscan.dbscan_clustering(args['eps'], args['min'], ratio, ISINs, URLs)
+            frame, scores, clust = dbscan.dbscan_clustering(args['eps'], args['min'], score, ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -936,9 +936,9 @@ class Agglomerative(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying Agglomerative algorithm')
-            frame, scores, clust = ag.agglomerative_clustering(args['k'],ratio,ISINs, URLs)
+            frame, scores, clust = ag.agglomerative_clustering(args['k'],score,ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -1115,9 +1115,9 @@ class Birch(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying Birch algorithm')
-            frame, scores, clust = birch.birch_clustering(args['k'],ratio,ISINs, URLs)
+            frame, scores, clust = birch.birch_clustering(args['k'],score,ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -1353,11 +1353,11 @@ class Elbow(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
 
             # plots elbow curve ad returns it
             logger.debug('Plotting elbow curve')
-            fig, K = kmeans.visualize_elbow(len(ISINs),ratio)
+            fig, K = kmeans.visualize_elbow(len(ISINs),score)
             canvas = FigureCanvas(fig)
             # Convert returned image to stream of bytes
             output = io.BytesIO()
@@ -1508,13 +1508,13 @@ class Silhouette(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             jsonk = ex.read_json(ex.get_recent_file('elbow_k_' + args['uname']))
             kn_knee = int(jsonk)
             logger.debug('Applying silhouette coefficient')
             # plots elbow curve ad returns it
             logger.debug('Plotting silhouette score')
-            fig, optimal_k = kmeans.silhouetteScore(len(ISINs), ratio, kn_knee)
+            fig, optimal_k = kmeans.silhouetteScore(len(ISINs), score, kn_knee)
             canvas = FigureCanvas(fig)
             # Convert returned image to stream of bytes
             output = io.BytesIO()
@@ -1624,6 +1624,80 @@ class Clear(Resource):
                     'message':'Something went wrong',
                     'status':'error'
                     }, 400
+
+
+
+class SendLogs(Resource):
+    '''
+    Send log file of requesting user
+    '''
+    def get(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('uname', type=str)
+            args = parser.parse_args()
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get log file..')
+            logger.info('Sending log file')
+            return send_file(os.path.join(LOG_FOLDER, args['uname']+'.log')) 
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+
+class ClearLogs(Resource):
+    '''
+    Removes log file of requesting user
+    '''
+    def delete(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('uname', type=str)
+            args = parser.parse_args()
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to clear log file..')
+            f = open(os.path.join(LOG_FOLDER ,args['uname']+'.log'), "r+")
+            f.seek(0)
+            f.truncate()
+
+            logger.info('Cleared log file')
+            return {
+                    'data': '', 
+                    'message': '',
+                    'status':'success'
+                    }, 200
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
 
 class ReportGeneration(Resource):
     '''
@@ -1796,6 +1870,8 @@ api.add_resource(ClusterSummary, '/clustering/summary')
 api.add_resource(Elbow, '/clustering/elbow')
 api.add_resource(Silhouette, '/clustering/silhouette')
 api.add_resource(Clear, '/clear')
+api.add_resource(SendLogs, '/getlog')
+api.add_resource(ClearLogs, '/clearlog')
 api.add_resource(Test, '/')
 
 

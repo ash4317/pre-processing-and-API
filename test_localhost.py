@@ -281,3 +281,19 @@ return: JSON object, results
 url = "http://127.0.0.1:5000/report?username=admin"
 r = requests.get(url=url)
 print(r.text)
+
+'''
+Arguments: uname (Username)*
+return: log file
+'''
+url = "http://127.0.0.1:5000/getlog?uname=admin"
+r = requests.get(url=url)
+open('admin_'+'log.log', 'wb').write(r.content)
+
+'''
+Arguments: uname (Username)*
+return: JSON object, status
+'''
+url = "http://127.0.0.1:5000/clearlog?uname=admin"
+r = requests.delete(url=url)
+print(r.text)
