@@ -181,7 +181,7 @@ def varThresh_tfidf(tfidf, thresh):
     '''
     Reduces features in the tfidf matrix using Variance Threshold.
     tfidf: tfidf matrix
-    thresh: threshold of variance below which data has to be kept
+    thresh: threshold of variance 
     '''
     selector = VarianceThreshold(threshold=thresh) 
     selector.fit(tfidf)
@@ -245,8 +245,6 @@ def preprocessing(textdata, steps):
             text = unusual_words(text)
         if 'stopwords' in steps:  
             text = rmv_stopWords(text)
-        if 'unusual' in steps:
-            text = unusual_words(text)
         if 'lemmatization' in steps:
             text = apply_lemmatization(text)
         if 'stemming' in steps:
