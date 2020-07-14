@@ -50,7 +50,7 @@ def exportcsv(uname, fname, filename='export.csv', field1 = [], field2 = [], fie
     '''
     Export all the data in the fields into a csv file (by default, "export.csv")
     '''
-    filename = give_filename(filename.split('.')[0] + '_' + uname + '_' + fname, '.' + filename.split('.')[1])
+    filename = give_filename(filename.split('.')[0] + '_' + uname + '_' + fname, '.csv')
     if os.path.isfile(filename):
         os.remove(filename)
     append_list_as_row(filename, fields)
@@ -64,7 +64,7 @@ def exportexcel(uname, fname, filename='export.xlsx', datalist=[], fields=['ISIN
     '''
     Exports data in the form of excel file, datalist is a list of lists, fields is a list of fields
     '''
-    filename = give_filename(filename.split('.')[0] + '_' + uname + '_' + fname, '.' + filename.split('.')[1])
+    filename = give_filename(filename.split('.')[0] + '_' + uname + '_' + fname, '.xlsx')
     workbook = Workbook(filename)
     worksheet = workbook.add_worksheet()
     cell_format = workbook.add_format({'bold': True})
@@ -285,10 +285,13 @@ def give_filename(fname, extension):
 
 
 
-def get_recent_file(name):
+def get_recent_file(name, extension):
     '''
     Selects the most recent file updated/created
     '''
-    names = [x for x in os.listdir() if name in x and '.json' in x]
+    names = [x for x in os.listdir() if name in x and extension in x]
     names.sort(reverse=True)
-    return names[0]
+    if len(names) > 0:
+        return names[0]
+    else:
+        return "False"

@@ -158,7 +158,7 @@ class ExtractData(Resource):
                 fname = args['fname']
             try:
                 logger.debug('Searching for requested datafile')
-                data = ex.get_recent_file('extract_' + args['uname'] + '_' + fname)
+                data = ex.get_recent_file('extract_' + args['uname'] + '_' + fname, '.json')
             
             # error message if traceback occurs
             except Exception as e:
@@ -213,6 +213,7 @@ class ExportExtractedData(Resource):
                         'message':'Give file name',
                         'status':'error'
                         }, 400
+            print(args['filepath'])
             
             # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
@@ -224,7 +225,7 @@ class ExportExtractedData(Resource):
             except:
                 fname = args['fname']
             try:
-                jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
+                jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname, '.json'))
                 ISINs, URLs, text = ex.jsontolists(jsondata)
             
             # error message if traceback occurs
@@ -235,10 +236,9 @@ class ExportExtractedData(Resource):
                         'message':'Could not fetch data to export',
                         'status':'error'
                         }, 400
-            logger.debug('Checking if filepath already exists')
-            if os.path.exists(args['filepath']):
-                logger.warning('Filepath already exists. File will be overridden.')
-                os.remove(args['filepath'])
+
+            if os.path.exists(ex.get_recent_file(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'], '.xlsx')):
+                os.remove(ex.get_recent_file(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'], '.xlsx'))
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             logger.debug('Checking if filepath has valid format')
@@ -257,12 +257,8 @@ class ExportExtractedData(Resource):
                         }, 400
             # Return success message
             logger.info('Exported successfully')
-            return {
-                    'data':'',
-                    'message':'Exported!',
-                    'status':'success'
-                    }, 200
-        
+            return send_file(ex.get_recent_file(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'], '.xlsx')) 
+
         # error message if traceback occurs
         except Exception as e:
             logger.exception('Exception occurred:' + repr(e))
@@ -318,7 +314,7 @@ class PreProcess(Resource):
             if not args['filepath']:
                 try:
                     logger.debug('Reading data from datafile')
-                    jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
+                    jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname, '.json'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     logger.exception('Failed to read datafile')
@@ -391,7 +387,7 @@ class PreProcess(Resource):
             # Read json file to get pre-processed data
             try:
                 logger.debug('Reading pre-processed datafile')
-                data = ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname)
+                data = ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json')
             except Exception as e:
                 logger.error('Error in reading pre-processed data file'+repr(e))
                 return {
@@ -457,7 +453,7 @@ class ExportPrepData(Resource):
             # Read json file to get pre-processed data
             try:
                 logger.debug('Reading pre-processed datafile.')
-                jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
                 ISINs, URLs, text = ex.jsontolists(jsondata)
             except:
                 logger.error('Error while reading pre-processed datafile.')
@@ -466,11 +462,9 @@ class ExportPrepData(Resource):
                         'message':'Could not fetch data to export',
                         'status':'error'
                         }, 400
-            logger.debug('Checking if filepath already exists')
-            if os.path.exists(args['filepath']):
-                logger.warning('Filepath already exists. Existing file will be overridden')
-                os.remove(args['filepath'])
                 
+            if os.path.exists(ex.get_recent_file(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'], '.xlsx')):
+                os.remove(ex.get_recent_file(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'], '.xlsx'))
 
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             if ex.check(args['filepath'], '.xlsx'):
@@ -487,12 +481,8 @@ class ExportPrepData(Resource):
                         'status':'error'
                         }, 400
             logger.info('Exported pre-processed data successfully.')
+            return send_file(ex.get_recent_file(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'], '.xlsx')) 
 
-            return {
-                    'data':'',
-                    'message':'Exported!',
-                    'status':'success'
-                    }, 200
         
         # error message if traceback occurs
         except Exception as e:
@@ -555,7 +545,7 @@ class Kmeans(Resource):
             if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
-                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except Exception as e:
                     logger.exception('Failed to read datafile'+repr(e))
@@ -658,7 +648,7 @@ class Kmeans(Resource):
             # Read JSON file to get clustered data
             try:
                 logger.debug('Reading datafile for clustered data')
-                data = ex.get_recent_file('cluster_' + args['uname'])
+                data = ex.get_recent_file('cluster_' + args['uname'], '.json')
             except:
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
@@ -731,7 +721,7 @@ class DBSCAN(Resource):
             if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
-                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     logger.exception('Failed to read datafile')
@@ -835,7 +825,7 @@ class DBSCAN(Resource):
             
             try:
                 logger.debug('Reading datafile for clustered data')
-                data = ex.get_recent_file('cluster_' + args['uname'])
+                data = ex.get_recent_file('cluster_' + args['uname'], '.json')
             except:
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
@@ -906,7 +896,7 @@ class Agglomerative(Resource):
             if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
-                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     logger.exception('Failed to read datafile')
@@ -1009,7 +999,7 @@ class Agglomerative(Resource):
             
             try:
                 logger.debug('Reading datafile for clustered data')
-                data = ex.get_recent_file('cluster_' + args['uname'])
+                data = ex.get_recent_file('cluster_' + args['uname'], '.json')
             except:
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
@@ -1080,7 +1070,7 @@ class Birch(Resource):
             if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
-                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     logger.exception('Failed to read datafile')
@@ -1183,7 +1173,7 @@ class Birch(Resource):
             
             try:
                 logger.debug('Reading datafile for clustered data')
-                data = ex.get_recent_file('cluster_' + args['uname'])
+                data = ex.get_recent_file('cluster_' + args['uname'], '.json')
             except:
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
@@ -1233,7 +1223,7 @@ class ClusterSummary(Resource):
             
             try:
                 logger.debug('Reading datafile for clustering summary')
-                data = ex.get_recent_file('summary_' + args['uname'])
+                data = ex.get_recent_file('summary_' + args['uname'], '.json')
             except:
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
@@ -1309,7 +1299,7 @@ class Elbow(Resource):
             if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
-                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     logger.exception('Failed to read datafile')
@@ -1390,7 +1380,7 @@ class Elbow(Resource):
             
             try:
                 logger.debug('Reading datafile for optimal k value after elbow method')
-                data = ex.get_recent_file('elbow_k_' + args['uname'])
+                data = ex.get_recent_file('elbow_k_' + args['uname'], '.json')
             except:
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
@@ -1454,7 +1444,7 @@ class Silhouette(Resource):
             if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
-                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+                    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
                     ISINs, URLs, text = ex.jsontolists(jsondata)
                 except:
                     logger.exception('Failed to read datafile')
@@ -1482,7 +1472,7 @@ class Silhouette(Resource):
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
             score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
-            jsonk = ex.read_json(ex.get_recent_file('elbow_k_' + args['uname']))
+            jsonk = ex.read_json(ex.get_recent_file('elbow_k_' + args['uname'], '.json'))
             kn_knee = int(jsonk)
             logger.debug('Applying silhouette coefficient')
             # plots elbow curve ad returns it
@@ -1537,7 +1527,7 @@ class Silhouette(Resource):
             
             try:
                 logger.debug('Reading datafile for optimal k value after silhouette')
-                data = ex.get_recent_file('optimal_k_' + args['uname'])
+                data = ex.get_recent_file('optimal_k_' + args['uname'], '.json')
             except:
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
@@ -1612,32 +1602,49 @@ class ReportGeneration(Resource):
     def post(self):
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('username', type=str,
+            parser.add_argument('uname', type=str,
                                 help="Enter the name of the user",
                                 required=True)
             parser.add_argument('kind', type=int,
                                 help="Specify the kind of method",
                                 required=True)
             args = parser.parse_args()
-            user = args['username']
-            report_method = args['kind']
             
-            if not args['username']:
+            
+            if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
                         'status':'error'
                         }, 400
+            
+            # by default, kind = 1, i.e. Brute Force method is used by default
             if not args['kind']:
-                return {
-                        'data':'',
-                        'message':'Enter kind',
-                        'status':'error'
-                        }, 400
+                args['kind'] = 1
+
+            user = args['uname']
+            report_method = args['kind']
+
+            print(report_method)
+            print(type(report_method))
                         
             # exception handling and adding entry into the log file
-            logger = ul.setup_logger(args['username'], os.path.join(LOG_FOLDER ,args['username']+'.log'), level= logging.DEBUG)
-            logger.info('Requested for report generation.')
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested for report generation. Previous report deleted.')
+
+            if report_method != 1 and report_method != 2:
+                logger.debug("Invalid argument 'kind' entered")
+                return {
+                    'data':'', 
+                    'message':'Invalid value of argument "kind". Valid values are "1" or "2".', 
+                    'status':'error'
+                }, 400
+            
+            # removing previously existing report of the same name (if any)
+            path = os.path.join(cwd, 'JSONdumps')
+            for a, b, c in os.walk(path):
+                if user + '.json' in c:
+                    os.remove(os.path.join(path, user + '.json'))
 
             try:
                 logger.debug('Checking for json input')
@@ -1699,13 +1706,13 @@ class ReportGeneration(Resource):
     def get(self):
         try:
             parser = reqparse.RequestParser()
-            parser.add_argument('username', type=str,
+            parser.add_argument('uname', type=str,
                                 help="Enter the name of the user",
                                 required=True)
             args = parser.parse_args()
-            user = args['username']
+            user = args['uname']
             
-            if not args['username']:
+            if not args['uname']:
                 return {
                         'data':'',
                         'message':'Give user name',
@@ -1713,7 +1720,7 @@ class ReportGeneration(Resource):
                         }, 400
                         
             # exception handling and adding entry into the log file
-            logger = ul.setup_logger(args['username'], os.path.join(LOG_FOLDER ,args['username']+'.log'), level= logging.DEBUG)
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested for report generation.')
 
             flag = 0

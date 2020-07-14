@@ -23,3 +23,765 @@
 2020-07-12 18:56:52,342 admin DEBUG Searching for JSON Dump
 2020-07-12 18:56:52,342 admin DEBUG Found JSON Dump
 2020-07-12 18:56:52,342 admin DEBUG Get request served successfully
+2020-07-13 10:21:02,537 admin INFO Requested to extract data.
+2020-07-13 10:21:02,554 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-13 10:21:21,680 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-13 10:21:21,689 admin INFO Requested to export extracted data.
+2020-07-13 10:21:21,694 admin DEBUG Checking if filepath already exists
+2020-07-13 10:21:21,694 admin DEBUG Checking if filepath has valid format
+2020-07-13 10:21:21,695 admin DEBUG Exporting data to excel file
+2020-07-13 10:21:21,868 admin INFO Exported successfully
+2020-07-13 10:21:21,877 admin INFO Requested to pre-process data.
+2020-07-13 10:21:21,877 admin DEBUG Reading data from datafile
+2020-07-13 10:21:21,882 admin DEBUG Pre-processing text data
+2020-07-13 10:21:34,804 admin DEBUG Pre-processed data
+2020-07-13 10:21:34,805 admin DEBUG Writting pre-processed data to datafile
+2020-07-13 10:21:34,806 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-13 10:21:34,816 admin INFO Requested to export pre-processed data.
+2020-07-13 10:21:34,816 admin DEBUG Reading pre-processed datafile.
+2020-07-13 10:21:34,817 admin DEBUG Checking if filepath already exists
+2020-07-13 10:21:34,818 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-13 10:21:34,868 admin INFO Exported pre-processed data successfully.
+2020-07-13 10:21:34,876 admin INFO Requested to plot elbow curve.
+2020-07-13 10:21:34,876 admin DEBUG Reading datafile..
+2020-07-13 10:21:34,877 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 10:21:34,877 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 10:21:34,877 admin DEBUG Calculating tf-idf
+2020-07-13 10:21:34,908 admin DEBUG Calculating variance threshold
+2020-07-13 10:21:34,913 admin DEBUG Applying PCA
+2020-07-13 10:21:35,007 admin DEBUG Plotting elbow curve
+2020-07-13 10:21:37,777 admin DEBUG Packing returned image as a stream of bytes to the Response object
+2020-07-13 10:21:37,777 admin INFO Plotted elbow curve successfully
+2020-07-13 10:21:37,777 admin DEBUG Writing optimal k value
+2020-07-13 10:21:37,778 admin INFO Obtained optimal value of K using Elbow curve successfully
+2020-07-13 10:21:40,723 admin INFO Requested to get optimal k value
+2020-07-13 10:21:40,723 admin DEBUG Reading datafile for optimal k value after elbow method
+2020-07-13 10:21:40,724 admin INFO Get request for optimal k value served successfully
+2020-07-13 10:21:40,734 admin INFO Requested for optimal value of K using Silhouette.
+2020-07-13 10:21:40,734 admin DEBUG Reading datafile..
+2020-07-13 10:21:40,735 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 10:21:40,735 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 10:21:40,735 admin DEBUG Calculating tf-idf
+2020-07-13 10:21:40,757 admin DEBUG Calculating variance threshold
+2020-07-13 10:21:40,761 admin DEBUG Applying PCA
+2020-07-13 10:21:40,770 admin DEBUG Applying silhouette coefficient
+2020-07-13 10:21:40,770 admin DEBUG Plotting silhouette score
+2020-07-13 10:21:41,911 admin DEBUG Packing returned image as a stream of bytes to the Response object
+2020-07-13 10:21:41,912 admin INFO Plotted silhouette score successfully
+2020-07-13 10:21:41,912 admin DEBUG Writting optimal k
+2020-07-13 10:21:41,914 admin INFO Obtained optimal value of k using Silhouette score successfully
+2020-07-13 10:21:43,659 admin INFO Requested to get optimal k value
+2020-07-13 10:21:43,659 admin DEBUG Reading datafile for optimal k value after silhouette
+2020-07-13 10:21:43,660 admin INFO Get request for optimal k value served successfully
+2020-07-13 10:21:43,671 admin INFO Requested to cluster documents.
+2020-07-13 10:21:43,671 admin DEBUG Reading datafile..
+2020-07-13 10:21:43,672 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 10:21:43,672 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 10:21:43,672 admin DEBUG Calculating tf-idf
+2020-07-13 10:21:43,711 admin DEBUG Calculating variance threshold
+2020-07-13 10:21:43,717 admin DEBUG Applying PCA
+2020-07-13 10:21:43,728 admin DEBUG Applying K-Means algorithm
+2020-07-13 10:21:43,759 admin DEBUG Sorting clusters
+2020-07-13 10:21:43,760 admin DEBUG Converting to JSON format
+2020-07-13 10:21:43,761 admin DEBUG Writting summary
+2020-07-13 10:21:43,762 admin DEBUG Writting clustering information to datafile
+2020-07-13 10:21:43,770 admin INFO Requested to get clustering details.
+2020-07-13 10:21:43,770 admin DEBUG Reading datafile for clustered data
+2020-07-13 10:21:43,770 admin INFO Get request for clustered data served successfully
+2020-07-13 10:21:43,784 admin INFO Requested to get clustering summary.
+2020-07-13 10:21:43,784 admin DEBUG Reading datafile for clustering summary
+2020-07-13 10:21:43,785 admin INFO Get request for clustering summary served successfully
+2020-07-13 10:21:43,785 admin DEBUG Returning summary
+2020-07-13 10:21:43,795 admin INFO Requested to cluster documents.
+2020-07-13 10:21:43,795 admin DEBUG Reading datafile..
+2020-07-13 10:21:43,797 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 10:21:43,798 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 10:21:43,798 admin DEBUG Calculating tf-idf
+2020-07-13 10:21:43,818 admin DEBUG Calculating variance threshold
+2020-07-13 10:21:43,822 admin DEBUG Applying PCA
+2020-07-13 10:21:43,830 admin DEBUG Applying DBSCAN algorithm
+2020-07-13 10:21:43,858 admin DEBUG Sorting clusters
+2020-07-13 10:21:43,859 admin DEBUG Converting to JSON format
+2020-07-13 10:21:43,860 admin DEBUG Writting summary
+2020-07-13 10:21:43,861 admin DEBUG Writting clustering information to datafile
+2020-07-13 10:21:43,868 admin INFO Requested to get clustering details.
+2020-07-13 10:21:43,869 admin DEBUG Reading datafile for clustered data
+2020-07-13 10:21:43,869 admin INFO Get request for clustered data served successfully
+2020-07-13 10:21:43,883 admin INFO Requested to get clustering summary.
+2020-07-13 10:21:43,883 admin DEBUG Reading datafile for clustering summary
+2020-07-13 10:21:43,884 admin INFO Get request for clustering summary served successfully
+2020-07-13 10:21:43,884 admin DEBUG Returning summary
+2020-07-13 10:21:43,894 admin INFO Requested to cluster documents.
+2020-07-13 10:21:43,894 admin DEBUG Reading datafile..
+2020-07-13 10:21:43,895 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 10:21:43,896 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 10:21:43,896 admin DEBUG Calculating tf-idf
+2020-07-13 10:21:43,917 admin DEBUG Calculating variance threshold
+2020-07-13 10:21:43,922 admin DEBUG Applying PCA
+2020-07-13 10:21:43,929 admin DEBUG Applying Agglomerative algorithm
+2020-07-13 10:21:43,954 admin DEBUG Sorting clusters
+2020-07-13 10:21:43,955 admin DEBUG Converting to JSON format
+2020-07-13 10:21:43,956 admin DEBUG Writting summary
+2020-07-13 10:21:43,957 admin DEBUG Writting clustering information to datafile
+2020-07-13 10:21:43,965 admin INFO Requested to get clustering details.
+2020-07-13 10:21:43,965 admin DEBUG Reading datafile for clustered data
+2020-07-13 10:21:43,965 admin INFO Get request for clustered data served successfully
+2020-07-13 10:21:43,980 admin INFO Requested to get clustering summary.
+2020-07-13 10:21:43,980 admin DEBUG Reading datafile for clustering summary
+2020-07-13 10:21:43,980 admin INFO Get request for clustering summary served successfully
+2020-07-13 10:21:43,980 admin DEBUG Returning summary
+2020-07-13 10:21:43,991 admin INFO Requested to cluster documents.
+2020-07-13 10:21:43,991 admin DEBUG Reading datafile..
+2020-07-13 10:21:43,991 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 10:21:43,992 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 10:21:43,992 admin DEBUG Calculating tf-idf
+2020-07-13 10:21:44,015 admin DEBUG Calculating variance threshold
+2020-07-13 10:21:44,020 admin DEBUG Applying PCA
+2020-07-13 10:21:44,027 admin DEBUG Applying Birch algorithm
+2020-07-13 10:21:44,046 admin DEBUG Sorting clusters
+2020-07-13 10:21:44,047 admin DEBUG Converting to JSON format
+2020-07-13 10:21:44,048 admin DEBUG Writting summary
+2020-07-13 10:21:44,049 admin DEBUG Writting clustering information to datafile
+2020-07-13 10:21:44,058 admin INFO Requested to get clustering details.
+2020-07-13 10:21:44,058 admin DEBUG Reading datafile for clustered data
+2020-07-13 10:21:44,059 admin INFO Get request for clustered data served successfully
+2020-07-13 10:21:44,072 admin INFO Requested to get clustering summary.
+2020-07-13 10:21:44,072 admin DEBUG Reading datafile for clustering summary
+2020-07-13 10:21:44,073 admin INFO Get request for clustering summary served successfully
+2020-07-13 10:21:44,073 admin DEBUG Returning summary
+2020-07-13 10:21:44,083 admin INFO Logging off...deleting all cached files
+2020-07-13 10:21:44,134 admin INFO Cleared cache
+2020-07-13 10:21:44,145 admin INFO Requested for report generation.
+2020-07-13 10:21:44,145 admin DEBUG Checking for json input
+2020-07-13 10:21:44,146 admin DEBUG Fetching URLs
+2020-07-13 10:21:44,146 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-07-13 10:21:45,009 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-07-13 10:21:45,472 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-07-13 10:21:45,934 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-07-13 10:21:46,333 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-07-13 10:21:46,784 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-07-13 10:21:47,205 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-07-13 10:21:47,677 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-07-13 10:21:48,110 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-07-13 10:21:48,367 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-07-13 10:21:48,693 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-07-13 10:21:49,094 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-07-13 10:21:49,375 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-07-13 10:21:49,904 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-07-13 10:21:50,634 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-07-13 10:21:51,100 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-07-13 10:21:51,666 admin DEBUG Using bruteforce method for report generation
+2020-07-13 10:21:53,729 admin INFO Report generated successfully
+2020-07-13 10:21:53,737 admin INFO Requested for report generation.
+2020-07-13 10:21:53,738 admin DEBUG Searching for JSON Dump
+2020-07-13 10:21:53,738 admin DEBUG Found JSON Dump
+2020-07-13 10:21:53,738 admin DEBUG Get request served successfully
+2020-07-13 12:54:13,595 admin INFO Requested to extract data.
+2020-07-13 12:54:13,611 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-13 12:54:23,702 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-13 12:54:43,177 admin INFO Requested to export extracted data.
+2020-07-13 12:54:43,177 admin DEBUG Checking if filepath has valid format
+2020-07-13 12:54:43,177 admin DEBUG Exporting data to excel file
+2020-07-13 12:54:43,334 admin INFO Exported successfully
+2020-07-13 12:55:36,663 admin INFO Requested to pre-process data.
+2020-07-13 12:55:36,663 admin DEBUG Reading data from datafile
+2020-07-13 12:55:36,679 admin DEBUG Pre-processing text data
+2020-07-13 12:55:42,224 admin DEBUG Pre-processed data
+2020-07-13 12:55:42,224 admin DEBUG Writting pre-processed data to datafile
+2020-07-13 12:55:42,224 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-13 12:55:54,728 admin INFO Requested to export pre-processed data.
+2020-07-13 12:55:54,728 admin DEBUG Reading pre-processed datafile.
+2020-07-13 12:55:54,728 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-13 12:55:54,759 admin INFO Exported pre-processed data successfully.
+2020-07-13 12:56:25,418 admin INFO Requested to get optimal k value
+2020-07-13 12:56:25,418 admin DEBUG Reading datafile for optimal k value after silhouette
+2020-07-13 12:56:25,418 admin ERROR Error in reading datafile
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1529, in get
+    data = ex.get_recent_file('optimal_k_' + args['uname'])
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 294, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+2020-07-13 12:56:47,966 admin INFO Requested to cluster documents.
+2020-07-13 12:56:47,966 admin DEBUG Reading datafile..
+2020-07-13 12:56:47,966 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 12:56:47,966 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 12:56:47,966 admin DEBUG Calculating tf-idf
+2020-07-13 12:56:47,982 admin DEBUG Calculating variance threshold
+2020-07-13 12:56:47,982 admin DEBUG Applying PCA
+2020-07-13 12:56:48,138 admin DEBUG Applying K-Means algorithm
+2020-07-13 12:56:48,185 admin DEBUG Sorting clusters
+2020-07-13 12:56:48,185 admin DEBUG Converting to JSON format
+2020-07-13 12:56:48,185 admin DEBUG Writting summary
+2020-07-13 12:56:48,185 admin DEBUG Writting clustering information to datafile
+2020-07-13 12:57:08,025 admin INFO Requested to get clustering details.
+2020-07-13 12:57:08,025 admin DEBUG Reading datafile for clustered data
+2020-07-13 12:57:08,025 admin INFO Get request for clustered data served successfully
+2020-07-13 12:57:17,598 admin INFO Requested to get clustering summary.
+2020-07-13 12:57:17,598 admin DEBUG Reading datafile for clustering summary
+2020-07-13 12:57:17,598 admin INFO Get request for clustering summary served successfully
+2020-07-13 12:57:17,598 admin DEBUG Returning summary
+2020-07-13 12:58:40,062 admin INFO Requested to export extracted data.
+2020-07-13 12:58:40,062 admin DEBUG Checking if filepath has valid format
+2020-07-13 12:58:40,062 admin DEBUG Exporting data to excel file
+2020-07-13 12:58:40,124 admin INFO Exported successfully
+2020-07-13 13:04:16,082 admin INFO Requested to export extracted data.
+2020-07-13 13:04:16,097 admin DEBUG Checking if filepath has valid format
+2020-07-13 13:04:16,097 admin DEBUG Exporting data to csv file
+2020-07-13 13:04:16,113 admin INFO Exported successfully
+2020-07-13 13:20:44,081 admin INFO Requested to cluster documents.
+2020-07-13 13:20:44,081 admin DEBUG Reading datafile..
+2020-07-13 13:20:44,081 admin ERROR Failed to read datafileIndexError('list index out of range')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 547, in post
+    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 294, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+2020-07-13 13:25:39,834 admin INFO Requested to get clustering details.
+2020-07-13 13:25:39,834 admin DEBUG Reading datafile for clustered data
+2020-07-13 13:25:39,834 admin INFO Get request for clustered data served successfully
+2020-07-13 13:25:51,316 admin INFO Requested to get clustering details.
+2020-07-13 13:25:51,316 admin DEBUG Reading datafile for clustered data
+2020-07-13 13:25:51,316 admin ERROR Error in reading datafile
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 650, in get
+    data = ex.get_recent_file('cluster_' + args['uname'])
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 294, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+2020-07-13 13:35:10,800 admin INFO Requested to plot elbow curve.
+2020-07-13 13:35:10,800 admin DEBUG Reading datafile..
+2020-07-13 13:35:10,800 admin ERROR Failed to read datafile
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1301, in post
+    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname))
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 294, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+2020-07-13 13:35:42,241 admin INFO Requested to plot elbow curve.
+2020-07-13 13:35:42,241 admin DEBUG Reading datafile..
+2020-07-13 13:35:42,272 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 13:35:42,272 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 13:35:42,272 admin DEBUG Calculating tf-idf
+2020-07-13 13:35:42,287 admin DEBUG Calculating variance threshold
+2020-07-13 13:35:42,287 admin DEBUG Applying PCA
+2020-07-13 13:35:42,303 admin DEBUG Plotting elbow curve
+2020-07-13 13:35:44,365 admin DEBUG Packing returned image as a stream of bytes to the Response object
+2020-07-13 13:35:44,365 admin INFO Plotted elbow curve successfully
+2020-07-13 13:35:44,365 admin DEBUG Writing optimal k value
+2020-07-13 13:35:44,365 admin INFO Obtained optimal value of K using Elbow curve successfully
+2020-07-13 13:49:00,766 admin INFO Requested to get optimal k value
+2020-07-13 13:49:00,766 admin DEBUG Reading datafile for optimal k value after elbow method
+2020-07-13 13:49:00,766 admin INFO Get request for optimal k value served successfully
+2020-07-13 15:13:39,211 admin INFO Requested to extract data.
+2020-07-13 15:13:39,211 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-13 15:13:54,002 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-13 15:21:45,109 admin INFO Requested to get extracted data.
+2020-07-13 15:21:45,109 admin DEBUG Searching for requested datafile
+2020-07-13 15:21:45,109 admin INFO Get request served successfully
+2020-07-13 15:25:01,577 admin INFO Requested to extract data.
+2020-07-13 15:25:01,577 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-13 15:25:02,264 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-13 15:25:21,555 admin INFO Requested to get extracted data.
+2020-07-13 15:25:21,556 admin DEBUG Searching for requested datafile
+2020-07-13 15:25:21,556 admin INFO Get request served successfully
+2020-07-13 15:28:50,133 admin INFO Requested to get extracted data.
+2020-07-13 15:28:50,133 admin DEBUG Searching for requested datafile
+2020-07-13 15:28:50,133 admin ERROR Exception occurred while reading datafile:IndexError('list index out of range')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 161, in get
+    data = ex.get_recent_file('extract_' + args['uname'] + '_' + fname)
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 294, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+2020-07-13 16:11:09,607 admin INFO Requested to pre-process data.
+2020-07-13 16:11:09,607 admin DEBUG Reading data from datafile
+2020-07-13 16:11:09,607 admin DEBUG Pre-processing text data
+2020-07-13 16:11:12,497 admin DEBUG Pre-processed data
+2020-07-13 16:11:12,497 admin DEBUG Writting pre-processed data to datafile
+2020-07-13 16:11:12,513 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-13 16:14:23,225 admin INFO Requested to pre-process data.
+2020-07-13 16:14:23,225 admin DEBUG Reading data from datafile
+2020-07-13 16:14:23,225 admin ERROR Failed to read datafile
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 316, in post
+    jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 294, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+2020-07-13 16:25:14,206 admin INFO Requested to get pre-processed data.
+2020-07-13 16:25:14,206 admin DEBUG Reading pre-processed datafile
+2020-07-13 16:25:14,206 admin INFO Get request for pre-processed data served successfully
+2020-07-13 16:29:01,043 admin INFO Requested to extract data.
+2020-07-13 16:29:01,043 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-13 16:29:02,602 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-13 16:29:18,066 admin INFO Requested to pre-process data.
+2020-07-13 16:29:18,066 admin DEBUG Reading data from datafile
+2020-07-13 16:29:18,066 admin DEBUG Pre-processing text data
+2020-07-13 16:29:18,488 admin DEBUG Pre-processed data
+2020-07-13 16:29:18,488 admin DEBUG Writting pre-processed data to datafile
+2020-07-13 16:29:18,488 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-13 16:29:35,447 admin INFO Requested to get pre-processed data.
+2020-07-13 16:29:35,447 admin DEBUG Reading pre-processed datafile
+2020-07-13 16:29:35,448 admin INFO Get request for pre-processed data served successfully
+2020-07-13 16:30:48,580 admin INFO Requested to extract data.
+2020-07-13 16:30:48,580 admin ERROR Failed to extract links and ISINs from JSON object.
+2020-07-13 16:31:02,569 admin INFO Requested to extract data.
+2020-07-13 16:31:02,569 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-13 16:31:14,046 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-13 16:31:26,205 admin INFO Requested to pre-process data.
+2020-07-13 16:31:26,205 admin DEBUG Reading data from datafile
+2020-07-13 16:31:26,205 admin DEBUG Pre-processing text data
+2020-07-13 16:31:30,126 admin DEBUG Pre-processed data
+2020-07-13 16:31:30,126 admin DEBUG Writting pre-processed data to datafile
+2020-07-13 16:31:30,126 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-13 16:31:34,886 admin INFO Requested to get pre-processed data.
+2020-07-13 16:31:34,887 admin DEBUG Reading pre-processed datafile
+2020-07-13 16:31:34,887 admin INFO Get request for pre-processed data served successfully
+2020-07-13 19:00:33,902 admin INFO Requested to extract data.
+2020-07-13 19:00:33,902 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-13 19:00:41,611 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-13 19:00:52,686 admin INFO Requested to pre-process data.
+2020-07-13 19:00:52,686 admin DEBUG Reading data from datafile
+2020-07-13 19:00:52,688 admin DEBUG Pre-processing text data
+2020-07-13 19:00:58,078 admin DEBUG Pre-processed data
+2020-07-13 19:00:58,078 admin DEBUG Writting pre-processed data to datafile
+2020-07-13 19:00:58,079 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-13 19:01:19,176 admin INFO Requested to cluster documents.
+2020-07-13 19:01:19,176 admin DEBUG Reading datafile..
+2020-07-13 19:01:19,177 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-13 19:01:19,177 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-13 19:01:19,177 admin DEBUG Calculating tf-idf
+2020-07-13 19:01:19,194 admin DEBUG Calculating variance threshold
+2020-07-13 19:01:19,198 admin DEBUG Applying PCA
+2020-07-13 19:01:19,204 admin DEBUG Applying K-Means algorithm
+2020-07-13 19:01:19,225 admin DEBUG Sorting clusters
+2020-07-13 19:01:19,225 admin DEBUG Converting to JSON format
+2020-07-13 19:01:19,226 admin DEBUG Writting summary
+2020-07-13 19:01:19,227 admin DEBUG Writting clustering information to datafile
+2020-07-13 21:03:14,246 admin INFO Requested to extract data.
+2020-07-13 21:03:14,261 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-13 21:03:25,394 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-13 21:03:38,654 admin INFO Requested to export extracted data.
+2020-07-13 21:03:38,657 admin DEBUG Checking if filepath has valid format
+2020-07-13 21:03:38,657 admin DEBUG Exporting data to excel file
+2020-07-13 21:03:38,706 admin INFO Exported successfully
+2020-07-13 21:03:38,707 admin ERROR Exception occurred:FileNotFoundError(2, 'No such file or directory')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 259, in post
+    return send_file(ex.give_filename(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'] + '.', args['filepath'].split('.')[1]))
+  File "c:\python 3.8.2\lib\site-packages\flask\helpers.py", line 629, in send_file
+    file = open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\extract_admin_ISINS_v3.xlsx._13-07-2020_21-03-38xlsx'
+2020-07-13 21:06:23,653 admin INFO Requested to export extracted data.
+2020-07-13 21:06:23,656 admin DEBUG Checking if filepath has valid format
+2020-07-13 21:06:23,656 admin DEBUG Exporting data to excel file
+2020-07-13 21:06:23,779 admin INFO Exported successfully
+2020-07-13 21:06:23,779 admin ERROR Exception occurred:FileNotFoundError(2, 'No such file or directory')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 259, in post
+    logger.info('Exported successfully')
+  File "c:\python 3.8.2\lib\site-packages\flask\helpers.py", line 629, in send_file
+    file = open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\extract_admin_ISINS_v3.xlsx._13-07-2020_21-06-23xlsx'
+2020-07-14 09:14:47,535 admin INFO Requested to extract data.
+2020-07-14 09:14:47,582 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-14 09:14:54,405 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-14 09:15:12,353 admin INFO Requested to extract data.
+2020-07-14 09:15:12,353 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-14 09:15:50,829 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-14 09:16:01,956 admin INFO Requested to pre-process data.
+2020-07-14 09:16:01,956 admin DEBUG Reading data from datafile
+2020-07-14 09:16:01,971 admin DEBUG Pre-processing text data
+2020-07-14 09:16:26,115 admin DEBUG Pre-processed data
+2020-07-14 09:16:26,115 admin DEBUG Writting pre-processed data to datafile
+2020-07-14 09:16:26,130 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-14 09:16:48,330 admin INFO Requested to cluster documents.
+2020-07-14 09:16:48,330 admin DEBUG Reading datafile..
+2020-07-14 09:16:48,330 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-14 09:16:48,330 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-14 09:16:48,330 admin DEBUG Calculating tf-idf
+2020-07-14 09:16:48,487 admin DEBUG Calculating variance threshold
+2020-07-14 09:16:48,550 admin DEBUG Applying PCA
+2020-07-14 09:16:48,800 admin DEBUG Applying K-Means algorithm
+2020-07-14 09:16:48,940 admin DEBUG Sorting clusters
+2020-07-14 09:16:48,940 admin DEBUG Converting to JSON format
+2020-07-14 09:16:48,956 admin DEBUG Writting summary
+2020-07-14 09:16:48,956 admin DEBUG Writting clustering information to datafile
+2020-07-14 09:17:33,382 admin INFO Requested to get clustering summary.
+2020-07-14 09:17:33,382 admin DEBUG Reading datafile for clustering summary
+2020-07-14 09:17:33,382 admin INFO Get request for clustering summary served successfully
+2020-07-14 09:17:33,382 admin DEBUG Returning summary
+2020-07-14 09:24:15,133 admin INFO Requested to get clustering summary.
+2020-07-14 09:24:15,133 admin DEBUG Reading datafile for clustering summary
+2020-07-14 09:24:15,133 admin INFO Get request for clustering summary served successfully
+2020-07-14 09:24:15,133 admin DEBUG Returning clustering details
+2020-07-14 09:45:59,975 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 09:45:59,975 admin ERROR Exception occurred:NameError("name 'p' is not defined")
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1644, in post
+    for a, b, c in os.walk(p):
+NameError: name 'p' is not defined
+2020-07-14 09:46:34,789 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 09:46:34,789 admin DEBUG Checking for json input
+2020-07-14 09:46:34,789 admin DEBUG Fetching URLs
+2020-07-14 09:46:34,789 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-07-14 09:46:36,893 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-07-14 09:46:37,769 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-07-14 09:46:38,789 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-07-14 09:46:39,679 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-07-14 09:46:40,711 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-07-14 09:46:41,621 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-07-14 09:46:42,594 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-07-14 09:46:43,585 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-07-14 09:46:44,316 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-07-14 09:46:45,265 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-07-14 09:46:46,078 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-07-14 09:46:46,859 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-07-14 09:46:47,812 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-07-14 09:46:49,190 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-07-14 09:46:50,178 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-07-14 09:46:51,069 admin DEBUG Using bruteforce method for report generation
+2020-07-14 09:46:52,990 admin INFO Report generated successfully
+2020-07-14 10:02:19,870 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:02:19,870 admin ERROR Exception occurred:NameError("name 'p' is not defined")
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1646, in post
+    os.remove(os.path.join(p, user + '.json'))
+NameError: name 'p' is not defined
+2020-07-14 10:02:32,551 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:02:32,551 admin ERROR Exception occurred:NameError("name 'p' is not defined")
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1646, in post
+    os.remove(os.path.join(p, user + '.json'))
+NameError: name 'p' is not defined
+2020-07-14 10:02:48,524 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:02:48,524 admin DEBUG Checking for json input
+2020-07-14 10:02:48,524 admin DEBUG Fetching URLs
+2020-07-14 10:02:48,524 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-07-14 10:02:49,726 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-07-14 10:02:50,717 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-07-14 10:02:51,576 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-07-14 10:02:52,487 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-07-14 10:02:53,440 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-07-14 10:02:54,467 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-07-14 10:02:55,267 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-07-14 10:02:56,362 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-07-14 10:02:56,975 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-07-14 10:02:57,585 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-07-14 10:02:58,637 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-07-14 10:02:59,301 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-07-14 10:03:00,737 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-07-14 10:03:01,790 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-07-14 10:03:02,691 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-07-14 10:03:03,757 admin DEBUG Invalid argument 'kind' entered
+2020-07-14 10:05:58,803 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:05:58,803 admin DEBUG Invalid argument 'kind' entered
+2020-07-14 10:11:11,160 admin INFO Requested for report generation.
+2020-07-14 10:11:11,160 admin DEBUG Searching for JSON Dump
+2020-07-14 10:11:11,160 admin ERROR Could not find the JSON Dump, the file is not prepared yet
+2020-07-14 10:11:28,991 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:11:28,991 admin DEBUG Invalid argument 'kind' entered
+2020-07-14 10:11:48,668 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:11:48,668 admin DEBUG Invalid argument 'kind' entered
+2020-07-14 10:12:52,878 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:12:52,878 admin DEBUG Invalid argument 'kind' entered
+2020-07-14 10:13:17,374 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:13:17,374 admin DEBUG Invalid argument 'kind' entered
+2020-07-14 10:13:54,699 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:13:54,699 admin DEBUG Invalid argument 'kind' entered
+2020-07-14 10:15:08,496 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:15:08,496 admin DEBUG Invalid argument 'kind' entered
+2020-07-14 10:15:41,024 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:15:41,024 admin DEBUG Checking for json input
+2020-07-14 10:15:41,024 admin DEBUG Fetching URLs
+2020-07-14 10:15:41,024 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-07-14 10:15:41,836 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-07-14 10:15:42,394 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-07-14 10:15:42,932 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-07-14 10:15:43,479 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-07-14 10:15:44,106 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-07-14 10:15:44,591 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-07-14 10:15:45,130 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-07-14 10:15:45,715 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-07-14 10:15:46,043 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-07-14 10:15:46,371 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-07-14 10:15:46,902 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-07-14 10:15:47,199 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-07-14 10:15:47,887 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-07-14 10:15:48,496 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-07-14 10:15:49,002 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-07-14 10:15:49,569 admin DEBUG Using bruteforce method for report generation
+2020-07-14 10:15:51,210 admin INFO Report generated successfully
+2020-07-14 10:16:14,057 admin INFO Requested for report generation.
+2020-07-14 10:16:14,058 admin DEBUG Searching for JSON Dump
+2020-07-14 10:16:14,058 admin DEBUG Found JSON Dump
+2020-07-14 10:16:14,058 admin DEBUG Get request served successfully
+2020-07-14 10:19:06,228 admin INFO Requested for report generation.
+2020-07-14 10:19:06,228 admin DEBUG Searching for JSON Dump
+2020-07-14 10:19:06,228 admin DEBUG Found JSON Dump
+2020-07-14 10:19:06,228 admin DEBUG Get request served successfully
+2020-07-14 10:20:42,098 admin INFO Requested for report generation.
+2020-07-14 10:20:42,098 admin DEBUG Searching for JSON Dump
+2020-07-14 10:20:42,099 admin DEBUG Found JSON Dump
+2020-07-14 10:20:42,099 admin DEBUG Get request served successfully
+2020-07-14 10:25:55,477 admin INFO Requested for report generation.
+2020-07-14 10:25:55,477 admin DEBUG Searching for JSON Dump
+2020-07-14 10:25:55,477 admin ERROR Could not find the JSON Dump, the file is not prepared yet
+2020-07-14 10:33:24,424 admin INFO Requested to export pre-processed data.
+2020-07-14 10:33:24,424 admin DEBUG Reading pre-processed datafile.
+2020-07-14 10:33:24,424 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-14 10:33:24,471 admin INFO Exported pre-processed data successfully.
+2020-07-14 10:33:24,471 admin ERROR Exception occurred: FileNotFoundError(2, 'No such file or directory')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 483, in post
+    return send_file(ex.give_filename(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'] + '.', args['filepath'].split('.')[1]))
+  File "c:\python 3.8.2\lib\site-packages\flask\helpers.py", line 629, in send_file
+    file = open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\prep_admin_ISINS_v3.xlsx._14-07-2020_10-33-24xlsx'
+2020-07-14 10:41:47,088 admin INFO Requested to export pre-processed data.
+2020-07-14 10:41:47,088 admin DEBUG Reading pre-processed datafile.
+2020-07-14 10:41:47,088 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-14 10:41:47,135 admin INFO Exported pre-processed data successfully.
+2020-07-14 10:41:47,135 admin ERROR Exception occurred: FileNotFoundError(2, 'No such file or directory')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 483, in post
+    return send_file(ex.give_filename(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'] + '.', args['filepath'].split('.')[1]))
+  File "c:\python 3.8.2\lib\site-packages\flask\helpers.py", line 629, in send_file
+    file = open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\prep_admin_ISINS_v3.xlsx._14-07-2020_10-41-47xlsx'
+2020-07-14 10:44:25,676 admin INFO Requested to export pre-processed data.
+2020-07-14 10:44:25,676 admin DEBUG Reading pre-processed datafile.
+2020-07-14 10:44:25,676 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-14 10:44:25,707 admin INFO Exported pre-processed data successfully.
+2020-07-14 10:44:25,707 admin ERROR Exception occurred: FileNotFoundError(2, 'No such file or directory')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api (2).py", line 483, in post
+    return send_file(ex.give_filename(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'] + '.', args['filepath'].split('.')[1]))
+  File "c:\python 3.8.2\lib\site-packages\flask\helpers.py", line 629, in send_file
+    file = open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\prep_admin_ISINS_v3.xlsx._14-07-2020_10-44-25xlsx'
+2020-07-14 10:47:40,646 admin INFO Requested to export pre-processed data.
+2020-07-14 10:47:40,646 admin DEBUG Reading pre-processed datafile.
+2020-07-14 10:47:40,661 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-14 10:47:40,692 admin INFO Exported pre-processed data successfully.
+2020-07-14 10:47:40,692 admin ERROR Exception occurred: FileNotFoundError(2, 'No such file or directory')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 483, in post
+    return send_file(args['uname'] + '_' + args['fname'] + '_' + args['filepath'])
+  File "c:\python 3.8.2\lib\site-packages\flask\helpers.py", line 629, in send_file
+    file = open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\admin_ISINS_v3.xlsx_prep.xlsx'
+2020-07-14 10:47:55,982 admin INFO Requested to export extracted data.
+2020-07-14 10:47:55,997 admin DEBUG Checking if filepath has valid format
+2020-07-14 10:47:55,998 admin DEBUG Exporting data to excel file
+2020-07-14 10:47:56,207 admin INFO Exported successfully
+2020-07-14 10:47:56,208 admin ERROR Exception occurred:FileNotFoundError(2, 'No such file or directory')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 259, in post
+    return send_file(args['uname'] + '_' + args['fname'] + '_' + args['filepath'])
+  File "c:\python 3.8.2\lib\site-packages\flask\helpers.py", line 629, in send_file
+    file = open(filename, "rb")
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\admin_ISINS_v3.xlsx_extract.xlsx'
+2020-07-14 10:55:07,361 admin INFO Requested to extract data.
+2020-07-14 10:55:07,361 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-14 10:55:53,742 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-14 10:56:01,964 admin INFO Requested to pre-process data.
+2020-07-14 10:56:01,979 admin DEBUG Reading data from datafile
+2020-07-14 10:56:01,979 admin DEBUG Pre-processing text data
+2020-07-14 10:56:24,935 admin DEBUG Pre-processed data
+2020-07-14 10:56:24,935 admin DEBUG Writting pre-processed data to datafile
+2020-07-14 10:56:24,935 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-14 10:56:40,483 admin INFO Requested to plot elbow curve.
+2020-07-14 10:56:40,483 admin DEBUG Reading datafile..
+2020-07-14 10:56:40,484 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-14 10:56:40,484 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-14 10:56:40,484 admin DEBUG Calculating tf-idf
+2020-07-14 10:56:40,517 admin DEBUG Calculating variance threshold
+2020-07-14 10:56:40,523 admin DEBUG Applying PCA
+2020-07-14 10:56:40,544 admin DEBUG Plotting elbow curve
+2020-07-14 10:56:45,060 admin DEBUG Packing returned image as a stream of bytes to the Response object
+2020-07-14 10:56:45,060 admin INFO Plotted elbow curve successfully
+2020-07-14 10:56:45,060 admin DEBUG Writing optimal k value
+2020-07-14 10:56:45,060 admin INFO Obtained optimal value of K using Elbow curve successfully
+2020-07-14 10:56:47,779 admin INFO Requested to get optimal k value
+2020-07-14 10:56:47,779 admin DEBUG Reading datafile for optimal k value after elbow method
+2020-07-14 10:56:47,779 admin INFO Get request for optimal k value served successfully
+2020-07-14 10:56:47,794 admin INFO Requested for optimal value of K using Silhouette.
+2020-07-14 10:56:47,794 admin DEBUG Reading datafile..
+2020-07-14 10:56:47,794 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-14 10:56:47,794 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-14 10:56:47,794 admin DEBUG Calculating tf-idf
+2020-07-14 10:56:47,826 admin DEBUG Calculating variance threshold
+2020-07-14 10:56:47,841 admin DEBUG Applying PCA
+2020-07-14 10:56:47,857 admin DEBUG Applying silhouette coefficient
+2020-07-14 10:56:47,857 admin DEBUG Plotting silhouette score
+2020-07-14 10:56:48,560 admin DEBUG Packing returned image as a stream of bytes to the Response object
+2020-07-14 10:56:48,560 admin INFO Plotted silhouette score successfully
+2020-07-14 10:56:48,560 admin DEBUG Writting optimal k
+2020-07-14 10:56:48,560 admin INFO Obtained optimal value of k using Silhouette score successfully
+2020-07-14 10:56:49,874 admin INFO Requested to get optimal k value
+2020-07-14 10:56:49,874 admin DEBUG Reading datafile for optimal k value after silhouette
+2020-07-14 10:56:49,874 admin INFO Get request for optimal k value served successfully
+2020-07-14 10:57:14,805 admin INFO Requested to cluster documents.
+2020-07-14 10:57:14,805 admin DEBUG Reading datafile..
+2020-07-14 10:57:14,806 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-14 10:57:14,806 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-14 10:57:14,806 admin DEBUG Calculating tf-idf
+2020-07-14 10:57:14,837 admin DEBUG Calculating variance threshold
+2020-07-14 10:57:14,842 admin DEBUG Applying PCA
+2020-07-14 10:57:14,863 admin DEBUG Applying K-Means algorithm
+2020-07-14 10:57:14,885 admin DEBUG Sorting clusters
+2020-07-14 10:57:14,885 admin DEBUG Converting to JSON format
+2020-07-14 10:57:14,886 admin DEBUG Writting summary
+2020-07-14 10:57:14,888 admin DEBUG Writting clustering information to datafile
+2020-07-14 10:57:14,900 admin INFO Requested to get clustering details.
+2020-07-14 10:57:14,900 admin DEBUG Reading datafile for clustered data
+2020-07-14 10:57:14,900 admin INFO Get request for clustered data served successfully
+2020-07-14 10:57:14,924 admin INFO Requested to get clustering summary.
+2020-07-14 10:57:14,924 admin DEBUG Reading datafile for clustering summary
+2020-07-14 10:57:14,924 admin INFO Get request for clustering summary served successfully
+2020-07-14 10:57:14,924 admin DEBUG Returning summary
+2020-07-14 10:57:14,941 admin INFO Requested to cluster documents.
+2020-07-14 10:57:14,941 admin DEBUG Reading datafile..
+2020-07-14 10:57:14,944 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-14 10:57:14,944 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-14 10:57:14,944 admin DEBUG Calculating tf-idf
+2020-07-14 10:57:14,970 admin DEBUG Calculating variance threshold
+2020-07-14 10:57:14,975 admin DEBUG Applying PCA
+2020-07-14 10:57:14,995 admin DEBUG Applying DBSCAN algorithm
+2020-07-14 10:57:15,035 admin DEBUG Sorting clusters
+2020-07-14 10:57:15,035 admin DEBUG Converting to JSON format
+2020-07-14 10:57:15,035 admin DEBUG Writting summary
+2020-07-14 10:57:15,035 admin DEBUG Writting clustering information to datafile
+2020-07-14 10:57:15,045 admin INFO Requested to get clustering details.
+2020-07-14 10:57:15,045 admin DEBUG Reading datafile for clustered data
+2020-07-14 10:57:15,045 admin INFO Get request for clustered data served successfully
+2020-07-14 10:57:15,065 admin INFO Requested to get clustering summary.
+2020-07-14 10:57:15,065 admin DEBUG Reading datafile for clustering summary
+2020-07-14 10:57:15,065 admin INFO Get request for clustering summary served successfully
+2020-07-14 10:57:15,065 admin DEBUG Returning summary
+2020-07-14 10:57:15,084 admin INFO Requested to cluster documents.
+2020-07-14 10:57:15,084 admin DEBUG Reading datafile..
+2020-07-14 10:57:15,084 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-14 10:57:15,084 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-14 10:57:15,084 admin DEBUG Calculating tf-idf
+2020-07-14 10:57:15,120 admin DEBUG Calculating variance threshold
+2020-07-14 10:57:15,125 admin DEBUG Applying PCA
+2020-07-14 10:57:15,145 admin DEBUG Applying Agglomerative algorithm
+2020-07-14 10:57:15,205 admin DEBUG Sorting clusters
+2020-07-14 10:57:15,205 admin DEBUG Converting to JSON format
+2020-07-14 10:57:15,211 admin DEBUG Writting summary
+2020-07-14 10:57:15,213 admin DEBUG Writting clustering information to datafile
+2020-07-14 10:57:15,225 admin INFO Requested to get clustering details.
+2020-07-14 10:57:15,225 admin DEBUG Reading datafile for clustered data
+2020-07-14 10:57:15,225 admin INFO Get request for clustered data served successfully
+2020-07-14 10:57:15,245 admin INFO Requested to get clustering summary.
+2020-07-14 10:57:15,245 admin DEBUG Reading datafile for clustering summary
+2020-07-14 10:57:15,245 admin INFO Get request for clustering summary served successfully
+2020-07-14 10:57:15,245 admin DEBUG Returning summary
+2020-07-14 10:57:15,265 admin INFO Requested to cluster documents.
+2020-07-14 10:57:15,265 admin DEBUG Reading datafile..
+2020-07-14 10:57:15,265 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-14 10:57:15,265 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-14 10:57:15,265 admin DEBUG Calculating tf-idf
+2020-07-14 10:57:15,295 admin DEBUG Calculating variance threshold
+2020-07-14 10:57:15,295 admin DEBUG Applying PCA
+2020-07-14 10:57:15,320 admin DEBUG Applying Birch algorithm
+2020-07-14 10:57:15,330 admin DEBUG Sorting clusters
+2020-07-14 10:57:15,330 admin DEBUG Converting to JSON format
+2020-07-14 10:57:15,335 admin DEBUG Writting summary
+2020-07-14 10:57:15,335 admin DEBUG Writting clustering information to datafile
+2020-07-14 10:57:15,345 admin INFO Requested to get clustering details.
+2020-07-14 10:57:15,345 admin DEBUG Reading datafile for clustered data
+2020-07-14 10:57:15,345 admin INFO Get request for clustered data served successfully
+2020-07-14 10:57:15,366 admin INFO Requested to get clustering summary.
+2020-07-14 10:57:15,366 admin DEBUG Reading datafile for clustering summary
+2020-07-14 10:57:15,366 admin INFO Get request for clustering summary served successfully
+2020-07-14 10:57:15,367 admin DEBUG Returning summary
+2020-07-14 10:57:51,036 admin INFO Logging off...deleting all cached files
+2020-07-14 10:57:51,036 admin ERROR Exception occurred: FileNotFoundError(2, 'The system cannot find the path specified')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1577, in delete
+    shutil.rmtree(path)
+  File "c:\python 3.8.2\lib\shutil.py", line 737, in rmtree
+    return _rmtree_unsafe(path, onerror)
+  File "c:\python 3.8.2\lib\shutil.py", line 596, in _rmtree_unsafe
+    onerror(os.scandir, path, sys.exc_info())
+  File "c:\python 3.8.2\lib\shutil.py", line 593, in _rmtree_unsafe
+    with os.scandir(path) as scandir_it:
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\ASHWIN\\Desktop\\FinIQ\\Assignments_FinIQ\\NLP_Citi\\pre-processing-and-API\\__pycache__'
+2020-07-14 10:58:44,128 admin INFO Requested for report generation. Previous report deleted.
+2020-07-14 10:58:44,128 admin DEBUG Checking for json input
+2020-07-14 10:58:44,128 admin DEBUG Fetching URLs
+2020-07-14 10:58:44,128 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-07-14 10:58:45,255 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-07-14 10:58:46,007 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-07-14 10:58:46,864 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-07-14 10:58:47,678 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-07-14 10:58:48,648 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-07-14 10:58:49,368 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-07-14 10:58:50,056 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-07-14 10:58:51,186 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-07-14 10:58:51,510 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-07-14 10:58:51,823 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-07-14 10:58:52,528 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-07-14 10:58:52,808 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-07-14 10:58:54,029 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-07-14 10:58:55,118 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-07-14 10:58:55,732 admin DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-07-14 10:58:56,466 admin DEBUG Using bruteforce method for report generation
+2020-07-14 10:58:58,390 admin INFO Report generated successfully
+2020-07-14 10:58:58,405 admin INFO Requested for report generation.
+2020-07-14 10:58:58,405 admin DEBUG Searching for JSON Dump
+2020-07-14 10:58:58,405 admin DEBUG Found JSON Dump
+2020-07-14 10:58:58,405 admin DEBUG Get request served successfully
+2020-07-14 11:01:57,462 admin INFO Requested to export extracted data.
+2020-07-14 11:01:57,462 admin ERROR Exception occurred while reading datafile:TypeError("get_recent_file() missing 1 required positional argument: 'extension'")
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 227, in post
+    jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname))
+TypeError: get_recent_file() missing 1 required positional argument: 'extension'
+2020-07-14 11:02:41,720 admin INFO Requested to export extracted data.
+2020-07-14 11:02:41,732 admin ERROR Exception occurred:IndexError('list index out of range')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 239, in post
+    if os.path.exists(ex.get_recent_file(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'], '.xlsx')):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 294, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+2020-07-14 11:03:14,814 admin INFO Requested to export extracted data.
+2020-07-14 11:03:14,829 admin ERROR Exception occurred:IndexError('list index out of range')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 239, in post
+    if os.path.exists(ex.get_recent_file(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'], '.xlsx')):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 294, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+2020-07-14 11:05:23,926 admin INFO Requested to export extracted data.
+2020-07-14 11:05:23,946 admin ERROR Exception occurred:IndexError('list index out of range')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 240, in post
+    if os.path.exists(ex.get_recent_file(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'], '.xlsx')):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 294, in get_recent_file
+    return names[0]
+IndexError: list index out of range
+2020-07-14 11:08:06,710 admin INFO Requested to export extracted data.
+2020-07-14 11:08:06,725 admin ERROR Exception occurred:TypeError('remove: path should be string, bytes or os.PathLike, not bool')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 241, in post
+    os.remove(ex.get_recent_file(args['filepath'].split('.')[0] + '_' + args['uname'] + '_' + args['fname'], '.xlsx'))
+TypeError: remove: path should be string, bytes or os.PathLike, not bool
+2020-07-14 11:08:42,275 admin INFO Requested to export extracted data.
+2020-07-14 11:08:42,290 admin DEBUG Checking if filepath has valid format
+2020-07-14 11:08:42,290 admin DEBUG Exporting data to excel file
+2020-07-14 11:08:42,478 admin INFO Exported successfully
+2020-07-14 11:10:03,055 admin INFO Requested to export extracted data.
+2020-07-14 11:10:03,070 admin DEBUG Checking if filepath has valid format
+2020-07-14 11:10:03,070 admin DEBUG Exporting data to excel file
+2020-07-14 11:10:03,224 admin INFO Exported successfully
+2020-07-14 11:11:15,200 admin INFO Requested to export pre-processed data.
+2020-07-14 11:11:15,200 admin DEBUG Reading pre-processed datafile.
+2020-07-14 11:11:15,201 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-14 11:11:16,275 admin INFO Exported pre-processed data successfully.

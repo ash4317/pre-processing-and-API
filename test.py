@@ -32,110 +32,110 @@ for ISIN in ISINs:
 
 
 #Extract data
-url = "https://preprocess-and-cluster-api.herokuapp.com/extract?no_of_docs=20&uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/extract?no_of_docs=50&uname=admin&fname=ISINS_v3.xlsx"
 r = requests.post(url=url, json=datajson)
 print(r.text)
 
 
 #Export extracted data
-url = "https://preprocess-and-cluster-api.herokuapp.com/extract/export?filepath=extract.xlsx&uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/extract/export?filepath=extract.xlsx&uname=admin&fname=ISINS_v3.xlsx"
 r = requests.post(url=url)
-print(r.text)
+open('admin_'+'extract.xlsx', 'wb').write(r.content)
 
 
 #Pre-process data
-url = "https://preprocess-and-cluster-api.herokuapp.com/preprocess?steps=url&steps=stemming&steps=lemmatization&steps=stopwords&steps=unusual&uname=admin&fname=ISINS_v3.xlsx" 
+url = "http://127.0.0.1:5000/preprocess?steps=url&steps=stemming&steps=lemmatization&steps=stopwords&steps=unusual&uname=admin&fname=ISINS_v3.xlsx" 
 r = requests.post(url=url)
 print(r.text)
 
 
 #Export pre-processed data
-url = "https://preprocess-and-cluster-api.herokuapp.com/preprocess/export?filepath=prep.xlsx&uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/preprocess/export?filepath=prep.xlsx&uname=admin&fname=ISINS_v3.xlsx"
 r = requests.post(url=url)
-print(r.text)
+open('prep.xlsx', 'wb').write(r.content)
 
 
 #Returns elbow curve plot
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/elbow?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/elbow?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.post(url=url)
 img = Image.open(io.BytesIO(r.content))
 #img.save('elbow.png')
 img.show()
 
 #Returns optimal value of K using elbow curve
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/elbow?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/elbow?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
 #Returns Silhouette score plot
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/silhouette?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/silhouette?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.post(url=url)
 img = Image.open(io.BytesIO(r.content))
 #img.save('silhouette.png')
 img.show()
 
 #Returns optimal value of K using silhouette score
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/silhouette?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/silhouette?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
 
 #Perform K-Means clustering 
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/kmeans?k=4&format=csv&uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/kmeans?k=4&format=csv&uname=admin&fname=ISINS_v3.xlsx"
 r = requests.post(url=url)
 
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/kmeans?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/kmeans?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
 # Get clustered data
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/summary?uname=admin"
+url = "http://127.0.0.1:5000/clustering/summary?uname=admin"
 r = requests.get(url=url)
 print(r.text)
 
 #Perform DBSCAN clustering
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/dbscan?eps=0.3&min=1&format=csv&uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/dbscan?eps=0.3&min=1&format=csv&uname=admin&fname=ISINS_v3.xlsx"
 r = requests.post(url=url)
 
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/dbscan?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/dbscan?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/summary?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/summary?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
 
 
 #Perform Agglomerative clustering
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/agglomerative?k=5&format=csv&uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/agglomerative?k=5&format=csv&uname=admin&fname=ISINS_v3.xlsx"
 r = requests.post(url=url)
 
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/agglomerative?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/agglomerative?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/summary?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/summary?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
 
 
 #Perform Birch clustering
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/birch?k=5&format=csv&uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/birch?k=5&format=csv&uname=admin&fname=ISINS_v3.xlsx"
 r = requests.post(url=url)
 
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/birch?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/birch?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
-url = "https://preprocess-and-cluster-api.herokuapp.com/clustering/summary?uname=admin&fname=ISINS_v3.xlsx"
+url = "http://127.0.0.1:5000/clustering/summary?uname=admin&fname=ISINS_v3.xlsx"
 r = requests.get(url=url)
 print(r.text)
 
 
 # Clear summary and cluster files at the time of log out
-url = "https://preprocess-and-cluster-api.herokuapp.com/clear?uname=admin"
+url = "http://127.0.0.1:5000/clear?uname=admin"
 r = requests.delete(url=url)
 print(r.text)
 
@@ -162,11 +162,11 @@ datajson = {
 print(len(datajson))
 
 # Extract data
-url = "https://preprocess-and-cluster-api.herokuapp.com/report?username=admin&kind=1"
+url = "http://127.0.0.1:5000/report?uname=admin&kind=1"
 r = requests.post(url=url, json=datajson)
 print(r.text)
 
 
-url = "https://preprocess-and-cluster-api.herokuapp.com/report?username=admin"
+url = "http://127.0.0.1:5000/report?uname=admin"
 r = requests.get(url=url)
 print(r.text)
