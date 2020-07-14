@@ -7,6 +7,7 @@ from flask import Flask, request, make_response, send_file, jsonify
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from flask_restful import Api, Resource, reqparse
 from urllib.request import urlopen
+from threading import Thread
 import json
 import io
 import os
@@ -1600,127 +1601,111 @@ class ReportGeneration(Resource):
     '''
 
     def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('uname', type=str,
+                            help="Enter the name of the user",
+                            required=True)
+        parser.add_argument('kind', type=int)
+        args = parser.parse_args()
+        user = args['uname']
+
+        # by default, kind = 1 , i.e. Brute force method used
+        if not args['kind']:
+            args['kind'] = 1
+        
+        report_method = args['kind']
+
+        if report_method != 1 and report_method != 2:
+            return {
+                'data':'', 
+                'message':'Invalid value for argument "kind". Valid values are 1 or 2', 
+                'status':'error'
+            }, 400
+
+        # exception handling and adding entry into the log file
+        logger = ul.setup_logger(args['uname'], os.path.join(
+            LOG_FOLDER, args['uname'] + '.log'), level=logging.DEBUG)
+        logger.info('Requested for report generation.')
+
+        if os.path.isfile(os.path.join(JSON_file_Location, f"{user}.json")):
+            os.remove(os.path.join(JSON_file_Location, f"{user}.json"))
+            logger.info(f'Older JSON Dump for {user} has been deleted')
+
         try:
-            parser = reqparse.RequestParser()
-            parser.add_argument('uname', type=str,
-                                help="Enter the name of the user",
-                                required=True)
-            parser.add_argument('kind', type=int,
-                                help="Specify the kind of method",
-                                required=True)
-            args = parser.parse_args()
-            
-            
-            if not args['uname']:
-                return {
-                        'data':'',
-                        'message':'Give user name',
-                        'status':'error'
-                        }, 400
-            
-            # by default, kind = 1, i.e. Brute Force method is used by default
-            if not args['kind']:
-                args['kind'] = 1
+            logger.debug('Checking for json input')
+            content = request.json
+        except Exception as e:
+            logger.debug('Could not extract URLs' + repr(e))
+            return {
+                "data": "",
+                "message": "Could not extract URLs",
+                "status": "error"
+            }, 400
 
-            user = args['uname']
-            report_method = args['kind']
-
-            print(report_method)
-            print(type(report_method))
-                        
-            # exception handling and adding entry into the log file
-            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
-            logger.info('Requested for report generation. Previous report deleted.')
-
-            if report_method != 1 and report_method != 2:
-                logger.debug("Invalid argument 'kind' entered")
-                return {
-                    'data':'', 
-                    'message':'Invalid value of argument "kind". Valid values are "1" or "2".', 
-                    'status':'error'
-                }, 400
-            
-            # removing previously existing report of the same name (if any)
-            path = os.path.join(cwd, 'JSONdumps')
-            for a, b, c in os.walk(path):
-                if user + '.json' in c:
-                    os.remove(os.path.join(path, user + '.json'))
-
+        sheetLocs = {}
+        logger.debug('Fetching URLs')
+        for url in content.values():
             try:
-                logger.debug('Checking for json input')
-                content = request.json
-            except Exception as e:
-                logger.debug('Could not extract URLs' +repr(e))
-                return {
-                    "data": "",
-                    "message": "Could not extract URLs",
-                    "status": "error"
-                }, 400
+                logger.debug(f"Fetching {url} URL")
+                html = urlopen(url).read()
+                x = url.split('/')[-1]
+                sheetLocs[x] = html
+            except Exception:
+                logger.exception(f"The url: {url} could not be fetched")
+                print(f"The url: {url} could not be fetched")
+                continue
 
-            sheetLocs = {}
-            logger.debug('Fetching URLs')
-            for url in content.values():
-                try:
-                    logger.debug(f"Fetching {url} URL")
-                    html = urlopen(url).read()
-                    x = url.split('/')[-1]
-                    sheetLocs[x] = html
-                except Exception:
-                    logger.exception(f"The url: {url} could not be fetched")
-                    print(f"The url: {url} could not be fetched")
-                    continue
+        tempLocs = []
+        for root, _, tempNames in os.walk(tempLoc):
+            for tempName in tempNames:
+                tempLocs.append(os.path.join(root, tempName))
 
-            tempLocs = []
-            for root, _, tempNames in os.walk(tempLoc):
-                for tempName in tempNames:
-                    tempLocs.append(os.path.join(root, tempName))
-
+        def myfunc(report_method, sheetLocs, tempLocs, keyListLoc, user):
             if report_method == 1:
-                logger.debug("Using bruteforce method for report generation")
-                data = BruteForceReportGen.main(sheetLocs, tempLocs, keyListLoc)
+                logger.debug(
+                    "Using bruteforce method for report generation")
+                data = BruteForceReportGen.main(
+                    sheetLocs, tempLocs, keyListLoc)
             elif report_method == 2:
-                logger.debug("Using non-bruteforce method for report generation")
-                data = NonBruteForceReportGen.main(sheetLocs, tempLocs, keyListLoc)
+                logger.debug(
+                    "Using non-bruteforce method for report generation")
+                data = NonBruteForceReportGen.main(
+                    sheetLocs, tempLocs, keyListLoc)
 
             user_excel = open(f"{JSON_file_Location}{user}.json", "w")
             json.dump(data, user_excel)
             logger.info("Report generated successfully")
+
+        dataThread = Thread(target=myfunc, kwargs={
+            "report_method": report_method,
+            "sheetLocs": sheetLocs,
+            "tempLocs": tempLocs,
+            "keyListLoc": keyListLoc,
+            "user": user
+        })
             
+        logger.info("Report generation has started.")
+        dataThread.start()
             # success message
-            return {
-                    'data':'',
-                    'message':'Template generated',
-                    'status':'success'
-                    }, 200
+        return {
+            'data': '',
+            'message': 'Report generation started.',
+            'status': 'success'
+        }, 200
 
-        # error message if traceback occurs
-        except Exception as e:
-            logger.exception('Exception occurred:' + repr(e))
-            return {
-                    'data':'',
-                    'message': repr(e),
-                    'status':'error'
-                    }, 400
-
+        
 
     def get(self):
-        try:
             parser = reqparse.RequestParser()
             parser.add_argument('uname', type=str,
                                 help="Enter the name of the user",
                                 required=True)
             args = parser.parse_args()
             user = args['uname']
-            
-            if not args['uname']:
-                return {
-                        'data':'',
-                        'message':'Give user name',
-                        'status':'error'
-                        }, 400
-                        
+
             # exception handling and adding entry into the log file
-            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger = ul.setup_logger(args['uname'], os.path.join(
+                LOG_FOLDER, args['uname'] + '.log'), level=logging.DEBUG)
             logger.info('Requested for report generation.')
 
             flag = 0
@@ -1734,7 +1719,8 @@ class ReportGeneration(Resource):
                         break
 
             if flag == 0:
-                logger.error('Could not find the JSON Dump, the file is not prepared yet')
+                logger.error(
+                    'Could not find the JSON Dump, the file is not prepared yet')
                 return {
                     "data": "",
                     "message": "Could not find the JSON Dump, the file is not prepared yet",
@@ -1744,15 +1730,6 @@ class ReportGeneration(Resource):
             fileContents = open(reqJSON, "r").readline()
             logger.debug('Get request served successfully')
             return fileContents
-            
-        # error message if traceback occurs
-        except Exception as e:
-            logger.exception('Exception occurred:' + repr(e))
-            return {
-                    'data':'',
-                    'message': repr(e),
-                    'status':'error'
-                    }, 400
 
 
 class Test(Resource):
