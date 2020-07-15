@@ -118,7 +118,7 @@ class ExtractData(Resource):
             logger.exception('Exception occurred:' + repr(e))
             return {
                     'data':'',
-                    'message': repr(e),
+                    'message': e,
                     'status':'error'
                     }, 400
 
@@ -158,7 +158,7 @@ class ExtractData(Resource):
                 logger.exception('Exception occurred while reading datafile:'+repr(e))
                 return {
                         'data':'', 
-                        'message':'Error in reading file: ' +repr(e), 
+                        'message':'Error in reading file', 
                         'status':'error'
                         }, 400
             
@@ -174,7 +174,7 @@ class ExtractData(Resource):
             logger.exception('Exception occurred:' + repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: ' +repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -222,7 +222,7 @@ class ExportExtractedData(Resource):
                 logger.exception('Exception occurred while reading datafile:'+repr(e))
                 return {
                         'data':'',
-                        'message':'Could not fetch data to export' +repr(e),
+                        'message':'Could not fetch data to export',
                         'status':'error'
                         }, 400
 
@@ -233,10 +233,10 @@ class ExportExtractedData(Resource):
             logger.debug('Checking if filepath has valid format')
             if ex.check(args['filepath'], '.xlsx'):
                 logger.debug('Exporting data to excel file')
-                ex.exportexcel(args['uname'], fname, filename = args['filepath'], datalist = [ISINs, URLs, text])
+                ex.exportexcel(args['uname'], args['fname'], filename = args['filepath'], datalist = [ISINs, URLs, text])
             elif ex.check(args['filepath'], '.csv'):
                 logger.debug('Exporting data to csv file')
-                ex.exportcsv(args['uname'], fname, filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
+                ex.exportcsv(args['uname'], args['fname'], filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
             else:
                 logger.error('Invalid format for export file')
                 return {
@@ -253,7 +253,7 @@ class ExportExtractedData(Resource):
             logger.exception('Exception occurred:' + repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: ' +repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -271,6 +271,7 @@ class PreProcess(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
             parser.add_argument('steps', action='append')
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
@@ -395,7 +396,7 @@ class PreProcess(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -457,10 +458,10 @@ class ExportPrepData(Resource):
             # if file is not of excel or csv, then return error code 400. Else, add to excel/csv as the user requires
             if ex.check(args['filepath'], '.xlsx'):
                 logger.debug('Exporting pre-processed data to excel file.')
-                ex.exportexcel(args['uname'], fname, filename = args['filepath'], datalist = [ISINs, URLs, text])
+                ex.exportexcel(args['uname'], args['fname'], filename = args['filepath'], datalist = [ISINs, URLs, text])
             elif ex.check(args['filepath'], '.csv'):
                 logger.debug('Exporting pre-processed data to csv file.')
-                ex.exportcsv(args['uname'], fname, filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
+                ex.exportcsv(args['uname'], args['fname'], filename=args['filepath'], field1 = ISINs, field2 = URLs, field3 = text)
             else:
                 logger.error('Invalid file format.')
                 return {
@@ -477,7 +478,7 @@ class ExportPrepData(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
     
@@ -493,9 +494,11 @@ class Kmeans(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
             parser.add_argument('k', type=int)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
+            parser.add_argument('format', type=str)
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
@@ -523,23 +526,12 @@ class Kmeans(Resource):
             except:
                 fname = args['fname']
 
-
-                
-            flag = 0
-            try:
-                logger.debug('Reading binary pre-processed data')
-                data = request.data
-                logger.debug('Copying data to excel file')
-                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
-                logger.debug('Reading copied excel data')
-                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + fname + '_' + 'prepped.xlsx')
-                flag = 1
-            except:
-                logger.debug('Binary pre-processed data not found')
-                flag = 0
+            # by default, format is excel
+            if not args['format']:
+                args['format'] = 'excel'
 
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if flag == 0:
+            if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
@@ -551,7 +543,9 @@ class Kmeans(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
-
+            else:
+                logger.debug('Reading dataset')
+                ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -567,9 +561,9 @@ class Kmeans(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying K-Means algorithm')
-            frame, scores, clust = kmeans.kmeans_clustering(args['k'],score,ISINs, URLs)
+            frame, scores, clust = kmeans.kmeans_clustering(args['k'],ratio,ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -606,7 +600,7 @@ class Kmeans(Resource):
             # returning all coordinates as a list of dictionaries
             for i in range(len(x_coords)):
                 data.append({'x':x_coords[i], 'y':y_coords[i]})
-            
+
             return {
                 'data':data,
                 'message':'',
@@ -616,7 +610,7 @@ class Kmeans(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -648,7 +642,6 @@ class Kmeans(Resource):
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
             logger.info('Get request for clustered data served successfully')
-
             return {
                     'data':ex.read_json(data),  
                     'message':'',
@@ -660,7 +653,7 @@ class Kmeans(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -676,10 +669,12 @@ class DBSCAN(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
             parser.add_argument('eps', type=float)
             parser.add_argument('min', type=int)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
+            parser.add_argument('format', type=str)
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
@@ -707,22 +702,12 @@ class DBSCAN(Resource):
             except:
                 fname = args['fname']
 
-                
-            flag = 0
-            try:
-                logger.debug('Reading binary pre-processed data')
-                data = request.data
-                logger.debug('Copying data to excel file')
-                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
-                logger.debug('Reading copied excel data')
-                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
-                flag = 1
-            except:
-                logger.debug('Binary pre-processed data not found')
-                flag = 0
+            # by default, format is excel
+            if not args['format']:
+                args['format'] = 'excel'
 
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if flag == 0:
+            if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
@@ -734,6 +719,9 @@ class DBSCAN(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
+            else:
+                logger.debug('Reading dataset')
+                ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -749,9 +737,9 @@ class DBSCAN(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying DBSCAN algorithm')
-            frame, scores, clust = dbscan.dbscan_clustering(args['eps'], args['min'], score, ISINs, URLs)
+            frame, scores, clust = dbscan.dbscan_clustering(args['eps'], args['min'], ratio, ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -799,7 +787,7 @@ class DBSCAN(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
     
@@ -842,7 +830,7 @@ class DBSCAN(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -858,9 +846,11 @@ class Agglomerative(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
             parser.add_argument('k', type=int)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
+            parser.add_argument('format', type=str)
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
@@ -887,22 +877,12 @@ class Agglomerative(Resource):
             except:
                 fname = args['fname']
 
-
-            flag = 0
-            try:
-                logger.debug('Reading binary pre-processed data')
-                data = request.data
-                logger.debug('Copying data to excel file')
-                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
-                logger.debug('Reading copied excel data')
-                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
-                flag = 1
-            except:
-                logger.debug('Binary pre-processed data not found')
-                flag = 0
+            # by default, format is excel
+            if not args['format']:
+                args['format'] = 'excel'
 
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if flag == 0:
+            if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
@@ -914,7 +894,9 @@ class Agglomerative(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
-
+            else:
+                logger.debug('Reading dataset')
+                ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -930,9 +912,9 @@ class Agglomerative(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying Agglomerative algorithm')
-            frame, scores, clust = ag.agglomerative_clustering(args['k'],score,ISINs, URLs)
+            frame, scores, clust = ag.agglomerative_clustering(args['k'],ratio,ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -980,7 +962,7 @@ class Agglomerative(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
     
@@ -1022,7 +1004,7 @@ class Agglomerative(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -1038,9 +1020,11 @@ class Birch(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
             parser.add_argument('k', type=int)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
+            parser.add_argument('format', type=str)
             parser.add_argument('uname', type=str)
             parser.add_argument('fname', type=str)
             args = parser.parse_args()
@@ -1067,22 +1051,12 @@ class Birch(Resource):
             except:
                 fname = args['fname']
 
-
-            flag = 0
-            try:
-                logger.debug('Reading binary pre-processed data')
-                data = request.data
-                logger.debug('Copying data to excel file')
-                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
-                logger.debug('Reading copied excel data')
-                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
-                flag = 1
-            except:
-                logger.debug('Binary pre-processed data not found')
-                flag = 0
+            # by default, format is excel
+            if not args['format']:
+                args['format'] = 'excel'
 
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if flag == 0:
+            if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
@@ -1094,6 +1068,9 @@ class Birch(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
+            else:
+                logger.debug('Reading dataset')
+                ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -1109,9 +1086,9 @@ class Birch(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
             logger.debug('Applying Birch algorithm')
-            frame, scores, clust = birch.birch_clustering(args['k'],score,ISINs, URLs)
+            frame, scores, clust = birch.birch_clustering(args['k'],ratio,ISINs, URLs)
             logger.debug('Sorting clusters')
             frame = frame.sort_values(by=['Cluster'])
             logger.debug('Converting to JSON format')
@@ -1159,7 +1136,7 @@ class Birch(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -1201,7 +1178,7 @@ class Birch(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -1262,7 +1239,7 @@ class ClusterSummary(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -1278,6 +1255,7 @@ class Elbow(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
             parser.add_argument('uname', type=str)
@@ -1306,21 +1284,8 @@ class Elbow(Resource):
             except:
                 fname = args['fname']
 
-            flag = 0
-            try:
-                logger.debug('Reading binary pre-processed data')
-                data = request.data
-                logger.debug('Copying data to excel file')
-                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
-                logger.debug('Reading copied excel data')
-                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
-                flag = 1
-            except:
-                logger.debug('Binary pre-processed data not found')
-                flag = 0
-
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if flag == 0:
+            if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
@@ -1332,6 +1297,9 @@ class Elbow(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
+            else:
+                logger.debug('Reading dataset')
+                ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -1347,7 +1315,7 @@ class Elbow(Resource):
             logger.debug('Calculating variance threshold')
             tfidf = cf.varThresh_tfidf(df, args['thresh'])
             logger.debug('Applying PCA')
-            ratio, score, pcadf = cf.pca_tfidf(df, args['pca_comp'])
+            score, ratio, pcadf = cf.pca_tfidf(df, args['pca_comp'])
 
             # plots elbow curve ad returns it
             logger.debug('Plotting elbow curve')
@@ -1369,7 +1337,7 @@ class Elbow(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -1411,7 +1379,7 @@ class Elbow(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -1426,6 +1394,7 @@ class Silhouette(Resource):
         '''
         try:
             parser = reqparse.RequestParser()
+            parser.add_argument('filepath', type=str)
             parser.add_argument('thresh', type=float)
             parser.add_argument('pca_comp', type=float)
             parser.add_argument('uname', type=str)
@@ -1454,22 +1423,8 @@ class Silhouette(Resource):
             except:
                 fname = args['fname']
 
-                
-            flag = 0
-            try:
-                logger.debug('Reading binary pre-processed data')
-                data = request.data
-                logger.debug('Copying data to excel file')
-                open(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx', 'wb').write(data)
-                logger.debug('Reading copied excel data')
-                ISINs, URLs, text = ex.readdataset(args['uname'] + '_' + args['fname'] + '_' + 'prepped.xlsx')
-                flag = 1
-            except:
-                logger.debug('Binary pre-processed data not found')
-                flag = 0
-
             # if filepath is not given, then pre-processed data is present in the file "preprocess.json"
-            if flag == 0:
+            if not args['filepath']:
                 try:
                     logger.debug('Reading datafile..')
                     jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
@@ -1481,6 +1436,9 @@ class Silhouette(Resource):
                             'message':'Failed to read data!',
                             'status':'error'
                             }, 400
+            else:
+                logger.debug('Reading dataset')
+                ISINs, URLs, text = ex.readdataset(args['filepath'])
 
             # sets default values of "thresh"=0.0001 and "pca_comp"=0.8
             if not args['thresh']:
@@ -1519,7 +1477,7 @@ class Silhouette(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -1561,7 +1519,7 @@ class Silhouette(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 
@@ -1586,11 +1544,15 @@ class Clear(Resource):
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Logging off...deleting all cached files')
             
-            names = [x for x in os.listdir() if args['uname'] in x and ('.json' in x or '.xlsx' in x or '.csv' in x) and 'extract_' not in x and 'preprocess_' not in x]
+            names = [x for x in os.listdir() if args['uname'] in x and '.json' in x and 'extract_' not in x and 'preprocess_' not in x]
 
             for fname in names:
                 os.remove(fname)
             
+            # removing cache directory
+            path = os.path.join(os.getcwd(), '__pycache__')
+            shutil.rmtree(path)
+
             logger.info('Cleared cache')
             return {
                     'data': '', 
@@ -1602,80 +1564,7 @@ class Clear(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong: '+ repr(e),
-                    'status':'error'
-                    }, 400
-
-
-
-class SendLogs(Resource):
-    '''
-    Send log file of requesting user
-    '''
-    def get(self):
-        try:
-            parser = reqparse.RequestParser()
-            parser.add_argument('uname', type=str)
-            args = parser.parse_args()
-            if not args['uname']:
-                return {
-                        'data':'',
-                        'message':'Give user name',
-                        'status':'error'
-                        }, 400
-                        
-            # exception handling and adding entry into the log file
-            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
-            logger.info('Requested to get log file..')
-            logger.info('Sending log file')
-            return send_file(os.path.join(LOG_FOLDER, args['uname']+'.log')) 
-        
-        # error message if traceback occurs
-        except Exception as e:
-            logger.exception('Exception occurred: '+repr(e))
-            return {
-                    'data':'',
-                    'message':'Something went wrong: '+ repr(e),
-                    'status':'error'
-                    }, 400
-
-
-class ClearLogs(Resource):
-    '''
-    Removes log file of requesting user
-    '''
-    def delete(self):
-        try:
-            parser = reqparse.RequestParser()
-            parser.add_argument('uname', type=str)
-            args = parser.parse_args()
-            if not args['uname']:
-                return {
-                        'data':'',
-                        'message':'Give user name',
-                        'status':'error'
-                        }, 400
-                        
-            # exception handling and adding entry into the log file
-            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
-            logger.info('Requested to clear log file..')
-            f = open(os.path.join(LOG_FOLDER ,args['uname']+'.log'), "r+")
-            f.seek(0)
-            f.truncate()
-
-            logger.info('Cleared log file')
-            return {
-                    'data': '', 
-                    'message': '',
-                    'status':'success'
-                    }, 200
-        
-        # error message if traceback occurs
-        except Exception as e:
-            logger.exception('Exception occurred: '+repr(e))
-            return {
-                    'data':'',
-                    'message':'Something went wrong: '+ repr(e),
+                    'message':'Something went wrong',
                     'status':'error'
                     }, 400
 

@@ -1,0 +1,63 @@
+2020-07-15 14:19:31,369 admin INFO Requested for optimal value of K using Silhouette.
+2020-07-15 14:19:31,369 admin DEBUG Reading binary pre-processed data
+2020-07-15 14:19:31,369 admin DEBUG Copying data to excel file
+2020-07-15 14:19:31,369 admin DEBUG Reading copied excel data
+2020-07-15 14:19:31,385 admin DEBUG Binary pre-processed data not found
+2020-07-15 14:19:31,385 admin DEBUG Reading datafile..
+2020-07-15 14:19:31,385 admin ERROR Failed to read datafile
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1475, in post
+    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 174, in read_json
+    fhand = open(fname)
+FileNotFoundError: [Errno 2] No such file or directory: 'False'
+2020-07-15 14:20:23,239 admin INFO Requested to extract data.
+2020-07-15 14:20:23,239 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-15 14:20:57,324 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-15 14:20:57,340 admin INFO Requested to export extracted data.
+2020-07-15 14:20:57,433 admin DEBUG Checking if filepath has valid format
+2020-07-15 14:20:57,434 admin DEBUG Exporting data to excel file
+2020-07-15 14:20:57,434 admin ERROR Exception occurred:NameError("name 'fname' is not defined")
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 236, in post
+    ex.exportexcel(args['uname'], fname, filename = args['filepath'], datalist = [ISINs, URLs, text])
+NameError: name 'fname' is not defined
+2020-07-15 14:20:57,451 admin INFO Requested to pre-process data.
+2020-07-15 14:20:57,451 admin ERROR Exception occurred: KeyError('filepath')
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 302, in post
+    if not args['filepath']:
+KeyError: 'filepath'
+2020-07-15 14:20:57,469 admin INFO Requested to export pre-processed data.
+2020-07-15 14:20:57,469 admin DEBUG Reading pre-processed datafile.
+2020-07-15 14:20:57,469 admin ERROR Error while reading pre-processed datafile.
+2020-07-15 14:20:57,485 admin INFO Requested to plot elbow curve.
+2020-07-15 14:20:57,485 admin DEBUG Reading binary pre-processed data
+2020-07-15 14:20:57,485 admin DEBUG Copying data to excel file
+2020-07-15 14:20:57,486 admin DEBUG Reading copied excel data
+2020-07-15 14:20:57,487 admin DEBUG Binary pre-processed data not found
+2020-07-15 14:20:57,487 admin DEBUG Reading datafile..
+2020-07-15 14:20:57,487 admin ERROR Failed to read datafile
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1326, in post
+    jsondata = ex.read_json(ex.get_recent_file('preprocess_' + args['uname'] + '_' + fname, '.json'))
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\extract.py", line 174, in read_json
+    fhand = open(fname)
+FileNotFoundError: [Errno 2] No such file or directory: 'False'
+2020-07-15 14:23:12,969 admin INFO Requested to extract data.
+2020-07-15 14:23:12,969 admin DEBUG Extracted links and ISINs from JSON object.
+2020-07-15 14:23:40,129 admin INFO Made entry for extracted data in datafile successfully.
+2020-07-15 14:23:40,142 admin INFO Requested to export extracted data.
+2020-07-15 14:23:40,152 admin DEBUG Checking if filepath has valid format
+2020-07-15 14:23:40,152 admin DEBUG Exporting data to excel file
+2020-07-15 14:23:40,639 admin INFO Exported successfully
+2020-07-15 14:23:40,661 admin INFO Requested to pre-process data.
+2020-07-15 14:23:40,661 admin DEBUG Reading data from datafile
+2020-07-15 14:23:40,673 admin DEBUG Pre-processing text data
+2020-07-15 14:23:58,451 admin DEBUG Pre-processed data
+2020-07-15 14:23:58,452 admin DEBUG Writting pre-processed data to datafile
+2020-07-15 14:23:58,454 admin DEBUG Made entry of pre-processed data in datafile successfully
+2020-07-15 14:23:58,467 admin INFO Requested to export pre-processed data.
+2020-07-15 14:23:58,467 admin DEBUG Reading pre-processed datafile.
+2020-07-15 14:23:58,468 admin DEBUG Exporting pre-processed data to excel file.
+2020-07-15 14:23:58,927 admin INFO Exported pre-processed data successfully.
