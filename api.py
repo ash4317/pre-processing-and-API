@@ -121,7 +121,7 @@ class ExtractData(Resource):
             logger.exception('Exception occurred:' + repr(e))
             return {
                     'data':'',
-                    'message': e,
+                    'message': repr(e),
                     'status':'error'
                     }, 400
 
@@ -165,7 +165,7 @@ class ExtractData(Resource):
                 logger.exception('Exception occurred while reading datafile:'+repr(e))
                 return {
                         'data':'', 
-                        'message':'Error in reading file', 
+                        'message':'Error in reading file: ' +repr(e), 
                         'status':'error'
                         }, 400
             
@@ -181,7 +181,7 @@ class ExtractData(Resource):
             logger.exception('Exception occurred:' + repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: ' +repr(e),
                     'status':'error'
                     }, 400
 
@@ -232,7 +232,7 @@ class ExportExtractedData(Resource):
                 logger.exception('Exception occurred while reading datafile:'+repr(e))
                 return {
                         'data':'',
-                        'message':'Could not fetch data to export',
+                        'message':'Could not fetch data to export' +repr(e),
                         'status':'error'
                         }, 400
 
@@ -263,7 +263,7 @@ class ExportExtractedData(Resource):
             logger.exception('Exception occurred:' + repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: ' +repr(e),
                     'status':'error'
                     }, 400
 
@@ -402,7 +402,7 @@ class PreProcess(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -484,7 +484,7 @@ class ExportPrepData(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
     
@@ -613,7 +613,7 @@ class Kmeans(Resource):
             # returning all coordinates as a list of dictionaries
             for i in range(len(x_coords)):
                 data.append({'x':x_coords[i], 'y':y_coords[i]})
-
+            
             return {
                 'data':data,
                 'message':'',
@@ -623,7 +623,7 @@ class Kmeans(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -655,6 +655,7 @@ class Kmeans(Resource):
                 logger.exception('Error in reading datafile')
                 return {'data':'', 'message':'Error in reading file', 'status':'error'}, 400
             logger.info('Get request for clustered data served successfully')
+
             return {
                     'data':ex.read_json(data),  
                     'message':'',
@@ -666,7 +667,7 @@ class Kmeans(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -805,7 +806,7 @@ class DBSCAN(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
     
@@ -848,7 +849,7 @@ class DBSCAN(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -986,7 +987,7 @@ class Agglomerative(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
     
@@ -1028,7 +1029,7 @@ class Agglomerative(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -1165,7 +1166,7 @@ class Birch(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -1207,7 +1208,7 @@ class Birch(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -1268,7 +1269,7 @@ class ClusterSummary(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -1381,7 +1382,7 @@ class Elbow(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -1423,7 +1424,7 @@ class Elbow(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -1538,7 +1539,7 @@ class Silhouette(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -1580,7 +1581,7 @@ class Silhouette(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -1621,7 +1622,7 @@ class Clear(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -1654,7 +1655,7 @@ class SendLogs(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
@@ -1694,7 +1695,7 @@ class ClearLogs(Resource):
             logger.exception('Exception occurred: '+repr(e))
             return {
                     'data':'',
-                    'message':'Something went wrong',
+                    'message':'Something went wrong: '+ repr(e),
                     'status':'error'
                     }, 400
 
