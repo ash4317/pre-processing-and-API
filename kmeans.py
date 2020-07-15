@@ -78,10 +78,12 @@ def visualize_elbow(number_of_termsheets, score):
         jump = 10
         
     wcss = []
+    dict_elbow = dict()
     for i in range(start, end, jump):
         kmeans_pca = KMeans(n_clusters=i)
         kmeans_pca.fit(score)
         wcss.append(kmeans_pca.inertia_)
+        dict_elbow[i] = kmeans_pca.inertia_
 
     #implementation kneedle algorithm
 
@@ -89,16 +91,7 @@ def visualize_elbow(number_of_termsheets, score):
     from kneed import KneeLocator
     kn = KneeLocator(list(K), wcss, S=1.0, curve='convex', direction='decreasing')
 
-    #plotting elbow curve graph 
-
-    fig = plt.figure(figsize =(10, 8))
-    plt.plot(range(start, end, jump), wcss, marker = 'o', linestyle = '--')
-    plt.xlabel("No.of Clusters")
-    plt.ylabel("WCSS")
-    plt.vlines(kn.knee, plt.ylim()[0], plt.ylim()[1], linestyles='dashed')
-    plt.title("K-means with PCA clustering", figure=fig)
-    #plt.show()
-    return fig, kn.knee
+    return dict_elbow, kn.knee
 
     
 def silhouetteScore(number_of_termsheets, score, kn_knee):
@@ -106,6 +99,7 @@ def silhouetteScore(number_of_termsheets, score, kn_knee):
     sil_avg_score = []
     maximum = 0
     optimal_k = kn_knee
+    sil_dict = dict()
     
     if number_of_termsheets <= 50 :
         start = 1
@@ -140,16 +134,9 @@ def silhouetteScore(number_of_termsheets, score, kn_knee):
         labels = kmeans_model.labels_
         silhouette_avg = metrics.silhouette_score(X, labels, metric='cosine')
         sil_avg_score.append(silhouette_avg)
+        sil_dict[i] = silhouette_avg
         if(silhouette_avg > maximum) :
             maximum = silhouette_avg
             optimal_k = i
-        
-    # plotting silhouette score graphs
 
-    fig = plt.figure(figsize =(10, 8))
-    plt.plot(range(start_pt,end_pt,1), sil_avg_score, marker = 'o', linestyle = '--')
-    plt.xlabel("No.of Clusters")
-    plt.ylabel("Silhouette Scores")
-    plt.title("Silhouette score variation", figure=fig)
-
-    return fig, optimal_k
+    return sil_dict, optimal_k
