@@ -83,11 +83,7 @@ class ExtractData(Resource):
             # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to extract data.')
-            try:
-                strrep = args['fname'].split('.', 1)[1]
-                fname = args['fname'].replace('.' + strrep, '')
-            except:
-                fname = args['fname']
+            args['fname'] = args['fname'].split('.')[0]
             try:
                 content = request.json
                 ISINs = list(content.keys())
@@ -107,7 +103,7 @@ class ExtractData(Resource):
                 logger.debug('Extracting all documents.')
             ISINs, URLs, text = ex.extract(ISINs, URLs, args['no_of_docs'])
             jsondata = ex.tojson(ISINs, URLs, text)
-            ex.write_json(jsondata, ex.give_filename('extract_' + args['uname'] + '_' + fname, '.json'))
+            ex.write_json(jsondata, ex.give_filename('extract_' + args['uname'] + '_' + args['fname'], '.json'))
             logger.info('Made entry for extracted data in datafile successfully.')
 
             # success message
@@ -152,14 +148,10 @@ class ExtractData(Resource):
             # exception handling and adding entry into the log file
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to get extracted data.')
-            try:
-                strrep = args['fname'].split('.', 1)[1]
-                fname = args['fname'].replace('.' + strrep, '')
-            except:
-                fname = args['fname']
+            args['fname'] = args['fname'].split('.')[0]
             try:
                 logger.debug('Searching for requested datafile')
-                data = ex.get_recent_file('extract_' + args['uname'] + '_' + fname, '.json')
+                data = ex.get_recent_file('extract_' + args['uname'] + '_' + args['fname'], '.json')
             
             # error message if traceback occurs
             except Exception as e:
@@ -220,13 +212,9 @@ class ExportExtractedData(Resource):
             logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
             logger.info('Requested to export extracted data.')
 
+            args['fname'] = args['fname'].split('.')[0]
             try:
-                strrep = args['fname'].split('.', 1)[1]
-                fname = args['fname'].replace('.' + strrep, '')
-            except:
-                fname = args['fname']
-            try:
-                jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + fname, '.json'))
+                jsondata = ex.read_json(ex.get_recent_file('extract_' + args['uname'] + '_' + args['fname'], '.json'))
                 ISINs, URLs, text = ex.jsontolists(jsondata)
             
             # error message if traceback occurs
@@ -1331,23 +1319,17 @@ class Elbow(Resource):
 
             # plots elbow curve ad returns it
             logger.debug('Plotting elbow curve')
-            fig, K = kmeans.visualize_elbow(len(ISINs),ratio)
-            canvas = FigureCanvas(fig)
-            # Convert returned image to stream of bytes
-            output = io.BytesIO()
-            canvas.print_png(output)
-            # Packing returned image as a stream of bytes in Response object
-            logger.debug('Packing returned image as a stream of bytes to the Response object')
-            response = make_response(output.getvalue())
-            response.mimetype = 'image/png'
-            logger.info('Plotted elbow curve successfully')
-
+            dict_elbow, K = kmeans.visualize_elbow(len(ISINs),ratio)
             # writes optimal k value into "optK.json" 
             logger.debug('Writing optimal k value')
             ex.write_json(int(K), ex.give_filename('elbow_k_' + args['uname'], '.json'))
             logger.info('Obtained optimal value of K using Elbow curve successfully')
 
-            return response
+            return {
+                'data':dict_elbow,
+                'message':'',
+                'status':'success'
+            }, 200
                         
         
         # error message if traceback occurs
@@ -1476,25 +1458,18 @@ class Silhouette(Resource):
             jsonk = ex.read_json(ex.get_recent_file('elbow_k_' + args['uname'], '.json'))
             kn_knee = int(jsonk)
             logger.debug('Applying silhouette coefficient')
-            # plots elbow curve ad returns it
-            logger.debug('Plotting silhouette score')
-            fig, optimal_k = kmeans.silhouetteScore(len(ISINs), ratio, kn_knee)
-            canvas = FigureCanvas(fig)
-            # Convert returned image to stream of bytes
-            output = io.BytesIO()
-            canvas.print_png(output)
-            # Packing returned image as a stream of bytes in Response object
-            logger.debug('Packing returned image as a stream of bytes to the Response object')
-            response = make_response(output.getvalue())
-            response.mimetype = 'image/png'
-            logger.info('Plotted silhouette score successfully')
+            dict_sil, optimal_k = kmeans.silhouetteScore(len(ISINs), ratio, kn_knee)
 
             # writes optimal k value into "optK.json" 
             logger.debug('Writting optimal k')
             ex.write_json(int(optimal_k), ex.give_filename('optimal_k_' + args['uname'], '.json'))
             logger.info('Obtained optimal value of k using Silhouette score successfully')
 
-            return response
+            return {
+                'data':dict_sil,
+                'message':'',
+                'status':'success'
+            }, 200
                         
         
         # error message if traceback occurs
@@ -1592,6 +1567,79 @@ class Clear(Resource):
                     'message':'Something went wrong',
                     'status':'error'
                     }, 400
+
+
+class SendLogs(Resource):
+    '''
+    Send log file of requesting user
+    '''
+    def get(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('uname', type=str)
+            args = parser.parse_args()
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to get log file..')
+            logger.info('Sending log file')
+            return send_file(os.path.join(LOG_FOLDER, args['uname']+'.log')) 
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
+
+class ClearLogs(Resource):
+    '''
+    Removes log file of requesting user
+    '''
+    def delete(self):
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('uname', type=str)
+            args = parser.parse_args()
+            if not args['uname']:
+                return {
+                        'data':'',
+                        'message':'Give user name',
+                        'status':'error'
+                        }, 400
+                        
+            # exception handling and adding entry into the log file
+            logger = ul.setup_logger(args['uname'], os.path.join(LOG_FOLDER ,args['uname']+'.log'), level= logging.DEBUG)
+            logger.info('Requested to clear log file..')
+            f = open(os.path.join(LOG_FOLDER ,args['uname']+'.log'), "r+")
+            f.seek(0)
+            f.truncate()
+
+            logger.info('Cleared log file')
+            return {
+                    'data': '', 
+                    'message': '',
+                    'status':'success'
+                    }, 200
+        
+        # error message if traceback occurs
+        except Exception as e:
+            logger.exception('Exception occurred: '+repr(e))
+            return {
+                    'data':'',
+                    'message':'Something went wrong',
+                    'status':'error'
+                    }, 400
+
 
 class ReportGeneration(Resource):
     '''
@@ -1757,6 +1805,8 @@ api.add_resource(ClusterSummary, '/clustering/summary')
 api.add_resource(Elbow, '/clustering/elbow')
 api.add_resource(Silhouette, '/clustering/silhouette')
 api.add_resource(Clear, '/clear')
+api.add_resource(SendLogs, '/getlog')
+api.add_resource(ClearLogs, '/clearlog')
 api.add_resource(Test, '/')
 
 
