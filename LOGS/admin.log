@@ -61,3 +61,13 @@ FileNotFoundError: [Errno 2] No such file or directory: 'False'
 2020-07-15 14:23:58,467 admin DEBUG Reading pre-processed datafile.
 2020-07-15 14:23:58,468 admin DEBUG Exporting pre-processed data to excel file.
 2020-07-15 14:23:58,927 admin INFO Exported pre-processed data successfully.
+2020-07-15 14:24:10,258 admin INFO Requested to plot elbow curve.
+2020-07-15 14:24:10,258 admin DEBUG Reading datafile..
+2020-07-15 14:24:10,258 admin DEBUG Setting default value of threshold for Variance Threshold to 0.0001
+2020-07-15 14:24:10,258 admin DEBUG Setting default value of number of components for PCA to 0.8
+2020-07-15 14:24:10,258 admin DEBUG Calculating tf-idf
+2020-07-15 14:24:10,287 admin DEBUG Calculating variance threshold
+2020-07-15 14:24:10,292 admin DEBUG Applying PCA
+2020-07-15 14:24:10,307 admin DEBUG Plotting elbow curve
+2020-07-15 14:24:12,140 admin DEBUG Writing optimal k value
+2020-07-15 14:24:12,140 admin INFO Obtained optimal value of K using Elbow curve successfully
