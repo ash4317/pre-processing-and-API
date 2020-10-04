@@ -1,0 +1,2136 @@
+2020-08-28 21:18:11,682 abcd INFO Requested for report generation.
+2020-08-28 21:18:11,682 abcd DEBUG Checking for json input
+2020-08-28 21:18:11,682 abcd DEBUG Fetching URLs
+2020-08-28 21:18:11,682 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-08-28 21:18:11,714 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,750 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-08-28 21:18:11,770 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,774 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-08-28 21:18:11,794 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,798 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-08-28 21:18:11,825 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,825 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-08-28 21:18:11,841 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,841 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-08-28 21:18:11,872 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,872 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-08-28 21:18:11,888 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,888 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-08-28 21:18:11,919 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,919 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-08-28 21:18:11,935 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,935 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-08-28 21:18:11,966 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,966 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-08-28 21:18:11,997 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:11,997 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-08-28 21:18:12,028 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:12,028 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-08-28 21:18:12,044 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:12,060 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-08-28 21:18:12,075 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:12,075 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-08-28 21:18:12,107 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:12,107 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-08-28 21:18:12,122 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:12,122 abcd INFO Report generation has started.
+2020-08-28 21:18:12,122 abcd DEBUG Using bruteforce method for report generation
+2020-08-28 21:18:12,216 abcd INFO Requested for report generation.
+2020-08-28 21:18:12,216 abcd DEBUG Searching for JSON Dump
+2020-08-28 21:18:12,216 abcd ERROR Could not find the JSON Dump, the file is not prepared yet
+2020-08-28 21:18:50,391 abcd INFO Requested for report generation.
+2020-08-28 21:18:50,391 abcd DEBUG Checking for json input
+2020-08-28 21:18:50,391 abcd DEBUG Fetching URLs
+2020-08-28 21:18:50,391 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-08-28 21:18:50,406 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,422 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-08-28 21:18:50,438 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,438 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-08-28 21:18:50,469 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,469 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-08-28 21:18:50,500 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,516 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-08-28 21:18:50,547 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,563 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-08-28 21:18:50,578 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,594 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-08-28 21:18:50,609 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,625 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-08-28 21:18:50,672 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,672 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-08-28 21:18:50,688 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,703 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-08-28 21:18:50,719 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,734 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-08-28 21:18:50,750 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,766 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-08-28 21:18:50,781 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,781 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-08-28 21:18:50,813 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,813 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-08-28 21:18:50,844 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,844 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-08-28 21:18:50,875 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,875 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-08-28 21:18:50,906 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:18:50,906 abcd INFO Report generation has started.
+2020-08-28 21:18:50,906 abcd DEBUG Using bruteforce method for report generation
+2020-08-28 21:18:50,922 abcd INFO Requested for report generation.
+2020-08-28 21:18:50,922 abcd DEBUG Searching for JSON Dump
+2020-08-28 21:18:50,922 abcd ERROR Could not find the JSON Dump, the file is not prepared yet
+2020-08-28 21:22:01,933 abcd INFO Requested for report generation.
+2020-08-28 21:22:01,937 abcd DEBUG Checking for json input
+2020-08-28 21:22:01,937 abcd DEBUG Fetching URLs
+2020-08-28 21:22:01,937 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-08-28 21:22:01,965 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:01,989 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-08-28 21:22:02,013 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,017 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-08-28 21:22:02,037 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,041 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-08-28 21:22:02,049 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,065 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-08-28 21:22:02,080 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,080 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-08-28 21:22:02,112 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,112 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-08-28 21:22:02,127 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,127 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-08-28 21:22:02,143 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,159 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-08-28 21:22:02,174 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,174 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-08-28 21:22:02,205 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,205 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-08-28 21:22:02,221 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,221 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-08-28 21:22:02,252 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,252 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-08-28 21:22:02,268 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,268 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-08-28 21:22:02,299 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,315 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-08-28 21:22:02,330 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,330 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-08-28 21:22:02,362 abcd ERROR The url: https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm could not be fetched
+Traceback (most recent call last):
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1319, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "c:\python 3.8.2\lib\http\client.py", line 1230, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1276, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1225, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "c:\python 3.8.2\lib\http\client.py", line 1004, in _send_output
+    self.send(msg)
+  File "c:\python 3.8.2\lib\http\client.py", line 944, in send
+    self.connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 1392, in connect
+    super().connect()
+  File "c:\python 3.8.2\lib\http\client.py", line 915, in connect
+    self.sock = self._create_connection(
+  File "c:\python 3.8.2\lib\socket.py", line 787, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "c:\python 3.8.2\lib\socket.py", line 918, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\ASHWIN\Desktop\FinIQ\Assignments_FinIQ\NLP_Citi\pre-processing-and-API\api.py", line 1698, in post
+    html = urlopen(url).read()
+  File "c:\python 3.8.2\lib\urllib\request.py", line 222, in urlopen
+    return opener.open(url, data, timeout)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 525, in open
+    response = self._open(req, data)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 542, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+  File "c:\python 3.8.2\lib\urllib\request.py", line 502, in _call_chain
+    result = func(*args)
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1362, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+  File "c:\python 3.8.2\lib\urllib\request.py", line 1322, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 11001] getaddrinfo failed>
+2020-08-28 21:22:02,362 abcd INFO Report generation has started.
+2020-08-28 21:22:02,362 abcd DEBUG Using bruteforce method for report generation
+2020-08-28 21:22:02,399 abcd INFO Requested for report generation.
+2020-08-28 21:22:02,399 abcd DEBUG Searching for JSON Dump
+2020-08-28 21:22:02,399 abcd ERROR Could not find the JSON Dump, the file is not prepared yet
+2020-08-28 21:25:46,718 abcd INFO Requested for report generation.
+2020-08-28 21:25:46,718 abcd DEBUG Checking for json input
+2020-08-28 21:25:46,718 abcd DEBUG Fetching URLs
+2020-08-28 21:25:46,718 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-08-28 21:25:48,764 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-08-28 21:25:51,221 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-08-28 21:25:52,348 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-08-28 21:25:54,618 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-08-28 21:25:57,078 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-08-28 21:25:58,721 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-08-28 21:26:00,929 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-08-28 21:26:02,700 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-08-28 21:26:03,761 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-08-28 21:26:05,204 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-08-28 21:26:07,253 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-08-28 21:26:08,159 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-08-28 21:26:09,644 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-08-28 21:26:11,815 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-08-28 21:26:12,956 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-08-28 21:26:15,146 abcd INFO Report generation has started.
+2020-08-28 21:26:15,162 abcd DEBUG Using bruteforce method for report generation
+2020-08-28 21:26:19,739 abcd INFO Report generated successfully
+2020-08-28 21:27:17,258 abcd INFO Requested for report generation.
+2020-08-28 21:27:17,258 abcd INFO Older JSON Dump for abcd has been deleted
+2020-08-28 21:27:17,258 abcd DEBUG Checking for json input
+2020-08-28 21:27:17,258 abcd DEBUG Fetching URLs
+2020-08-28 21:27:17,274 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007930/dp108304_424b2-us1972721.htm URL
+2020-08-28 21:27:17,946 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008018/dp108385_424b2-us1972668.htm URL
+2020-08-28 21:27:18,581 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008084/dp108463_424b2-us1972667.htm URL
+2020-08-28 21:27:19,125 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009058/dp109430_424b2-us1972617.htm URL
+2020-08-28 21:27:19,640 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007911/dp108280_424b2-us1972550.htm URL
+2020-08-28 21:27:20,203 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009050/dp109447_424b2-us1972547.htm URL
+2020-08-28 21:27:20,781 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007828/dp108206_424b2-us1972545.htm URL
+2020-08-28 21:27:21,296 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009060/dp109497_424b2-us1972484.htm URL
+2020-08-28 21:27:21,890 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007527/dp107872_fwp-us1972482.htm URL
+2020-08-28 21:27:22,218 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007524/dp107870_fwp-us1972480.htm URL
+2020-08-28 21:27:22,530 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319008572/dp109026_424b2-us1972369.htm URL
+2020-08-28 21:27:23,144 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007525/dp107868_fwp-us1972350.htm URL
+2020-08-28 21:27:23,539 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009080/dp109492_424b2-us1972281.htm URL
+2020-08-28 21:27:24,427 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007870/dp108232_424b2-us1972280.htm URL
+2020-08-28 21:27:25,411 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319007155/dp107611_424b2-us1972269.htm URL
+2020-08-28 21:27:25,958 abcd DEBUG Fetching https://www.sec.gov/Archives/edgar/data/831001/000095010319009048/dp109444_424b2-us1972158.htm URL
+2020-08-28 21:27:26,583 abcd INFO Report generation has started.
+2020-08-28 21:27:26,583 abcd DEBUG Using bruteforce method for report generation
+2020-08-28 21:27:26,629 abcd INFO Requested for report generation.
+2020-08-28 21:27:26,629 abcd DEBUG Searching for JSON Dump
+2020-08-28 21:27:26,629 abcd ERROR Could not find the JSON Dump, the file is not prepared yet
+2020-08-28 21:27:29,316 abcd INFO Report generated successfully
